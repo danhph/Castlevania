@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C75B0BF7-FF99-4B0A-947C-E3D4248B0CEE}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Game</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>..\DirectX\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\DirectX\Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dinput8.lib;dxguid.lib;dsound.lib;dxerr.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="CastlevaniaGame.cpp" />
+    <ClCompile Include="Framework\Animation.cpp" />
+    <ClCompile Include="Framework\DeviceManager.cpp" />
+    <ClCompile Include="Framework\dxaudio.cpp" />
+    <ClCompile Include="Framework\Event.cpp" />
+    <ClCompile Include="Framework\GameTime.cpp" />
+    <ClCompile Include="Framework\Graphics.cpp" />
+    <ClCompile Include="Framework\IComponent.cpp" />
+    <ClCompile Include="Framework\InputController.cpp" />
+    <ClCompile Include="Framework\main.cpp" />
+    <ClCompile Include="Framework\Managers\SceneManager.cpp" />
+    <ClCompile Include="Framework\Managers\SoundManager.cpp" />
+    <ClCompile Include="Framework\Scenario.cpp" />
+    <ClCompile Include="Framework\Scene.cpp" />
+    <ClCompile Include="Framework\Sprite.cpp" />
+    <ClCompile Include="Framework\SpriteManager.cpp" />
+    <ClCompile Include="Framework\StopWatch.cpp" />
+    <ClCompile Include="Framework\Surface.cpp" />
+    <ClCompile Include="Framework\Text.cpp" />
+    <ClCompile Include="Framework\TextBitmap.cpp" />
+    <ClCompile Include="Framework\Texture.cpp" />
+    <ClCompile Include="Framework\TimeSpan.cpp" />
+    <ClCompile Include="Framework\Transformable.cpp" />
+    <ClCompile Include="Framework\utils.cpp" />
+    <ClCompile Include="Framework\Viewport.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Objects\BaseObject.cpp" />
+    <ClCompile Include="Objects\TextSprite.cpp" />
+    <ClCompile Include="pugixml\pugixml.cpp" />
+    <ClCompile Include="Scene\IntroScene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CastlevaniaGame.h" />
+    <ClInclude Include="Framework\Animation.h" />
+    <ClInclude Include="Framework\define.h" />
+    <ClInclude Include="Framework\DeviceManager.h" />
+    <ClInclude Include="Framework\dxaudio.h" />
+    <ClInclude Include="Framework\Event.h" />
+    <ClInclude Include="Framework\GameTime.h" />
+    <ClInclude Include="Framework\Graphics.h" />
+    <ClInclude Include="Framework\IComponent.h" />
+    <ClInclude Include="Framework\InputController.h" />
+    <ClInclude Include="Framework\Managers\SceneManager.h" />
+    <ClInclude Include="Framework\Managers\SoundManager.h" />
+    <ClInclude Include="Framework\Scenario.h" />
+    <ClInclude Include="Framework\Scene.h" />
+    <ClInclude Include="Framework\Sprite.h" />
+    <ClInclude Include="Framework\SpriteManager.h" />
+    <ClInclude Include="Framework\StopWatch.h" />
+    <ClInclude Include="Framework\Surface.h" />
+    <ClInclude Include="Framework\Text.h" />
+    <ClInclude Include="Framework\TextBitmap.h" />
+    <ClInclude Include="Framework\Texture.h" />
+    <ClInclude Include="Framework\TimeSpan.h" />
+    <ClInclude Include="Framework\Transformable.h" />
+    <ClInclude Include="Framework\utils.h" />
+    <ClInclude Include="Framework\Viewport.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Objects\BaseObject.h" />
+    <ClInclude Include="Objects\TextSprite.h" />
+    <ClInclude Include="pugixml\pugiconfig.hpp" />
+    <ClInclude Include="pugixml\pugixml.hpp" />
+    <ClInclude Include="Scene\IntroScene.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
