@@ -3,7 +3,6 @@
 
 #include "../Framework/Sprite.h"
 #include "../Framework/SpriteManager.h"
-#include "../Framework/Managers/SoundManager.h"
 #include "../Framework/Managers/SceneManager.h"
 #include "../Framework/InputController.h"
 #include "../Framework/StopWatch.h"
@@ -28,17 +27,15 @@ public:
 	void updateInput(float deltatime) override;
 
 private:
-	Sprite* _yellowfancon;
 	Sprite* _introtable;
-	Movement* _movement;
 
 	void onKeyPressed(KeyEventArg* key_event);
+	
+	Movement* _movement;
 	StopWatch* _flash;
 	StopWatch* _access;
-	int _ok;
+	bool _ok ;
 	bool _draw;
-	bool _drawyellowFalcon;
 	TextSprite* _playOption;
-	TextSprite* _chosenOption;
 };
 #endif // !__INTRO_SCENE__

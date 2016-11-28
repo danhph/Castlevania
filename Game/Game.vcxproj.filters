@@ -31,6 +31,18 @@
     <Filter Include="GameSource\Objects">
       <UniqueIdentifier>{47c4b3f7-ff35-4869-8354-a826e10984e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Framework\Manager">
+      <UniqueIdentifier>{060344b9-46ff-4230-95d9-ae9dbfe4caee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSource\Framework\Manager">
+      <UniqueIdentifier>{74a5d4fd-d667-4255-a49e-6fedd963fe6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Tiles">
+      <UniqueIdentifier>{ce444d46-dde8-4a51-ada3-9fb2c66bcef5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSource\Tiles">
+      <UniqueIdentifier>{b1979ca8-3c6d-43ed-ba18-7c28cc9bf6f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Animation.cpp">
@@ -69,16 +81,7 @@
     <ClCompile Include="Framework\Scene.cpp">
       <Filter>GameSource\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\Managers\SceneManager.cpp">
-      <Filter>GameSource\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Framework\Managers\SoundManager.cpp">
-      <Filter>GameSource\Framework</Filter>
-    </ClCompile>
     <ClCompile Include="Framework\Sprite.cpp">
-      <Filter>GameSource\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Framework\SpriteManager.cpp">
       <Filter>GameSource\Framework</Filter>
     </ClCompile>
     <ClCompile Include="Framework\StopWatch.cpp">
@@ -124,6 +127,27 @@
     <ClCompile Include="Objects\BaseObject.cpp">
       <Filter>GameSource\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Framework\Managers\SceneManager.cpp">
+      <Filter>GameSource\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\SpriteManager.cpp">
+      <Filter>GameSource\Framework\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Managers\SoundManager.cpp">
+      <Filter>GameSource\Framework\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles\Map.cpp">
+      <Filter>GameSource\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles\Tile.cpp">
+      <Filter>GameSource\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles\TileSet.cpp">
+      <Filter>GameSource\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\CollisionBody.cpp">
+      <Filter>GameSource\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation.h">
@@ -165,16 +189,7 @@
     <ClInclude Include="Framework\Scene.h">
       <Filter>Game\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\Managers\SceneManager.h">
-      <Filter>Game\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework\Managers\SoundManager.h">
-      <Filter>Game\Framework</Filter>
-    </ClInclude>
     <ClInclude Include="Framework\Sprite.h">
-      <Filter>Game\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework\SpriteManager.h">
       <Filter>Game\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Framework\StopWatch.h">
@@ -217,6 +232,36 @@
       <Filter>Game\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Objects\BaseObject.h">
+      <Filter>Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Managers\SoundManager.h">
+      <Filter>Game\Framework\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\SpriteManager.h">
+      <Filter>Game\Framework\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Managers\SceneManager.h">
+      <Filter>Game\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage21.h">
+      <Filter>Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles\config.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles\Tile.h">
+      <Filter>Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles\TileSet.h">
+      <Filter>Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles\Map.h">
+      <Filter>Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Player.h">
+      <Filter>Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\CollisionBody.h">
       <Filter>Game\Objects</Filter>
     </ClInclude>
   </ItemGroup>

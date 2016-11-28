@@ -1,16 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game", "Game\Game.vcxproj", "{C75B0BF7-FF99-4B0A-947C-E3D4248B0CEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|Win32 = Debug|Win32
+		Release|Any CPU = Release|Any CPU
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C75B0BF7-FF99-4B0A-947C-E3D4248B0CEE}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{C75B0BF7-FF99-4B0A-947C-E3D4248B0CEE}.Debug|Win32.ActiveCfg = Debug|Win32
 		{C75B0BF7-FF99-4B0A-947C-E3D4248B0CEE}.Debug|Win32.Build.0 = Debug|Win32
+		{C75B0BF7-FF99-4B0A-947C-E3D4248B0CEE}.Release|Any CPU.ActiveCfg = Release|Win32
 		{C75B0BF7-FF99-4B0A-947C-E3D4248B0CEE}.Release|Win32.ActiveCfg = Release|Win32
 		{C75B0BF7-FF99-4B0A-947C-E3D4248B0CEE}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection

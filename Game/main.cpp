@@ -5,7 +5,7 @@
 using namespace std;
 USE_GAMEUIT_FRAMEWORK
 
-#define APP_TITTLE L"Contra"
+#define APP_TITTLE L"Castlevania"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpcmdLine,  int nCmdShow)
 {

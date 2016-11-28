@@ -1,4 +1,5 @@
 ﻿#include "CastlevaniaGame.h"
+#include "Scene/IntroScene.h"
 
 
 CastlevaniaGame::CastlevaniaGame(HINSTANCE hInstance, LPWSTR title) : Game(hInstance, title, WINDOW_WIDTH, WINDOW_HEIGHT)
@@ -14,7 +15,7 @@ void CastlevaniaGame::init()
 	Game::init();
 	// init game
 #if _DEBUG
-	//	SceneManager::getInstance()->addScene(__);
+	SceneManager::getInstance()->addScene(new IntroScene());
 #else
 	SceneManager::getInstance()->addScene(new IntroScene());
 #endif
