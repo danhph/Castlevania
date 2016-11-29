@@ -11,19 +11,19 @@ using namespace std;
 using namespace pugi;
 USE_GAMEUIT_FRAMEWORK
 
-class Map
+class TileMap
 {
 public:
 
 	void draw(LPD3DXSPRITE, Viewport*);
 	void release();
 
-	static Map* LoadFromFile(const string path, eID spriteId);
+	static TileMap* LoadFromFile(const string path, eID spriteId);
 
 	GVector2 getWorldSize();
 	
-	Map();
-	~Map();
+	TileMap();
+	~TileMap();
 
 private:
 

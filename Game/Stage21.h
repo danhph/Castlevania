@@ -8,19 +8,20 @@
 #include "FrameWork/Scenario.h"
 #include "Framework/Scene.h"
 #include "Objects/BaseObject.h"
-#include "Tiles/Map.h"
-
-#define BOSS_VIEWPORT_ANCHOR		6112
+#include "Objects/Player.h"
+#include "Objects/Help.h"
+#include "Framework/QNode.h"
+#include "Tiles/TileMap.h"
 
 using namespace std;
 USE_GAMEUIT_FRAMEWORK
 
 EVENT_RECEIVER
-class PlayScene : public Scene
+class Stage21 : public Scene
 {
 public:
-	PlayScene();
-	~PlayScene();
+	Stage21();
+	~Stage21();
 
 	bool init() override;
 	void updateInput(float dt) override;
@@ -29,7 +30,6 @@ public:
 	void release() override;
 
 	void setViewport(Viewport* viewport);
-	//static Viewport* getViewport();
 
 	BaseObject* getObject(eID id);
 
@@ -37,8 +37,6 @@ public:
 private:
 	void destroyobject(); // kiển tra nếu object hết hạn sử dụng thì phá huỷ đối tượng
 	Text* _text;
-
-	Help* _help;
 
 	// Danh sách đối tượng dùng để tạo quadtree.
 	map<string, BaseObject*> _mapObject;
@@ -51,17 +49,12 @@ private:
 	vector<BaseObject*> _activeObject;
 
 	vector<IControlable*> _listControlObject;
-	Map* _background;
 
-	// quadtree
-	QNode* _root;
+	TileMap* _tileMap;
 
 	BaseObject* _player;
-	BaseObject* _bulletmanager;
 
 	void updateViewport(BaseObject* objTracker);
-
-	ScenarioManager* _director;
 
 	bool checkGameLife();
 };

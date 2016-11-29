@@ -93,9 +93,6 @@
     <ClCompile Include="Framework\Text.cpp">
       <Filter>GameSource\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\TextBitmap.cpp">
-      <Filter>GameSource\Framework</Filter>
-    </ClCompile>
     <ClCompile Include="Framework\Texture.cpp">
       <Filter>GameSource\Framework</Filter>
     </ClCompile>
@@ -136,9 +133,6 @@
     <ClCompile Include="Framework\Managers\SoundManager.cpp">
       <Filter>GameSource\Framework\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Tiles\Map.cpp">
-      <Filter>GameSource\Tiles</Filter>
-    </ClCompile>
     <ClCompile Include="Tiles\Tile.cpp">
       <Filter>GameSource\Tiles</Filter>
     </ClCompile>
@@ -147,6 +141,27 @@
     </ClCompile>
     <ClCompile Include="Objects\CollisionBody.cpp">
       <Filter>GameSource\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\EmptyObject.cpp">
+      <Filter>GameSource\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\LifeUI.cpp">
+      <Filter>GameSource\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Player.cpp">
+      <Filter>GameSource\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Help.cpp">
+      <Filter>GameSource\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\QNode.cpp">
+      <Filter>GameSource\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Stage21.cpp">
+      <Filter>GameSource\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles\TileMap.cpp">
+      <Filter>GameSource\Tiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -201,9 +216,6 @@
     <ClInclude Include="Framework\Text.h">
       <Filter>Game\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\TextBitmap.h">
-      <Filter>Game\Framework</Filter>
-    </ClInclude>
     <ClInclude Include="Framework\Texture.h">
       <Filter>Game\Framework</Filter>
     </ClInclude>
@@ -255,14 +267,26 @@
     <ClInclude Include="Tiles\TileSet.h">
       <Filter>Game\Tiles</Filter>
     </ClInclude>
-    <ClInclude Include="Tiles\Map.h">
-      <Filter>Game\Tiles</Filter>
-    </ClInclude>
     <ClInclude Include="Objects\Player.h">
       <Filter>Game\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Objects\CollisionBody.h">
       <Filter>Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\LifeUI.h">
+      <Filter>Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\EmptyObject.h">
+      <Filter>Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Help.h">
+      <Filter>Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\QNode.h">
+      <Filter>Game\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles\TileMap.h">
+      <Filter>Game\Tiles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

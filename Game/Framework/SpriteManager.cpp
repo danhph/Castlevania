@@ -21,28 +21,27 @@ SpriteManager::~SpriteManager(void)
 
 void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 {
-	/* if you have any image, load them with this format */
-	// [psedue code]
-	// sp = new SPRITE(...)
-	// this->_listSprite.insert(pair<eID, Sprite*>(eID::ENUMOBJECT, sp));
-
-	//Sprite* sp = new Sprite(spriteHandle, L"Flower.png", 4, 4);
-	//this->_listSprite.insert(pair<eID, Sprite*>(eID::FLOWER, sp));
-
-	//sp = new Sprite(spriteHandle, L"mario.png", 5, 5);
-	//this->_listSprite.insert(pair<eID, Sprite*>(eID::MARIO, sp));
-
 	Sprite* pSprite = NULL;
 
 	pSprite = new Sprite(spriteHandle, L"Resources//Images//mainmenu.png");
 	this->_listSprite[eID::MAIN_MENU] = pSprite;
 
+	pSprite = new Sprite(spriteHandle, L"Resources//Images//life.png");
+	this->_listSprite[eID::LIFE_ICON] = pSprite;
 
 	pSprite = new Sprite(spriteHandle, L"Resources//Fonts//fontEx.png", 30, 10);
 	this->_listSprite[eID::FONTEX] = pSprite;
 
 	pSprite = new Sprite(spriteHandle, L"Resources//Fonts//fontFull.png", 54, 6);
 	this->_listSprite[eID::FONTFULL] = pSprite;
+
+	pSprite = new Sprite(spriteHandle, L"Resources//Images//walk_left.png");
+	this->_listSprite.insert(pair<eID, Sprite*>(eID::PLAYER, pSprite));
+	this->loadSpriteInfo(eID::PLAYER, "Resources//Images//walk_left.txt");
+
+	pSprite = loadXMLDoc(spriteHandle, L"Resources//Map//stage21.xml");
+	pSprite->setOrigin(VECTOR2ZERO);
+	this->_listSprite[eID::MAP_STAGE_21] = pSprite;
 
 }
 

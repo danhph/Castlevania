@@ -1,5 +1,6 @@
 #include "IntroScene.h"
 #include "../Framework/Managers/SoundManager.h"
+#include "../Stage21.h"
 
 void IntroScene::updateInput(float deltatime)
 {
@@ -55,7 +56,7 @@ void IntroScene::update(float dt)
 		}
 		if (_access->isTimeLoop(800))
 		{
-			auto play = new IntroScene();
+			auto play = new Stage21();
 			SceneManager::getInstance()->replaceScene(play);
 		}
 	}

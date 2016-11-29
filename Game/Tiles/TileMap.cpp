@@ -1,20 +1,20 @@
-#include "Map.h"
+#include "TileMap.h"
 
-Map::Map()
+TileMap::TileMap()
 {
 	_mapIndex = NULL;
 }
 
-Map::~Map()
+TileMap::~TileMap()
 {
 }
 
-void Map::release()
+void TileMap::release()
 {
 }
 
 
-void Map::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
+void TileMap::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
 	RECT screenRectEx =
 	{
@@ -42,7 +42,7 @@ void Map::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 	}
 }
 
-GVector2 Map::getWorldSize()
+GVector2 TileMap::getWorldSize()
 {
 	GVector2 result;
 	result.x = this->_mapSize.x * this->_frameWidth;
@@ -50,7 +50,7 @@ GVector2 Map::getWorldSize()
 	return result;
 }
 
-Map* Map::LoadFromFile(const string path, eID spriteId)
+TileMap* TileMap::LoadFromFile(const string path, eID spriteId)
 {
 	xml_document doc;
 
@@ -59,7 +59,7 @@ Map* Map::LoadFromFile(const string path, eID spriteId)
 	{
 		return nullptr;
 	}
-	Map* map = new Map();
+	TileMap* map = new TileMap();
 
 
 	xml_node tilemap = doc.child("Tilesmap");
@@ -89,7 +89,7 @@ Map* Map::LoadFromFile(const string path, eID spriteId)
 	return map;
 }
 
-void Map::getElementMatrixIndex(xml_node& node, int** matrix)
+void TileMap::getElementMatrixIndex(xml_node& node, int** matrix)
 {
 	xml_node child = node.first_child();
 
@@ -120,7 +120,7 @@ void Map::getElementMatrixIndex(xml_node& node, int** matrix)
 	}
 }
 
-xml_attribute Map::getAttributeValue(const xml_node& node, string attributename)
+xml_attribute TileMap::getAttributeValue(const xml_node& node, string attributename)
 {
 	return node.find_attribute(
 		[&](xml_attribute att) -> bool

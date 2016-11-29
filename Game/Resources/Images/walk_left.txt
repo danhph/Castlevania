@@ -1,0 +1,6 @@
+frame_name		left	top	right	bottom
+walk_left_01		0	0	32	64	
+walk_left_02		32	0	64	64
+walk_left_03		64	0	96	64
+
+		

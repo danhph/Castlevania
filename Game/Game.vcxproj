@@ -92,14 +92,15 @@
     <ClCompile Include="Framework\main.cpp" />
     <ClCompile Include="Framework\Managers\SceneManager.cpp" />
     <ClCompile Include="Framework\Managers\SoundManager.cpp" />
+    <ClCompile Include="Framework\QNode.cpp" />
     <ClCompile Include="Framework\Scenario.cpp" />
     <ClCompile Include="Framework\Scene.cpp" />
     <ClCompile Include="Framework\Sprite.cpp" />
     <ClCompile Include="Framework\SpriteManager.cpp" />
+    <ClCompile Include="Framework\Stage21.cpp" />
     <ClCompile Include="Framework\StopWatch.cpp" />
     <ClCompile Include="Framework\Surface.cpp" />
     <ClCompile Include="Framework\Text.cpp" />
-    <ClCompile Include="Framework\TextBitmap.cpp" />
     <ClCompile Include="Framework\Texture.cpp" />
     <ClCompile Include="Framework\TimeSpan.cpp" />
     <ClCompile Include="Framework\Transformable.cpp" />
@@ -109,10 +110,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Objects\BaseObject.cpp" />
     <ClCompile Include="Objects\CollisionBody.cpp" />
+    <ClCompile Include="Objects\EmptyObject.cpp" />
+    <ClCompile Include="Objects\Help.cpp" />
+    <ClCompile Include="Objects\LifeUI.cpp" />
+    <ClCompile Include="Objects\Player.cpp" />
     <ClCompile Include="Objects\TextSprite.cpp" />
     <ClCompile Include="pugixml\pugixml.cpp" />
     <ClCompile Include="Scene\IntroScene.cpp" />
-    <ClCompile Include="Tiles\Map.cpp" />
+    <ClCompile Include="Tiles\TileMap.cpp" />
     <ClCompile Include="Tiles\Tile.cpp" />
     <ClCompile Include="Tiles\TileSet.cpp" />
   </ItemGroup>
@@ -129,6 +134,7 @@
     <ClInclude Include="Framework\InputController.h" />
     <ClInclude Include="Framework\Managers\SceneManager.h" />
     <ClInclude Include="Framework\Managers\SoundManager.h" />
+    <ClInclude Include="Framework\QNode.h" />
     <ClInclude Include="Framework\Scenario.h" />
     <ClInclude Include="Framework\Scene.h" />
     <ClInclude Include="Framework\Sprite.h" />
@@ -136,7 +142,6 @@
     <ClInclude Include="Framework\StopWatch.h" />
     <ClInclude Include="Framework\Surface.h" />
     <ClInclude Include="Framework\Text.h" />
-    <ClInclude Include="Framework\TextBitmap.h" />
     <ClInclude Include="Framework\Texture.h" />
     <ClInclude Include="Framework\TimeSpan.h" />
     <ClInclude Include="Framework\Transformable.h" />
@@ -145,6 +150,9 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Objects\BaseObject.h" />
     <ClInclude Include="Objects\CollisionBody.h" />
+    <ClInclude Include="Objects\EmptyObject.h" />
+    <ClInclude Include="Objects\Help.h" />
+    <ClInclude Include="Objects\LifeUI.h" />
     <ClInclude Include="Objects\Player.h" />
     <ClInclude Include="Objects\TextSprite.h" />
     <ClInclude Include="pugixml\pugiconfig.hpp" />
@@ -152,7 +160,7 @@
     <ClInclude Include="Scene\IntroScene.h" />
     <ClInclude Include="Stage21.h" />
     <ClInclude Include="Tiles\config.h" />
-    <ClInclude Include="Tiles\Map.h" />
+    <ClInclude Include="Tiles\TileMap.h" />
     <ClInclude Include="Tiles\Tile.h" />
     <ClInclude Include="Tiles\TileSet.h" />
   </ItemGroup>

@@ -74,11 +74,6 @@ bool Viewport::isContains(const RECT &rect)
 RECT Viewport::getBounding()
 {
 	RECT rect;
-	//rect.left = _positionWorld.x;
-	//rect.bottom = WINDOW_HEIGHT - _positionWorld.y;
-	//rect.top = rect.bottom + _height;
-	//rect.right = rect.left + _width;
-
 	rect.left = _positionWorld.x;
 	rect.top = _positionWorld.y;
 	rect.bottom = rect.top - _height;

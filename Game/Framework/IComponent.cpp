@@ -123,17 +123,6 @@ RoundMovement::RoundMovement(float radius, float frequency, float radian, Sprite
 
 void RoundMovement::update(float deltatime)
 {
-	//float oldRadian = _radian;
-	//_radian += _radianVeloc * deltatime / 1000;
-
-	//float deltaX = _radius * cos(_radian) - _roundposition.x;
-	//float deltaY = _radius * sin(_radian) - _roundposition.y;
-
-	//_roundposition = GVector2(deltaX, deltaY);
-	//auto position= this->_refSprite->getPosition();
-	//position += _roundposition;
-	//this->_refSprite->setPosition(position);
-	//return;
 	/*
 	góc xoay được tính theo công thức
 	φ = ω * t
