@@ -30,11 +30,11 @@ void Text::draw()
 	_font->DrawTextA(
 		NULL,
 		_text.c_str(),
-		-1,												// số chữ để vẽ ra, -1 là vẽ hết
+		-1,
 		&_textRect,
 		_textAlign,
 		_color
-		);
+	);
 }
 
 void Text::setText(string text)
@@ -122,17 +122,17 @@ void Text::updateFont()
 	}
 
 	D3DXCreateFont(
-		DeviceManager::getInstance()->getDevice(),		// device
-		_fontHeight,									// font height
-		0,												// font width
-		_fontWeight,									// font weight
-		1,												//
-		_italic,										// italic
+		DeviceManager::getInstance()->getDevice(),
+		_fontHeight,
+		0,
+		_fontWeight,
+		1,
+		_italic,
 		DEFAULT_CHARSET,
 		OUT_DEFAULT_PRECIS,
 		ANTIALIASED_QUALITY,
 		FF_DONTCARE,
-		_fontName,										// font face
-		&_font											// pointer font
-		);
+		_fontName,
+		&_font
+	);
 }

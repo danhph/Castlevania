@@ -17,7 +17,7 @@ TimeSpan::TimeSpan(UINT64 ticks)
 
 float TimeSpan::getMiliSeconds()
 {
-	return ((float) _ticks )/ TicksPerMilisecond;
+	return ((float) _ticks) / TicksPerMilisecond;
 }
 
 UINT64 TimeSpan::getTicks()

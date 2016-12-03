@@ -4,16 +4,15 @@
 
 TileSet::TileSet(eID spriteId)
 {
-	Sprite* sp= SpriteManager::getInstance()->getSprite(spriteId);
+	Sprite* sp = SpriteManager::getInstance()->getSprite(spriteId);
 	this->_tileImage = sp;
 	this->_heighttile = sp->getFrameHeight();
 	this->_widthtile = sp->getFrameWidth();
-		
 }
 
-void TileSet::draw(LPD3DXSPRITE spriteHandle, int id, GVector2 position,  Viewport *viewport )
+void TileSet::draw(LPD3DXSPRITE spriteHandle, int id, GVector2 position, Viewport* viewport)
 {
-	for(auto tile : _listTiles)
+	for (auto tile : _listTiles)
 	{
 		if (tile->getId() == id)
 		{
@@ -27,27 +26,32 @@ void TileSet::draw(LPD3DXSPRITE spriteHandle, int id, GVector2 position,  Viewpo
 	}
 }
 
-void TileSet::loadListTiles(pugi::xml_node& node)
+void TileSet::loadListTiles(pugi::xml_node& tileset)
 {
-	/*
-		tilelistnode chứa tất cả các element <Tile> trong file xml.
-		Cấu trúc dạng:
-		<Tiles>
-			<Tile>
-		<Tiles>
-	*/
-	auto tilelistnode = node.child("Tiles").children();
-	Tile*  tile = nullptr;
-	RECT srcRECT = { 0,0,0,0};
-	int id = 0;
-	for each (pugi::xml_node_iterator it in tilelistnode)
+	auto image = tileset.child("image");
+	auto imageWidth = image.attribute("width").as_int();
+
+	auto firstTileId = tileset.attribute("firstgid").as_int();
+	auto tileWidth = tileset.attribute("tilewidth").as_int();
+	auto tileHeight = tileset.attribute("tileheight").as_int();
+	auto tileCount = tileset.attribute("tilecount").as_int();
+
+	Tile* tile = nullptr;
+	RECT srcRECT = {0,0,tileWidth,tileHeight};
+	
+	while (tileCount--)
 	{
-		id = it->attribute("Id").as_int();
-		srcRECT.top = it->child("Rect").attribute("Y").as_int();
-		srcRECT.left = it->child("Rect").attribute("X").as_int();
-		srcRECT.bottom = srcRECT.top + it->child("Rect").attribute("Width").as_int() + 1; 
-		srcRECT.right = srcRECT.left + it->child("Rect").attribute("Height").as_int() + 1;
-		this->_listTiles.push_back(new Tile(this->_tileImage, srcRECT, id));
+		this->_listTiles.push_back(new Tile(this->_tileImage, srcRECT, firstTileId));
+		firstTileId++;
+		if (srcRECT.right + tileWidth > imageWidth)
+		{
+			srcRECT.left = 0;
+			srcRECT.top += tileHeight;
+		}
+		else
+			srcRECT.left += tileWidth;
+		srcRECT.right = srcRECT.left + tileWidth;
+		srcRECT.bottom = srcRECT.top + tileHeight;
 	}
 }
 
@@ -56,7 +60,7 @@ int TileSet::getWidthtile() const
 	return _widthtile;
 }
 
-void TileSet::setWidthtile(const int &value)
+void TileSet::setWidthtile(const int& value)
 {
 	this->_widthtile = value;
 }
@@ -66,7 +70,7 @@ int TileSet::getHeighttile() const
 	return this->_heighttile;
 }
 
-void TileSet::setHeighttile(const int &value)
+void TileSet::setHeighttile(const int& value)
 {
 	this->_heighttile = value;
 }

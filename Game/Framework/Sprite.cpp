@@ -4,7 +4,6 @@ USE_GAMEUIT_FRAMEWORK
 
 Sprite::~Sprite()
 { 
-//	this->_surface->Release();
 }
 
 

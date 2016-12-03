@@ -38,7 +38,7 @@ bool Stage21::init()
 
 	//_root = QNode::loadQuadTree("Resources//Map//stage1_quadtree.xml");
 
-	_tileMap = TileMap::LoadFromFile("Resources//Map//stage21.xml", eID::MAP_STAGE_21);
+	_tileMap = TileMap::LoadFromFile("Resources//Map//stage21.tmx", eID::MAP_STAGE_21);
 
 
 	return true;

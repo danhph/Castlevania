@@ -11,7 +11,7 @@
 #include "CollisionBody.h"
 
 #include <list>
-#include "LifeUI.h"
+#include "Info.h"
 
 #define MOVE_SPEED 125
 #define JUMP_VEL 450
@@ -88,7 +88,7 @@ private:
 	int _lifeNum;
 	float _protectTime;
 
-	LifeUI* _lifeUI;
+	Info* _info;
 
 	GVector2 getVelocity();
 

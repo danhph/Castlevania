@@ -5,12 +5,10 @@
 #include "FrameWork/SpriteManager.h"
 #include "FrameWork/Managers/SceneManager.h"
 #include "FrameWork/Text.h"
-#include "FrameWork/Scenario.h"
 #include "Framework/Scene.h"
 #include "Objects/BaseObject.h"
 #include "Objects/Player.h"
 #include "Objects/Help.h"
-#include "Framework/QNode.h"
 #include "Tiles/TileMap.h"
 
 using namespace std;

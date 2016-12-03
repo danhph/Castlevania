@@ -1,6 +1,6 @@
 ﻿#include "Animation.h"
 
-Animation::Animation(Sprite * spriteSheet, float timeAnimate, bool loop)
+Animation::Animation(Sprite* spriteSheet, float timeAnimate, bool loop)
 {
 	_spriteSheet = spriteSheet;
 	_timeAnimate = timeAnimate;
@@ -13,14 +13,14 @@ Animation::Animation(Sprite * spriteSheet, float timeAnimate, bool loop)
 
 	_startFrame = 0;
 	_endFrame = _totalFrames - 1;
-	 
+
 	this->setIndex(0);
 	this->setLoop(loop);
 	_canFlashes = false;
 	_flashColor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
-Animation::Animation(Sprite * spriteSheet, int totalFrames, int cols, float timeAnimate)
+Animation::Animation(Sprite* spriteSheet, int totalFrames, int cols, float timeAnimate)
 {
 	_spriteSheet = spriteSheet;
 	_timeAnimate = timeAnimate;
@@ -51,18 +51,18 @@ Animation::Animation(Sprite * spriteSheet, int totalFrames, int cols, float time
 
 Animation::~Animation()
 {
-	// dont release sprite
 }
 
 void Animation::nextFrame()
 {
 	this->setIndex(_index + 1);
 }
+
 int Animation::getIndex()
 {
-	// 7ung -> use in Explostion::update
 	return _index;
 }
+
 void Animation::setIndex(int index)
 {
 	if (index == _index || _totalFrames == 0)
@@ -92,7 +92,7 @@ void Animation::update(float dt)
 		if (_canAnimate)
 			this->nextFrame();
 
-		_timer -= _timeAnimate;				// không thể gán bằng 0. vì như vậy là làm tròn. sẽ có sai số
+		_timer -= _timeAnimate;
 
 		if (_canFlashes)
 		{
@@ -137,11 +137,12 @@ void Animation::canAnimate(bool can)
 	if (_canAnimate != can)
 		_canAnimate = can;
 }
+
 bool Animation::isAnimate()
 {
-	// 7ung => use in AirCraft::draw
 	return _canAnimate;
 }
+
 bool Animation::isLastAnimation()
 {
 	//
@@ -150,19 +151,11 @@ bool Animation::isLastAnimation()
 
 void Animation::addFrameRect(RECT rect)
 {
-	//nếu là rect đầu tiên thì set current luôn
 	if (_frameRectList.empty())
 	{
 		_currentRect = rect;
-
-		// trường hợp kiểm tra _bounding trước khi vẽ lần đầu tiên, nếu ko có setFrameRect thì nó sẽ lấy nguyên spriteSheet
-		// sẽ làm sai kích thước của frame hiện tại
-		// vậy lần đầu gán cho frame đầu. (nhưng bị lỗi ở AirCraft)
-		// cách khác là setframeRect ở object cho sprite.
-
-		// _spriteSheet->setFrameRect(_currentRect);
 	}
-		
+
 
 	_frameRectList.push_back(rect);
 	_totalFrames = _frameRectList.size();
@@ -275,7 +268,7 @@ D3DXCOLOR Animation::getColorFlash()
 	return _flashColor;
 }
 
-void Animation::draw(LPD3DXSPRITE spriteHandle, Viewport * viewport)
+void Animation::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
 	_spriteSheet->setFrameRect(_currentRect);
 	_spriteSheet->render(spriteHandle, viewport);

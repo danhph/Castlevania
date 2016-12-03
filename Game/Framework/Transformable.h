@@ -40,8 +40,8 @@ public:
 protected:
 	GVector2			_position;
 	GVector2			_scale;
-	float				_rotate;				// theo độ 0-360
-	GVector2			_origin;				// gốc của Transform, dùng để xoay, scale (anchor: điểm neo)
+	float				_rotate;				
+	GVector2			_origin;				
 	GVector2			_anchorPoint;
 	float					_zIndex;
 };

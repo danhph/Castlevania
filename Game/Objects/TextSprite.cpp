@@ -44,6 +44,10 @@ void TextSprite::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 		{
 			index = 45;
 		}
+		else if (c == '-')
+		{
+			index = 44;
+		}
 
 		 _sprite->setIndex(index);
 		_sprite->setPosition(GVector2(_position.x + _sprite->getFrameWidth() * i, _position.y));

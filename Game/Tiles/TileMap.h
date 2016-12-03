@@ -37,9 +37,7 @@ private:
 
 	TileSet* _tileSet;
 
-	static xml_attribute getAttributeValue(const xml_node& node, string attributeName);
-
-	static void getElementMatrixIndex(xml_node& node, int** matrix);
+	void getElementMatrixIndex(xml_node& node);
 };
 
 #endif // !__MAP_H__

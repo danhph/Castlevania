@@ -39,8 +39,9 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::PLAYER, pSprite));
 	this->loadSpriteInfo(eID::PLAYER, "Resources//Images//walk_left.txt");
 
-	pSprite = loadXMLDoc(spriteHandle, L"Resources//Map//stage21.xml");
+	pSprite = loadXMLDoc(spriteHandle, L"Resources//Map//stage21.tmx");
 	pSprite->setOrigin(VECTOR2ZERO);
+	pSprite->setScale(2.0f);
 	this->_listSprite[eID::MAP_STAGE_21] = pSprite;
 
 }
@@ -51,25 +52,22 @@ Sprite* SpriteManager::loadXMLDoc(LPD3DXSPRITE spritehandle, LPWSTR path)
 	pugi::xml_parse_result result = doc.load_file(path, pugi::parse_default | pugi::parse_pi);
 	if (result == false)
 	{
-		OutputDebugString(L"Khong tim thay file xml");
+		OutputDebugString(L"Khong tim thay file");
 		return nullptr;
 	}
-	pugi::xml_node root = doc.first_child();
-	pugi::xml_node tileset_node = root.child("TileSet");
-	// Tìm tên file.
-	// Cắt từ chuỗi path ra để tìm thư mục.
-	// Sau đó ghép với tên file ảnh được lấy từ file xml để load ảnh.
-	string filename = tileset_node.attribute("FileName").as_string(); // get filename from xml node
-	wstring L_filename = wstring(filename.begin(), filename.end()); // convert to wstring.
-
-	wstring strpath = wstring(path); // convert to wstring.
-	int index = strpath.find_last_of(L'//'); // cut to find path
+	auto tileset_node = doc.child("map").child("tileset");
+	int tilecount = tileset_node.attribute("tilecount").as_int();
+	int columns = tileset_node.attribute("columns").as_int();
+	auto image = tileset_node.child("image");
+	
+	string filename = image.attribute("source").as_string();
+	wstring L_filename = wstring(filename.begin(), filename.end()); 
+	wstring strpath = wstring(path); 
+	int index = strpath.find_last_of(L'//');
 	strpath = strpath.substr(0, index);
-	strpath += L"/" + L_filename; // concat string.  Final string is strpath.
-	// Tìm số dòng
-	int rows = tileset_node.attribute("Rows").as_int();
-	int columns = tileset_node.attribute("Columns").as_int();
-	return new Sprite(spritehandle, (LPWSTR) strpath.c_str(), rows * columns, columns);
+	strpath += L"/" + L_filename; 
+	
+	return new Sprite(spritehandle, (LPWSTR) strpath.c_str(), tilecount, columns);
 }
 
 Sprite* SpriteManager::getSprite(eID id)

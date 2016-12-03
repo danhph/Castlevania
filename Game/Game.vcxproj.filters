@@ -75,9 +75,6 @@
     <ClCompile Include="pugixml\pugixml.cpp">
       <Filter>GameSource\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\Scenario.cpp">
-      <Filter>GameSource\Framework</Filter>
-    </ClCompile>
     <ClCompile Include="Framework\Scene.cpp">
       <Filter>GameSource\Framework</Filter>
     </ClCompile>
@@ -145,23 +142,23 @@
     <ClCompile Include="Objects\EmptyObject.cpp">
       <Filter>GameSource\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\LifeUI.cpp">
-      <Filter>GameSource\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Objects\Player.cpp">
       <Filter>GameSource\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Help.cpp">
       <Filter>GameSource\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\QNode.cpp">
-      <Filter>GameSource\Framework</Filter>
-    </ClCompile>
     <ClCompile Include="Framework\Stage21.cpp">
       <Filter>GameSource\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Tiles\TileMap.cpp">
       <Filter>GameSource\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Info.cpp">
+      <Filter>GameSource\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\QuadtreeNode.cpp">
+      <Filter>GameSource\Framework</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -196,9 +193,6 @@
       <Filter>Game\Framework</Filter>
     </ClInclude>
     <ClInclude Include="pugixml\pugixml.hpp">
-      <Filter>Game\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework\Scenario.h">
       <Filter>Game\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Framework\Scene.h">
@@ -273,20 +267,20 @@
     <ClInclude Include="Objects\CollisionBody.h">
       <Filter>Game\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\LifeUI.h">
-      <Filter>Game\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Objects\EmptyObject.h">
       <Filter>Game\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Help.h">
       <Filter>Game\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\QNode.h">
-      <Filter>Game\Framework</Filter>
-    </ClInclude>
     <ClInclude Include="Tiles\TileMap.h">
       <Filter>Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Info.h">
+      <Filter>Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\QuadtreeNode.h">
+      <Filter>Game\Framework</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

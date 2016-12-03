@@ -16,29 +16,15 @@ GAMEUIT_FRAMEWORK_BEGIN
 class Sprite : public Transformable
 {
 public:
-	/*
-		@filePath: đường dẫn hình ảnh
-		@totalFrames: số frame ảnh trên một file
-		@cols: số frame trên một dòng
-	Nếu không truyền số frame, số cột (= 1) sẽ vẽ hết hình. Để vẽ một vị trí cụ thể trên hình thì dùng setFrameRect().
-	*/
 	Sprite(LPD3DXSPRITE spriteHandle, LPWSTR filePath, int totalFrames = 1, int cols = 1);
 
 	~Sprite();
 
-	/*
-	
-	*/
 	void release();
 	
-	/*
-	vẽ hình
-	*/
+
 	void render(LPD3DXSPRITE spriteHandle);
 
-	/*
-	vẽ hình với viewport
-	*/
 	void render(LPD3DXSPRITE spriteHandle, Viewport* viewport);
 
 	void setPosition(float x, float y, float z = 1);
@@ -65,34 +51,17 @@ public:
 	void setFrameRect(float x, float y, int width, int height);
 	RECT getFrameRect();
 	RECT getFrameRectByIndex(int index);
-	/*
-	Chuyển qua frame kế tiếp
-	*/
+
 	void nextFrame();
 
-	/*
-	Truyền thứ tự frame cụ thể
-	*/
 	void setIndex(int index);
 
-	/*
-	Lấy chiều ngang của frame
-	*/
 	int getFrameWidth();
 
-	/*
-	Lấy chiều dọc của frame
-	*/
 	int getFrameHeight();
 
-	/*
-	Lấy chiều ngang của nguyên tấm hình
-	*/
 	int getTextureWidth();
 
-	/*
-	Lấy chiều dọc của nguyên tấm hình
-	*/
 	int getTextureHeight();
 
 	void drawBounding(bool draw);
@@ -100,23 +69,20 @@ public:
 	void setOpacity(float opacity);
 	float getOpacity();
 
-	/*
-	Màu vẽ sprite
-	*/
 	void setColor(D3DXCOLOR color);
 	D3DXCOLOR getColor();
 
 private:
 	Texture				_texture;
-	float				_opacity;						// từ 0.0f đến 1.0f thôi
+	float				_opacity;						
 	D3DXCOLOR			_color;
 
 	RECT				_bound;
 
-	int					_totalFrames;					// tổng số frame
-	int					_columns;						// số cột
+	int					_totalFrames;					
+	int					_columns;						
 	int					_index;
-	GVector2			_currentFrame;					// frame hiện tại
+	GVector2			_currentFrame;					
 
 	RECT				_frameRect;
 	int					_frameWidth;
@@ -130,7 +96,6 @@ private:
 
 	GVector2 rotatePointAroundOrigin(GVector2 point, float angle, GVector2 origin);
 
-	//surface để vẽ bounding
 	LPDIRECT3DSURFACE9	_surface;
 	bool				_isDrawBounding;
 };

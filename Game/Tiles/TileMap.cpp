@@ -24,20 +24,20 @@ void TileMap::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 		viewport->getPositionWorld().y - viewport->getHeight()
 	};
 
-	int iBegin = max(screenRectEx.left / _frameWidth, 0);
-	int iEnd = min(screenRectEx.right / _frameWidth + 1, _mapSize.x);
-	int jBegin = _mapSize.y - min(screenRectEx.top / _frameHeight + 1, _mapSize.y);
-	int jEnd = _mapSize.y - max(screenRectEx.bottom / _frameHeight , 0);
+	int colBegin = max(screenRectEx.left / _frameWidth, 0);
+	int colEnd = min(screenRectEx.right / _frameWidth + 1, _mapSize.x);
+	int rowBegin = _mapSize.y - min(screenRectEx.top / _frameHeight + 1, _mapSize.y);
+	int rowEnd = _mapSize.y - max(screenRectEx.bottom / _frameHeight , 0);
 
 	GVector2 pos;
 
-	for (int i = iBegin; i < iEnd; i++)
+	for (int col = colBegin; col < colEnd; col++)
 	{
-		for (int j = jBegin; j < jEnd; j++)
+		for (int row = rowBegin; row < rowEnd; row++)
 		{
-			pos.x = i * _frameWidth;
-			pos.y = (_mapSize.y - j - 1) * _frameHeight;
-			this->_tileSet->draw(spriteHandle, this->_mapIndex[j][i], pos, viewport);
+			pos.x = col * _frameWidth;
+			pos.y = (_mapSize.y - row - 1) * _frameHeight;
+			this->_tileSet->draw(spriteHandle, this->_mapIndex[row][col], pos, viewport);
 		}
 	}
 }
@@ -59,74 +59,48 @@ TileMap* TileMap::LoadFromFile(const string path, eID spriteId)
 	{
 		return nullptr;
 	}
-	TileMap* map = new TileMap();
+	TileMap* tileMap = new TileMap();
 
-
-	xml_node tilemap = doc.child("Tilesmap");
-	if (tilemap == NULL)
+	xml_node map = doc.child("map");
+	if (map == NULL)
 		return nullptr;
-	map->_mapSize.x = getAttributeValue(tilemap, "columns").as_int();
-	map->_mapSize.y = getAttributeValue(tilemap, "rows").as_int();
 
-	map->_mapIndex = new int*[int(map->_mapSize.y)];
-	for (int i = 0; i < map->_mapSize.y; i++)
+	xml_node tileset = map.child("tileset");
+	tileMap->_tileSet = new TileSet(spriteId);
+	tileMap->_tileSet->loadListTiles(tileset);
+
+
+	xml_node layer = map.child("layer");
+	tileMap->_mapSize.x = layer.attribute("width").as_int();
+	tileMap->_mapSize.y = layer.attribute("height").as_int();
+
+	tileMap->_mapIndex = new int*[int(tileMap->_mapSize.y)];
+	for (int i = 0; i < tileMap->_mapSize.y; i++)
 	{
-		map->_mapIndex[i] = new int[(int)map->_mapSize.x];
+		tileMap->_mapIndex[i] = new int[(int)tileMap->_mapSize.x];
 	}
 
-	xml_node matrixindex = tilemap.child("MatrixIndex");
-	if (matrixindex == NULL)
-		return nullptr;
-	getElementMatrixIndex(matrixindex, map->_mapIndex);
+	tileMap->getElementMatrixIndex(layer);
 
-	xml_node tileset = tilemap.child("TileSet");
-	map->_tileSet = new TileSet(spriteId);
-	map->_tileSet->loadListTiles(tileset);
+	tileMap->_frameWidth = tileMap->_tileSet->getSprite()->getFrameWidth();
+	tileMap->_frameHeight = tileMap->_tileSet->getSprite()->getFrameHeight();
 
-	map->_frameWidth = map->_tileSet->getSprite()->getFrameWidth();
-	map->_frameHeight = map->_tileSet->getSprite()->getFrameHeight();
-
-	return map;
+	return tileMap;
 }
 
-void TileMap::getElementMatrixIndex(xml_node& node, int** matrix)
+void TileMap::getElementMatrixIndex(xml_node& node)
 {
-	xml_node child = node.first_child();
+	auto elements = node.child("data").children();
+	auto row = 0, col = 0;
 
-	string indexStr;
-
-	int i = 0, j = 0;
-
-	while (child != nullptr)
+	for (auto element : elements)
 	{
-		char* temp = NULL;
-		char* pch = NULL;
-
-		indexStr = child.text().as_string();
-
-		i = child.attribute("id").as_int();
-
-		auto str = splitString(indexStr, '\t');
-		int j = 0;
-
-		for (string tmp : str)
+		this->_mapIndex[row][col] = element.attribute("gid").as_int();
+		col++;
+		if (col >= this->_mapSize.x)
 		{
-			matrix[i][j] = atoi(tmp.c_str());
-			j++;
+			col = 0;
+			row++;
 		}
-
-		child = child.next_sibling();
-		str.clear();
 	}
-}
-
-xml_attribute TileMap::getAttributeValue(const xml_node& node, string attributename)
-{
-	return node.find_attribute(
-		[&](xml_attribute att) -> bool
-		{
-			if (string(att.name()).compare(attributename) == 0)
-				return true;
-			return false;
-		});
 }

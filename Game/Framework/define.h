@@ -3,11 +3,10 @@
 
 #define _USE_MATH_DEFINES
 
-#include <d3d9.h>		// d3d9.lib
-#include <d3dx9.h>		// d3dx9.lib
-#include <dinput.h>		// dinput8.lib, dxguid.lib
-#include <dsound.h>		// dsound.lib
-
+#include <d3d9.h>		
+#include <d3dx9.h>	
+#include <dinput.h>		
+#include <dsound.h>		
 #include <windows.h>
 #include <exception>
 #include <math.h>
@@ -17,12 +16,16 @@
 #include "utils.h"
 using namespace std;
 
-#define WINDOW_WIDTH 514
+#define WINDOW_WIDTH 512
 #define WINDOW_HEIGHT 450
 #define SCALE_FACTOR 1.0f
 
-#define C_WHITE D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)				// màu trắnng
-#define COLOR_KEY D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f)				// màu khi mà load hình nó bỏ qua > trong suốt
+#define COLOR_WHITE D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)				// màu trắnng
+#define COLOR_KEY D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f)				
+
+
+#define MAX_OBJECTS 4
+#define MAX_LEVELS 32
 
 enum eID
 {
@@ -37,26 +40,17 @@ enum eID
 
 enum eStatus
 {
-	NORMAL = 0, // 00000 = 0	
-	MOVING_LEFT = (1 << 0), // 00001 = 2^0
-	MOVING_RIGHT = (1 << 1), // 00010 = 2^1
-	JUMPING = (1 << 2), // 00100 = 2^2
-	LAYING_DOWN = (1 << 3), // 01000 = 2^3
-	RUNNING = (1 << 4), // 10000 = 2^4
-	LOOKING_UP = (1 << 5), // 2^5
-	SHOOTING = (1 << 6),
-	FALLING = (1 << 7),
-};
-
-enum eMouthStatus
-{
+	NORMAL = 0,
+	MOVING_LEFT = (1 << 0),
+	MOVING_RIGHT = (1 << 1),
+	JUMPING = (1 << 2),
+	RUNNING = (1 << 3),
 };
 
 enum eLandType
 {
-	GRASS,
-	WATER,
-	BRIDGELAND
+	LAND,
+	WALL,
 };
 
 enum eDirection
@@ -69,26 +63,7 @@ enum eDirection
 	ALL = (TOP | BOTTOM | LEFT | RIGHT),
 };
 
-enum eAirCraftType
-{
-};
-
-enum eMapType
-{
-	VERTICAL = 0,
-	HORIZONTAL = 1
-};
-
-enum eBulletType
-{
-};
-
 enum eSoundId
-{
-	INTRO,
-};
-
-enum eWT_Status
 {
 };
 

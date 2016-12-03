@@ -3,14 +3,15 @@
 
 #include "EmptyObject.h"
 #include "../FrameWork/define.h"
+#include "TextSprite.h"
 
 #define GAP 10
 
-class LifeUI : public EmptyObject
+class Info : public EmptyObject
 {
 public:
-	LifeUI(GVector2 position, int number);
-	~LifeUI();
+	Info(GVector2 position, int number);
+	~Info();
 
 	virtual void init();
 	virtual void update(float deltatime);
@@ -21,7 +22,9 @@ public:
 	int getLifeNumber();
 
 private:
-	vector<Sprite*> _listIcons;
+	Sprite* _iconLife;
+	TextSprite* _textLife;
+	int _lifeNumber;
 };
 
 #endif // !__LIFEUI_H__

@@ -37,7 +37,7 @@ void Player::init()
 	_animations[eStatus::RUNNING]->addFrameRect(eID::PLAYER, "walk_left_01", "walk_left_02", "walk_left_03", NULL);
 
 	this->setOrigin(GVector2(0.5f, 0.0f));
-	this->setStatus(eStatus::FALLING);
+	this->setStatus(eStatus::NORMAL);
 
 	// create stopWatch
 	_stopWatch = new StopWatch();
@@ -46,12 +46,12 @@ void Player::init()
 
 	_isHolding = false;
 
-	_currentAnimateIndex = eStatus::NORMAL;
+	_currentAnimateIndex = eStatus::NORMAL; // debug
 
 	this->resetValues();
 	
-	_lifeUI = new LifeUI(GVector2(20, 30), this->getLifeNumber());
-	_lifeUI->init();
+	_info = new Info(GVector2(350, 40), this->getLifeNumber());
+	_info->init();
 }
 
 void Player::update(float deltatime)
@@ -88,7 +88,7 @@ void Player::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
 	_animations[_currentAnimateIndex]->draw(spriteHandle, viewport);
 
-	_lifeUI->draw(spriteHandle, viewport);
+	_info->draw(spriteHandle, viewport);
 }
 
 void Player::release()
@@ -110,7 +110,7 @@ void Player::release()
 	SAFE_DELETE(_shootStopWatch);
 	SAFE_DELETE(_shootAnimateStopWatch);
 	SAFE_DELETE(_reviveStopWatch);
-	SAFE_DELETE(_lifeUI);
+	SAFE_DELETE(_info);
 	this->unhookinputevent();
 }
 

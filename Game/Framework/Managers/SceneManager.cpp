@@ -10,13 +10,13 @@ SceneManager::SceneManager()
 {
 }
 
-SceneManager * SceneManager::getInstance()
+SceneManager* SceneManager::getInstance()
 {
 	if (_instance == nullptr)
 	{
 		_instance = new SceneManager();
 	}
-	
+
 	return _instance;
 }
 
@@ -55,7 +55,7 @@ void SceneManager::release()
 	}
 }
 
-void SceneManager::addScene(Scene * scene)
+void SceneManager::addScene(Scene* scene)
 {
 	_scenes.push_back(scene);
 	_scenes.back()->init();
@@ -71,7 +71,7 @@ void SceneManager::removeScene()
 	}
 }
 
-void SceneManager::replaceScene(Scene * scene)
+void SceneManager::replaceScene(Scene* scene)
 {
 	this->removeScene();
 	this->addScene(scene);
@@ -87,7 +87,7 @@ void SceneManager::clearScenes()
 	}
 }
 
-Scene * SceneManager::getCurrentScene()
+Scene* SceneManager::getCurrentScene()
 {
 	if (!_scenes.empty())
 		return _scenes.back();

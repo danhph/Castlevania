@@ -1,4 +1,4 @@
-
+﻿
 #include "BaseObject.h"
 
 IControlable::IControlable()
@@ -202,3 +202,4 @@ eDirection BaseObject::getPhysicsBodySide()
 {
 	return _physicsSide;
 }
+

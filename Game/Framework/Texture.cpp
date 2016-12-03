@@ -3,19 +3,17 @@ USE_GAMEUIT_FRAMEWORK
 
 Texture::Texture(void)
 {
-	_color = C_WHITE;
-	_texture = nullptr;		// nullptr have the same meaning NULL.
+	_color = COLOR_WHITE;
+	_texture = nullptr;
 }
 
 Texture::~Texture(void)
 {
-	//_texture->Release();
-	// do no thing. use release instead.
 }
 
 HRESULT Texture::loadFromFile(LPD3DXSPRITE spriteHandle, LPWSTR filePath, D3DXCOLOR color, D3DXCOLOR colorkey)
 {
-	HRESULT			result;
+	HRESULT result;
 
 	result = D3DXGetImageInfoFromFile(filePath, &this->_imageInfo);
 	if (result != D3D_OK)
@@ -41,15 +39,17 @@ HRESULT Texture::loadFromFile(LPD3DXSPRITE spriteHandle, LPWSTR filePath, D3DXCO
 		&this->_imageInfo,
 		nullptr,
 		&this->_texture);
-	
+
 	_color = color;
 
 	return result;
 }
+
 void Texture::release()
 {
 	this->_texture->Release();
 }
+
 void Texture::render(LPD3DXSPRITE spriteHandle, const RECT* rect, const GVector3* center, const GVector3* position)
 {
 	spriteHandle->Draw(
@@ -60,27 +60,25 @@ void Texture::render(LPD3DXSPRITE spriteHandle, const RECT* rect, const GVector3
 		_color);
 }
 
-void Texture::render(LPD3DXSPRITE spriteHandle, RECT * srcRect, GVector2 position, GVector2 scale, float rotate, GVector2 origin, float zIndex)
+void Texture::render(LPD3DXSPRITE spriteHandle, RECT* srcRect, GVector2 position, GVector2 scale, float rotate, GVector2 origin, float zIndex)
 {
 	D3DXMATRIX matFinal;
 	D3DXMATRIX matTransformed;
 	D3DXMATRIX matOld;
 
-	// origin in position
 	GVector3 center = GVector3(abs(srcRect->right - srcRect->left) * origin.x, abs(srcRect->top - srcRect->bottom) * (1 - origin.y), zIndex);
-	
-	// get matrix texture
+
 	spriteHandle->GetTransform(&matOld);
 
 	D3DXMatrixTransformation2D(
-		&matTransformed,						// ma tran ket qua sau transform
-		&position,								// goc toa do / diem neo
-		0.0f,									
-		&scale,									// ti le scale
-		&position,								// goc toa do / diem neo
-		D3DXToRadian(rotate),					// góc xoay theo radian
-		0										// vi trí
-		);
+		&matTransformed,
+		&position,
+		0.0f,
+		&scale,
+		&position,
+		D3DXToRadian(rotate),
+		0
+	);
 
 	matFinal = matTransformed * matOld;
 
@@ -88,8 +86,8 @@ void Texture::render(LPD3DXSPRITE spriteHandle, RECT * srcRect, GVector2 positio
 	spriteHandle->SetTransform(&matFinal);
 
 	// BEGIN
-	spriteHandle->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_DONOTSAVESTATE );
-	
+	spriteHandle->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_DONOTSAVESTATE);
+
 	spriteHandle->Draw(
 		this->_texture,
 		srcRect,
@@ -103,12 +101,12 @@ void Texture::render(LPD3DXSPRITE spriteHandle, RECT * srcRect, GVector2 positio
 	spriteHandle->End();
 }
 
-void Texture::render(LPD3DXSPRITE spriteHandle, RECT * srcRect, Viewport viewport, GVector2 position, GVector2 scale, float rotate, GVector2 origin, float zIndex)
+void Texture::render(LPD3DXSPRITE spriteHandle, RECT* srcRect, Viewport viewport, GVector2 position, GVector2 scale, float rotate, GVector2 origin, float zIndex)
 {
 	GVector3 positionViewport;
 	positionViewport = viewport.getPositionInViewport(&GVector3(position.x, position.y, zIndex));
-	// ver 05/10/2015 - 7ung : ép kiêu về int. để tránh trường hợp bị hụt pixel 
-	render(spriteHandle, srcRect, GVector2((int)positionViewport.x,(int) positionViewport.y), scale, rotate, origin, positionViewport.z);
+
+	render(spriteHandle, srcRect, GVector2((int)positionViewport.x, (int) positionViewport.y), scale, rotate, origin, positionViewport.z);
 }
 
 void Texture::setColor(D3DXCOLOR color)

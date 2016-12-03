@@ -1,4 +1,3 @@
-
 #include "StopWatch.h"
 
 USE_GAMEUIT_FRAMEWORK
@@ -14,11 +13,11 @@ StopWatch::~StopWatch()
 {
 }
 
-bool StopWatch:: isFinish()
+bool StopWatch::isFinish()
 {
 	return this->_isFinish;
 }
-// milisecond
+
 bool StopWatch::isTimeLoop(float time)
 {
 	float _totalgametime = GameTime::getInstance()->getTotalGameTime();
@@ -57,6 +56,7 @@ bool StopWatch::isStopWatch(float time)
 	}
 	return false;
 }
+
 void StopWatch::restart()
 {
 	_isStart = false;
@@ -67,6 +67,6 @@ void StopWatch::timeLoopAction(float milisecond, pFunction action)
 {
 	if (isTimeLoop(milisecond))
 	{
-		(*action) ();
+		(*action)();
 	}
 }
