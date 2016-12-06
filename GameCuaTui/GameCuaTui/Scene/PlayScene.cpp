@@ -31,8 +31,8 @@ bool PlayScene::init()
 {
 	auto player = new Player();
 	player->init();
-	player->setPosition(32, 32);
-
+	player->setPosition(64 + 16, 64);
+	player->getBounding();
 	this->_player = player;
 	_activeObject.push_back(_player);
 
@@ -46,8 +46,8 @@ bool PlayScene::init()
 	rectMap.bottom = 0;
 	rectMap.top = quadTreeWidth;
 	rectMap.right = quadTreeWidth;
-	
-	
+
+
 	_root = new QuadTreeNode(rectMap);
 
 	auto listObject = GetListObjectFromFile("Resources//Map//stage21.tmx");

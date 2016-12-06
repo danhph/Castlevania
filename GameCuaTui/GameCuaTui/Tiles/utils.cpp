@@ -33,10 +33,10 @@ BaseObject* GetWall(xml_node item, int mapHeight)
 	if (properties.size() == 0)
 		return nullptr;
 
-	auto x = stoi(properties["x"]);
-	auto y = stoi(properties["y"]);
-	auto width = stoi(properties["width"]);
-	auto height = stoi(properties["height"]);
+	auto x = 2*stoi(properties["x"]);
+	auto y = 2*stoi(properties["y"]);
+	auto width = 2*stoi(properties["width"]);
+	auto height = 2*stoi(properties["height"]);
 	
 	auto wall = new Wall(x, mapHeight - y - height, width, height);
 	wall->init();

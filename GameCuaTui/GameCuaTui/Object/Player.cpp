@@ -202,7 +202,22 @@ float Player::checkCollision(BaseObject* object, float dt)
 
 	if (objectId == eID::WALL)
 	{
-		if (!this->isInStatus(eStatus(eStatus::JUMPING | eStatus::FALLING)) && collisionBody->checkCollision(object, direction, dt, false));
+		if (!this->isInStatus(eStatus(eStatus::JUMPING | eStatus::FALLING)) && collisionBody->checkCollision(object, direction, dt, false))
+		{
+			if (direction == eDirection::TOP && !(this->getVelocity().y > -200 && this->isInStatus(eStatus::JUMPING)))
+			{
+				float moveX, moveY;
+				if (collisionBody->isColliding(object, moveX, moveY, dt))
+				{
+					collisionBody->updateTargetPosition(object, direction, false, GVector2(moveX, moveY));
+				}
+
+				auto gravity = (Gravity*)this->_componentList["Gravity"];
+				gravity->setStatus(eGravityStatus::SHALLOWED);
+
+				this->standing();
+			}
+		}
 	}
 }
 
