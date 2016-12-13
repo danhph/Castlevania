@@ -58,13 +58,12 @@ BaseObject* GetStair(xml_node item, int mapHeight)
 	auto x = 2 * stoi(properties["x"]);
 	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
 
-	auto step = stoi(properties["step"]);
 	auto direct = false;
 	if (properties["direct"] == "true")
 		direct = true;
 
 
-	auto stair = new Stair(x, y, width, height, step, direct);
+	auto stair = new Stair(x, y, width, height, direct);
 	stair->init();
 	return stair;
 }

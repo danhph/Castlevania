@@ -100,6 +100,7 @@ private:
 
 	BaseObject* _stair;
 	bool _directStair;
+	bool _holdingKey;
 };
 
 void safeCheckCollision(BaseObject* activeobj, BaseObject* passiveobj, float dt);

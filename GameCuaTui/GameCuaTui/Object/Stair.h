@@ -10,10 +10,9 @@
 class Stair : public BaseObject
 {
 public:
-	Stair(int x, int y, int width, int height, int step, bool direct);
+	Stair(int x, int y, int width, int height, bool direct);
 	~Stair();
 
-	int GetStep();
 	bool GetDirection();
 
 	void init() override;
@@ -53,7 +52,6 @@ public:
 #pragma endregion
 private:
 	map<string, IComponent*> _listComponent;
-	int _step;
 	bool _direct;
 	RECT _bound;
 };

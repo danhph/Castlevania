@@ -1,22 +1,16 @@
 #include "Stair.h"
 
 
-Stair::Stair(int x, int y, int width, int height, int step, bool direct) : BaseObject(eID::STAIR)
+Stair::Stair(int x, int y, int width, int height, bool direct) : BaseObject(eID::STAIR)
 {
 	this->_bound.left = x;
 	this->_bound.bottom = y;
 	this->_bound.top = y + height;
 	this->_bound.right = x + width;
 
-	this->_step = step;
 	this->_direct = direct;
 
-	BaseObject::setPhysicsBodySide(eDirection::TOP_BOTTOM);
-}
-
-int Stair::GetStep()
-{
-	return _step;
+	BaseObject::setPhysicsBodySide(eDirection::ALL);
 }
 
 bool Stair::GetDirection()
