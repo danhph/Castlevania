@@ -43,6 +43,7 @@ enum eID
 
 	WALL = 40,
 	STAIR = 41,
+	STAIR_END = 42,
 };
 
 enum eStatus

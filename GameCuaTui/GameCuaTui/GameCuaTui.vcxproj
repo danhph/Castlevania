@@ -110,6 +110,7 @@
     <ClCompile Include="Object\Player.cpp" />
     <ClCompile Include="Object\QuadtreeNode.cpp" />
     <ClCompile Include="Object\Stair.cpp" />
+    <ClCompile Include="Object\StairEnd.cpp" />
     <ClCompile Include="Object\TextSprite.cpp" />
     <ClCompile Include="Object\Wall.cpp" />
     <ClCompile Include="pugixml\pugixml.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="Object\Player.h" />
     <ClInclude Include="Object\QuadtreeNode.h" />
     <ClInclude Include="Object\Stair.h" />
+    <ClInclude Include="Object\StairEnd.h" />
     <ClInclude Include="Object\TextSprite.h" />
     <ClInclude Include="Object\Wall.h" />
     <ClInclude Include="pugixml\pugiconfig.hpp" />

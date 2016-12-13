@@ -1,7 +1,4 @@
 #include "utils.h"
-#include <list>
-#include "../Object/Wall.h"
-#include "../Object/Stair.h"
 
 map<string, string> GetObjectProperties(xml_node node)
 {
@@ -46,6 +43,27 @@ BaseObject* GetWall(xml_node item, int mapHeight)
 	return wall;
 }
 
+BaseObject* GetStairEnd(xml_node item, int mapHeight)
+{
+	auto properties = GetObjectProperties(item);
+	if (properties.size() == 0)
+		return nullptr;
+
+	auto width = 2 * stoi(properties["width"]);
+	auto height = 2 * stoi(properties["height"]);
+
+	auto x = 2 * stoi(properties["x"]);
+	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
+
+	auto direct = false;
+	if (properties["direct"] == "true")
+		direct = true;
+
+	auto stair = new StairEnd(x, y, width, height, direct);
+	stair->init();
+	return stair;
+}
+
 BaseObject* GetStair(xml_node item, int mapHeight)
 {
 	auto properties = GetObjectProperties(item);
@@ -74,10 +92,12 @@ BaseObject* GetObjectByType(xml_node item, eID type, int mapHeight)
 	{
 		case WALL:
 			return GetWall(item, mapHeight);
-			break;
+			
 		case STAIR:
 			return GetStair(item, mapHeight);
-			break;
+		
+		case STAIR_END:
+			return GetStairEnd(item, mapHeight);
 		default:
 			return nullptr;
 	}

@@ -1,6 +1,7 @@
 ﻿#include "Player.h"
 #include "../Framework/SceneManager.h"
 #include "Stair.h"
+#include "StairEnd.h"
 
 Player::Player(int life) : BaseObject(eID::PLAYER)
 {
@@ -48,10 +49,10 @@ void Player::init()
 
 
 	_animations[eStatus::MOVING_UP] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::MOVING_UP]->addFrameRect(eID::PLAYER, "up", "walk_right_02", "up", NULL);
+	_animations[eStatus::MOVING_UP]->addFrameRect(eID::PLAYER, "up", "walk_right_02", NULL);
 
 	_animations[eStatus::MOVING_DOWN] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::MOVING_DOWN]->addFrameRect(eID::PLAYER, "down", "walk_right_02", "down", NULL);
+	_animations[eStatus::MOVING_DOWN]->addFrameRect(eID::PLAYER, "down", "walk_right_02", NULL);
 
 	_animations[eStatus::STAND_UP] = new Animation(_sprite, 0.12f);
 	_animations[eStatus::STAND_UP]->addFrameRect(eID::PLAYER, "up", NULL);
@@ -132,6 +133,15 @@ void Player::updateStatus(float dt)
 	{
 		moveUp();
 	}
+	else if ((this->getStatus() & eStatus::MOVING_DOWN) == eStatus::MOVING_DOWN)
+	{
+		moveDown();
+	}
+	else if ((this->getStatus() & eStatus::STAND_DOWN) == eStatus::STAND_DOWN)
+	{
+		if (_input->isKeyDown(DIK_DOWN))
+			this->setStatus(MOVING_DOWN);
+	}
 	else if ((this->getStatus() & eStatus::JUMPING) != eStatus::JUMPING)
 	{
 		this->standing();
@@ -181,6 +191,7 @@ void Player::resetValues()
 	this->setScale(SCALE_FACTOR);
 
 	_stair = nullptr;
+	_stairEnd = nullptr;
 	_holdingKey = false;
 
 	_movingSpeed = MOVE_SPEED;
@@ -227,6 +238,8 @@ void Player::onKeyPressed(KeyEventArg* key_event)
 	{
 		case DIK_LEFT:
 			{
+				if (this->isInStatus(STAND_UP) || this->isInStatus(STAND_DOWN) || this->isInStatus(STAND_DOWN) || this->isInStatus(MOVING_DOWN))
+					break;
 				if (!this->isInStatus(eStatus::JUMPING))
 				{
 					this->removeStatus(eStatus::MOVING_RIGHT);
@@ -237,6 +250,8 @@ void Player::onKeyPressed(KeyEventArg* key_event)
 			}
 		case DIK_RIGHT:
 			{
+				if (this->isInStatus(STAND_UP) || this->isInStatus(STAND_DOWN) || this->isInStatus(STAND_DOWN) || this->isInStatus(MOVING_DOWN))
+					break;
 				if (!this->isInStatus(eStatus::JUMPING))
 				{
 					this->removeStatus(eStatus::MOVING_LEFT);
@@ -246,7 +261,17 @@ void Player::onKeyPressed(KeyEventArg* key_event)
 			}
 		case DIK_DOWN:
 			{
-				if (!this->isInStatus(eStatus::JUMPING))
+				if (this->isInStatus(STAND_UP) || this->isInStatus(STAND_DOWN) || this->isInStatus(MOVING_DOWN))
+				{
+					moveDown();
+					_holdingKey = true;
+				}
+				else if (_stairEnd != nullptr)
+				{
+					moveDownToStair();
+					_holdingKey = true;
+				}
+				else if (!this->isInStatus(eStatus::JUMPING))
 				{
 					this->addStatus(eStatus::SIT_DOWN);
 					this->removeStatus(eStatus::MOVING_LEFT);
@@ -257,18 +282,20 @@ void Player::onKeyPressed(KeyEventArg* key_event)
 
 		case DIK_X:
 			{
+				if (this->isInStatus(STAND_UP) || this->isInStatus(STAND_DOWN) || this->isInStatus(STAND_DOWN) || this->isInStatus(MOVING_DOWN))
+					break;
 				if (!this->isInStatus(eStatus::SIT_DOWN) || this->isInStatus(eStatus::MOVING_LEFT) || this->isInStatus(eStatus::MOVING_RIGHT))
 					this->jump();
 				break;
 			}
 		case DIK_UP:
 			{
-			if (_stair != nullptr)
-			{
-				moveUp();
-				_holdingKey = true;
-			}
-			break;
+				if (_stair != nullptr)
+				{
+					moveUp();
+					_holdingKey = true;
+				}
+				break;
 			}
 		default:
 			break;
@@ -295,12 +322,16 @@ void Player::onKeyReleased(KeyEventArg* key_event)
 		case DIK_DOWN:
 			{
 				this->removeStatus(eStatus::SIT_DOWN);
+				if (this->isInStatus(MOVING_DOWN))
+				{
+					_holdingKey = false;
+				}
 				break;
 			}
 		case DIK_UP:
 			{
-			_holdingKey = false;
-			break;
+				_holdingKey = false;
+				break;
 			}
 		default:
 			break;
@@ -355,6 +386,7 @@ float Player::checkCollision(BaseObject* object, float dt)
 				collisionBody->updateTargetPosition(object, direction, false, GVector2(moveX, moveY));
 			}
 
+
 			if (direction == eDirection::TOP && !(this->getVelocity().y > -200 && this->isInStatus(eStatus::JUMPING)))
 			{
 				auto gravity = (Gravity*)this->_componentList["Gravity"];
@@ -367,7 +399,6 @@ float Player::checkCollision(BaseObject* object, float dt)
 		else if (preWall == object)
 		{
 			auto gravity = (Gravity*)this->_componentList["Gravity"];
-
 
 			if (!this->isInStatus(eStatus::MOVING_DOWN)
 				&& !this->isInStatus(eStatus::MOVING_UP)
@@ -385,12 +416,24 @@ float Player::checkCollision(BaseObject* object, float dt)
 		if (collisionBody->checkCollision(object, direction, dt, false))
 		{
 			_stair = object;
-			_directStair = ((Stair*)object)->GetDirection();	
+			_directStair = ((Stair*)object)->GetDirection();
 		}
 		else
 		{
 			if (_stair == object)
 				_stair = nullptr;
+		}
+	}
+	else if (objectId == STAIR_END)
+	{
+		if (collisionBody->checkCollision(object, direction, dt, false))
+		{
+			_stairEnd = object;
+			_directStair = ((StairEnd*)object)->GetDirection();
+		}
+		else if (_stairEnd == object)
+		{
+			_stairEnd = nullptr;
 		}
 	}
 
@@ -422,6 +465,17 @@ void Player::standing()
 	this->removeStatus(eStatus::FALLING);
 }
 
+
+void Player::standingOnStair()
+{
+	auto move = (Movement*)this->_componentList["Movement"];
+	move->setVelocity(GVector2(0, 0));
+	this->removeStatus(eStatus::JUMPING);
+	this->removeStatus(eStatus::FALLING);
+	this->removeStatus(STAND_UP);
+	this->removeStatus(STAND_DOWN);
+}
+
 void Player::moveLeft()
 {
 	if (this->getScale().x > 0)
@@ -443,11 +497,10 @@ void Player::moveRight()
 
 void Player::moveDown()
 {
-	if (this->isInStatus(eStatus::MOVING_UP) || this->isInStatus(eStatus::FALLING))
-		return;
-
-	this->addStatus(eStatus::MOVING_UP);
-
+	this->removeStatus(MOVING_UP);
+	this->removeStatus(STAND_DOWN);
+	this->removeStatus(eStatus::STAND_UP);
+	this->addStatus(eStatus::MOVING_DOWN);
 
 	auto move = (Movement*)this->_componentList["Movement"];
 
@@ -464,8 +517,50 @@ void Player::moveDown()
 		move->setVelocity(GVector2(-_movingSpeed, -_movingSpeed));
 	}
 
-	auto g = (Gravity*)this->_componentList["Gravity"];
-	g->setStatus(eGravityStatus::FALLING__DOWN);
+	int x = this->getPositionX() - _stair->getBounding().left;
+	int y = this->getPositionY() - _stair->getBounding().bottom;
+
+	x = (x + 9) / 16 * 16;
+	y = (y + 9) / 16 * 16;
+
+	if (x == 0 || y == 0)
+	{
+		this->setStatus(NORMAL);
+	}
+
+
+	if (_stopWatch->isTimeLoop(120))
+	{
+		if (!_holdingKey)
+		{
+			move->setVelocity(GVector2(0, 0));
+
+			this->setPositionX(x + _stair->getBounding().left);
+			this->setPositionY(x + _stair->getBounding().bottom);
+
+			this->setStatus(STAND_DOWN);
+		}
+
+		_stopWatch->restart();
+	}
+}
+
+void Player::moveDownToStair()
+{
+	this->addStatus(eStatus::STAND_DOWN);
+
+	if (!_directStair)
+	{
+		if (this->getScale().x < 0)
+			this->setScaleX(this->getScale().x * (-1));
+	}
+	else
+	{
+		if (this->getScale().x > 0)
+			this->setScaleX(this->getScale().x * (-1));
+	}
+
+	this->setPosition(GVector2(_stairEnd->getBounding().left, _stairEnd->getBounding().bottom));
 }
 
 
@@ -477,10 +572,20 @@ void Player::moveUp()
 			return;
 		this->setPositionX(_stair->getPositionX());
 	}
-	this->addStatus(eStatus::MOVING_UP);
+	this->removeStatus(MOVING_DOWN);
+	this->removeStatus(STAND_DOWN);
 	this->removeStatus(eStatus::STAND_UP);
+	this->addStatus(eStatus::MOVING_UP);
 
 	auto move = (Movement*)this->_componentList["Movement"];
+
+
+	if (_stair == nullptr)
+	{
+		this->setStatus(NORMAL);
+		_stopWatch->restart();
+		return;
+	}
 
 	if (_directStair)
 	{
@@ -500,33 +605,19 @@ void Player::moveUp()
 		if (!_holdingKey)
 		{
 			move->setVelocity(GVector2(0, 0));
-			
-			if (_stair == nullptr)
-			{
-				this->setStatus(NORMAL);
-				_stopWatch->restart();
-				return;
-			}
-
 
 			int x = this->getPositionX() - _stair->getBounding().left;
 			int y = this->getPositionY() - _stair->getBounding().bottom;
 
 			x = x / 16 * 16;
 			y = y / 16 * 16;
-			
+
 			this->setPositionX(x + _stair->getBounding().left);
 			this->setPositionY(x + _stair->getBounding().bottom);
-			
+
 			this->setStatus(STAND_UP);
 		}
 
-		_stopWatch->restart();
-	}
-
-	if (_stair == nullptr)
-	{
-		this->setStatus(NORMAL);
 		_stopWatch->restart();
 	}
 }

@@ -58,11 +58,13 @@ public:
 	void unhookinputevent();
 
 	void standing();
+	void standingOnStair();
 	void moveLeft();
 	void moveRight();
 	
 	void moveUp();
 	void moveDown();
+	void moveDownToStair();
 
 	void jump();
 	void sitDown();
@@ -101,6 +103,8 @@ private:
 	BaseObject* _stair;
 	bool _directStair;
 	bool _holdingKey;
+
+	BaseObject* _stairEnd;
 };
 
 void safeCheckCollision(BaseObject* activeobj, BaseObject* passiveobj, float dt);
