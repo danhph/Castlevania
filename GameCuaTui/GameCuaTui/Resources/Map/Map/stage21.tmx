@@ -70,19 +70,16 @@
     <property name="ActiveBoundY" type="float" value="32"/>
    </properties>
   </object>
-  <object id="19" name="Wall" type="40" x="16.5" y="64" width="143.5" height="16"/>
-  <object id="24" name="Wall" type="40" x="0" y="0" width="16" height="159.5"/>
+  <object id="19" name="Wall" type="40" x="0" y="64" width="160" height="16"/>
+  <object id="24" name="Wall" type="40" x="0" y="0" width="16" height="64"/>
   <object id="28" name="Wall" type="40" x="0" y="160" width="256" height="16"/>
   <object id="29" name="Wall" type="40" x="224" y="96" width="16" height="64"/>
-  <object id="30" name="Wall" type="40" x="175" y="96" width="49" height="16"/>
+  <object id="30" name="Wall" type="40" x="176" y="96" width="48" height="16"/>
   <object id="31" name="Wall" type="40" x="240" y="64" width="16" height="32"/>
-  <object id="32" name="Stair" type="41" x="112" y="97.75" width="61.25" height="62.25">
-   <properties>
-    <property name="direct" type="bool" value="true"/>
-    <property name="step" type="int" value="7"/>
-   </properties>
-  </object>
+  <object id="32" name="Stair" type="41" x="112" y="153" width="16" height="7"/>
+  <object id="42" name="Stair" type="41" x="160.333" y="103.75" width="16" height="8.25"/>
   <object id="44" name="Wall" type="40" x="224" y="0" width="16" height="64"/>
   <object id="45" name="Wall" type="40" x="0" y="0" width="32" height="32"/>
+  <object id="46" name="Door" type="42" x="-2.13163e-14" y="112" width="16" height="48"/>
  </objectgroup>
 </map>

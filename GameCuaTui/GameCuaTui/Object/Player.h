@@ -14,7 +14,8 @@
 #include "Info.h"
 
 #define MOVE_SPEED 125
-#define JUMP_VEL 450
+#define JUMP_VEL 350
+
 #define GRAVITY 800
 #define REVIVE_TIME 2000
 #define PROTECT_TIME 3000
@@ -59,6 +60,10 @@ public:
 	void standing();
 	void moveLeft();
 	void moveRight();
+	
+	void moveUp();
+	void moveDown();
+
 	void jump();
 	void sitDown();
 	void falling();
@@ -91,7 +96,10 @@ private:
 
 	void resetValues();
 
-	BaseObject* _preObject;
+	BaseObject* preWall;
+
+	BaseObject* _stair;
+	bool _directStair;
 };
 
 void safeCheckCollision(BaseObject* activeobj, BaseObject* passiveobj, float dt);

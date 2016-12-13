@@ -4,13 +4,14 @@
 #include "EmptyObject.h"
 #include "../FrameWork/define.h"
 #include "TextSprite.h"
+#include "../Framework/StopWatch.h"
 
 #define GAP 10
 
-class Info : public EmptyObject
+class Info : public BaseObject
 {
 public:
-	Info(GVector2 position, int number);
+	Info();
 	~Info();
 
 	virtual void init();
@@ -18,13 +19,50 @@ public:
 	virtual void draw(LPD3DXSPRITE, Viewport*);
 	virtual void release();
 
-	void setLifeNumber(int number);
-	int getLifeNumber();
+	void SetPlayerHitPoint(int number);
+	int GetPlayerHitPoint();
+	
+	void SetEnemyHitPoint(int number);
+	int GetEnemyHitPoint();
 
+	void SetHeart(int number);
+	int GetHeart();
+
+	void SetLife(int number);
+	int GetLife();
+
+	void SetStage(int number);
+	int GetStage();
+
+	void SetScore(int number);
+	int GetScore();
+
+	void SetTime(int number);
+	int GetTime();
 private:
-	Sprite* _iconLife;
+	Sprite* _iconPlayerHitPoint;
+	TextSprite* _textPlayer;
+	int _playerHitPointNumber;
+	
+	Sprite* _iconEnemyHitPoint;
+	TextSprite* _textEnemy;
+	int _enemyHitPointNumber;
+
+	Sprite* _iconHeart;
+	TextSprite* _textHeart;
+	int _heartNumber;
+	
 	TextSprite* _textLife;
 	int _lifeNumber;
+
+	TextSprite* _textScore;
+	int _scoreNumber;
+
+	TextSprite* _textStage;
+	int _stageNumber;
+
+	TextSprite* _textTime;
+	int _timeNumber;	
 };
 
 #endif // !__LIFEUI_H__

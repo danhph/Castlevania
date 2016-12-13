@@ -74,19 +74,13 @@ void PlayScene::update(float dt)
 	if (this->checkEndGame() == true)
 		return;
 
-	GVector2 viewport_position = _viewport->getPositionWorld();
 	RECT viewport_in_transform = _viewport->getBounding();
 
-	RECT screen;
-	screen.left = viewport_in_transform.left;
-	screen.right = viewport_in_transform.right;
-	screen.top = this->_tileMap->getWorldSize().y - viewport_position.y;
-	screen.bottom = screen.top + _viewport->getHeight();
 
 	_root->DeleteObjects();
 
 	_activeObject.clear();
-	_activeObject = _root->Retrieve(screen);
+	_activeObject = _root->Retrieve(viewport_in_transform);
 	_activeObject.push_back(_player);
 
 	for (auto obj : _activeObject)

@@ -1,6 +1,7 @@
 #include "utils.h"
 #include <list>
 #include "../Object/Wall.h"
+#include "../Object/Stair.h"
 
 map<string, string> GetObjectProperties(xml_node node)
 {
@@ -33,14 +34,39 @@ BaseObject* GetWall(xml_node item, int mapHeight)
 	if (properties.size() == 0)
 		return nullptr;
 
-	auto x = 2*stoi(properties["x"]);
-	auto y = 2*stoi(properties["y"]);
-	auto width = 2*stoi(properties["width"]);
-	auto height = 2*stoi(properties["height"]);
-	
-	auto wall = new Wall(x, mapHeight - y - height, width, height);
+	auto width = 2 * stoi(properties["width"]);
+	auto height = 2 * stoi(properties["height"]);
+
+	auto x = 2 * stoi(properties["x"]);
+	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
+
+
+	auto wall = new Wall(x, y, width, height);
 	wall->init();
 	return wall;
+}
+
+BaseObject* GetStair(xml_node item, int mapHeight)
+{
+	auto properties = GetObjectProperties(item);
+	if (properties.size() == 0)
+		return nullptr;
+
+	auto width = 2 * stoi(properties["width"]);
+	auto height = 2 * stoi(properties["height"]);
+
+	auto x = 2 * stoi(properties["x"]);
+	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
+
+	auto step = stoi(properties["step"]);
+	auto direct = false;
+	if (properties["direct"] == "true")
+		direct = true;
+
+
+	auto stair = new Stair(x, y, width, height, step, direct);
+	stair->init();
+	return stair;
 }
 
 BaseObject* GetObjectByType(xml_node item, eID type, int mapHeight)
@@ -49,11 +75,13 @@ BaseObject* GetObjectByType(xml_node item, eID type, int mapHeight)
 	{
 		case WALL:
 			GetWall(item, mapHeight);
-		break;
+			break;
+		case STAIR:
+			GetStair(item, mapHeight);
+			break;
 		default:
 			return nullptr;
 	}
-	
 }
 
 list<BaseObject*>* GetListObjectFromFile(const string path)
@@ -69,8 +97,8 @@ list<BaseObject*>* GetListObjectFromFile(const string path)
 	auto map = doc.child("map");
 	if (map == NULL)
 		return listObj;
-	
-	auto mapHeight = map.attribute("tileheight").as_int()*map.attribute("height").as_int();
+
+	auto mapHeight = 2 * map.attribute("tileheight").as_int() * map.attribute("height").as_int();
 
 	xml_node objectGroup = map.child("objectgroup");
 	if (objectGroup == NULL)

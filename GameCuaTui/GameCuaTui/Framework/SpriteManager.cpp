@@ -26,7 +26,7 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite[eID::MAIN_MENU] = pSprite;
 
 	pSprite = new Sprite(spriteHandle, L"Resources//Images//life.png");
-	this->_listSprite[eID::LIFE_ICON] = pSprite;
+	this->_listSprite[eID::HEART_ICON] = pSprite;
 
 	pSprite = new Sprite(spriteHandle, L"Resources//Fonts//fontEx.png", 30, 10);
 	this->_listSprite[eID::FONTEX] = pSprite;
@@ -34,9 +34,9 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	pSprite = new Sprite(spriteHandle, L"Resources//Fonts//fontFull.png", 54, 6);
 	this->_listSprite[eID::FONTFULL] = pSprite;
 
-	pSprite = new Sprite(spriteHandle, L"Resources//Images//walk_left.png");
+	pSprite = new Sprite(spriteHandle, L"Resources//Images//simon.png");
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::PLAYER, pSprite));
-	this->loadSpriteInfo(eID::PLAYER, "Resources//Images//walk_left.txt");
+	this->loadSpriteInfo(eID::PLAYER, "Resources//Images//simon.txt");
 
 	pSprite = loadXMLDoc(spriteHandle, L"Resources//Map//stage21.tmx");
 	pSprite->setOrigin(VECTOR2ZERO);

@@ -33,11 +33,16 @@ enum eID
 	MAIN_MENU = 1,
 	FONTFULL = 2,
 	FONTEX = 3,
-	LIFE_ICON = 4,
+
+	INFO = 4,
+	HEART_ICON = 5,
+	HIT_POINT_ICON = 6,
+
 
 	MAP_STAGE_21 = 21,
 
 	WALL = 40,
+	STAIR = 41,
 };
 
 enum eStatus
@@ -52,6 +57,12 @@ enum eStatus
 	FALLING = (1 << 6),
 
 	DESTROY = (1 << 7),
+
+	MOVING_UP = (1 << 9),
+	MOVING_DOWN = (1 << 10),
+
+	STAND_UP = (1 << 11),
+	STAND_DOWN = (1 << 12),
 };
 
 enum eDirection
@@ -61,6 +72,7 @@ enum eDirection
 	BOTTOM = 2,
 	LEFT = 4,
 	RIGHT = 8,
+	TOP_BOTTOM = (TOP|BOTTOM),
 	ALL = (TOP | BOTTOM | LEFT | RIGHT),
 };
 
