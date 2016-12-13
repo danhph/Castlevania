@@ -74,10 +74,10 @@ BaseObject* GetObjectByType(xml_node item, eID type, int mapHeight)
 	switch (type)
 	{
 		case WALL:
-			GetWall(item, mapHeight);
+			return GetWall(item, mapHeight);
 			break;
 		case STAIR:
-			GetStair(item, mapHeight);
+			return GetStair(item, mapHeight);
 			break;
 		default:
 			return nullptr;
