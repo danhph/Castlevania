@@ -26,8 +26,6 @@ public:
 
 	void setViewport(Viewport* viewport);
 
-	void setStage(int id);
-
 	BaseObject* getObject(eID id);
 
 	Player* getPlayer();

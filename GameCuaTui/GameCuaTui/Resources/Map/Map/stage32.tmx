@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="48" height="6" tilewidth="32" tileheight="32" nextobjectid="60">
  <tileset firstgid="1" name="frame5" tilewidth="32" tileheight="32" tilecount="288" columns="48">
-  <image source="../Castle Vania image/image/frame5.png" width="1536" height="192"/>
+  <image source="frame5.png" width="1536" height="192"/>
  </tileset>
  <layer name="Tile Layer 1" width="48" height="6">
   <data encoding="csv">

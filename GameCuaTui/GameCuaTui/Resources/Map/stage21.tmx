@@ -56,7 +56,11 @@
   </data>
  </layer>
  <objectgroup name="Object Layer 1">
-  <object id="1" name="STAR" type="50" x="47.25" y="129.75" width="32" height="32"/>
+  <object id="1" name="START" type="50" x="44.25" y="142.5" width="18.25" height="20.75">
+   <properties>
+    <property name="status" type="int" value="0"/>
+   </properties>
+  </object>
   <object id="4" name="BreakWall" type="60" x="224" y="64" width="16" height="32"/>
   <object id="8" name="Bat" type="70" x="38" y="16" width="16" height="16"/>
   <object id="10" name="Candle" type="61" x="204" y="102" width="8" height="8"/>

@@ -30,6 +30,9 @@ void PlayScene::setViewport(Viewport* viewport)
 
 void PlayScene::initStage()
 {
+	this->getPlayer()->setStage(_currentStage);
+	this->getPlayer()->resetValues();
+
 	_tileMap = StageManager::getInstance()->getTileMap(_currentStage);
 	
 	auto quadTreeWidth = (_tileMap->worldWidth() >= _tileMap->worldHeight()) ? _tileMap->worldWidth() : _tileMap->worldHeight();
@@ -48,6 +51,7 @@ void PlayScene::initStage()
 		if (obj->getId() == START)
 		{
 			_player->setPosition(obj->getPosition());
+			this->getPlayer()->setStatus(obj->getStatus());
 		}
 		else
 			_root->Insert(obj);
@@ -84,8 +88,16 @@ void PlayScene::update(float dt)
 	sprintf(str, "delta time: %f", dt);
 	_text->setText(str);
 
+	if (this->getPlayer()->getStage() != _currentStage)
+	{
+		_currentStage = this->getPlayer()->getStage();
+		initStage();
+	}
+
 	if (this->checkEndGame() == true)
+	{
 		return;
+	}
 
 	if (_player->isInStatus(eStatus::DIE) == false)
 	{
@@ -194,9 +206,3 @@ Player* PlayScene::getPlayer()
 {
 	return (Player*) this->_player;
 }
-
-void PlayScene::setStage(int id)
-{
-	_currentStage = (eID) id;
-}
-

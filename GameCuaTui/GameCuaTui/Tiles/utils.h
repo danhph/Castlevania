@@ -12,6 +12,7 @@
 using namespace pugi;
 
 map<string, string> GetObjectProperties(xml_node node);
+BaseObject* GetStart(xml_node item, int mapHeight);
 BaseObject* GetWall(xml_node item, int mapHeight);
 BaseObject* GetStair(xml_node item, int mapHeight);
 BaseObject* GetStairEnd(xml_node item, int mapHeight);

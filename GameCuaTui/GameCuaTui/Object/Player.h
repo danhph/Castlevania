@@ -75,7 +75,11 @@ public:
 
 	float getMovingSpeed();
 
+	void setStage(eID id);
+	eID getStage();
+
 	RECT getBounding() override;
+	void resetValues();
 
 private:
 	map<int, Animation*> _animations;
@@ -96,8 +100,6 @@ private:
 
 	void updateCurrentAnimateIndex();
 
-	void resetValues();
-
 	BaseObject* preWall;
 
 	BaseObject* _stair;
@@ -105,6 +107,8 @@ private:
 	bool _holdingKey;
 
 	BaseObject* _stairEnd;
+
+	eID _currentStage;
 };
 
 void safeCheckCollision(BaseObject* activeobj, BaseObject* passiveobj, float dt);

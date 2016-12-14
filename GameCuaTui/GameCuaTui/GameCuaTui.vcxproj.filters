@@ -164,6 +164,9 @@
     <ClCompile Include="Framework\StageManager.cpp">
       <Filter>Source Files\Framework</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Start.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\define.h">
@@ -294,6 +297,9 @@
     </ClInclude>
     <ClInclude Include="Framework\StageManager.h">
       <Filter>Header Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Start.h">
+      <Filter>Header Files\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

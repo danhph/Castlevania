@@ -1,4 +1,5 @@
 #include "utils.h"
+#include "../Object/Start.h"
 
 map<string, string> GetObjectProperties(xml_node node)
 {
@@ -24,6 +25,26 @@ map<string, string> GetObjectProperties(xml_node node)
 	return properties;
 }
 
+BaseObject* GetStart(xml_node item, int mapHeight)
+{
+	auto properties = GetObjectProperties(item);
+	if (properties.size() == 0)
+		return nullptr;
+
+	auto width = 2 * stoi(properties["width"]);
+	auto height = 2 * stoi(properties["height"]);
+
+	auto x = 2 * stoi(properties["x"]);
+	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
+
+
+	auto start = new Start(x, y, width, height);
+	start->init();
+	start->setPosition(GVector2(x, y));
+	start->setStatus((eStatus) stoi(properties["status"]));
+
+	return start;
+}
 
 BaseObject* GetWall(xml_node item, int mapHeight)
 {
@@ -98,6 +119,10 @@ BaseObject* GetObjectByType(xml_node item, eID type, int mapHeight)
 		
 		case STAIR_END:
 			return GetStairEnd(item, mapHeight);
+
+		case START:
+			return GetStart(item, mapHeight);
+
 		default:
 			return nullptr;
 	}

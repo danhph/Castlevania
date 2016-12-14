@@ -757,3 +757,13 @@ void safeCheckCollision(BaseObject* activeobj, BaseObject* passiveobj, float dt)
 		activeobj->checkCollision(passiveobj, dt);
 	}
 }
+
+eID Player::getStage()
+{
+	return _currentStage;
+}
+
+void Player::setStage(eID id)
+{
+	_currentStage = id;
+}
