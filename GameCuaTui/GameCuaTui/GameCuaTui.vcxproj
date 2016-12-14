@@ -93,6 +93,7 @@
     <ClCompile Include="Framework\SoundManager.cpp" />
     <ClCompile Include="Framework\Sprite.cpp" />
     <ClCompile Include="Framework\SpriteManager.cpp" />
+    <ClCompile Include="Framework\StageManager.cpp" />
     <ClCompile Include="Framework\StopWatch.cpp" />
     <ClCompile Include="Framework\Text.cpp" />
     <ClCompile Include="Framework\Texture.cpp" />
@@ -137,6 +138,7 @@
     <ClInclude Include="Framework\SoundManager.h" />
     <ClInclude Include="Framework\Sprite.h" />
     <ClInclude Include="Framework\SpriteManager.h" />
+    <ClInclude Include="Framework\StageManager.h" />
     <ClInclude Include="Framework\StopWatch.h" />
     <ClInclude Include="Framework\Text.h" />
     <ClInclude Include="Framework\Texture.h" />

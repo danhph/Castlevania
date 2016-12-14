@@ -4,6 +4,7 @@
 #include "Framework/SoundManager.h"
 #include "Scene/IntroScene.h"
 #include "Scene/PlayScene.h"
+#include "Framework/StageManager.h"
 
 CastlevaniaGame::CastlevaniaGame(HINSTANCE hInstance, LPWSTR title) : Game(hInstance, title, WINDOW_WIDTH, WINDOW_HEIGHT)
 {
@@ -57,4 +58,5 @@ void CastlevaniaGame::loadResource()
 	// load resource
 	SpriteManager::getInstance()->loadResource(_spriteHandle);
 	SoundManager::getInstance()->loadSound(Game::hWindow->getWnd());
+	StageManager::getInstance()->loadResource();
 }

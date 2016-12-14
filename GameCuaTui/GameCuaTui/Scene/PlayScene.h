@@ -26,9 +26,13 @@ public:
 
 	void setViewport(Viewport* viewport);
 
+	void setStage(int id);
+
 	BaseObject* getObject(eID id);
 
 	Player* getPlayer();
+
+
 private:
 	Text* _text;
 
@@ -45,6 +49,10 @@ private:
 	void updateViewport(BaseObject* objTracker);
 
 	bool checkEndGame();
+
+	void initStage();
+
+	eID _currentStage;
 };
 
 #endif //

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="8" height="6" tilewidth="32" tileheight="32" nextobjectid="54">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="8" height="6" tilewidth="32" tileheight="32" nextobjectid="56">
  <tileset firstgid="1" name="map_lv2" tilewidth="32" tileheight="32" tilecount="441" columns="21">
   <image source="map_lv2.png" width="674" height="672"/>
  </tileset>
@@ -56,7 +56,7 @@
   </data>
  </layer>
  <objectgroup name="Object Layer 1">
-  <object id="1" name="Player" type="50" x="48" y="128" width="32" height="32"/>
+  <object id="1" name="STAR" type="50" x="47.25" y="129.75" width="32" height="32"/>
   <object id="4" name="BreakWall" type="60" x="224" y="64" width="16" height="32"/>
   <object id="8" name="Bat" type="70" x="38" y="16" width="16" height="16"/>
   <object id="10" name="Candle" type="61" x="204" y="102" width="8" height="8"/>
@@ -71,7 +71,7 @@
    </properties>
   </object>
   <object id="19" name="Wall" type="40" x="16.5" y="66.5" width="143.5" height="12.75"/>
-  <object id="24" name="Wall" type="40" x="0" y="0" width="16" height="159.5"/>
+  <object id="24" name="Wall" type="40" x="0" y="66.5" width="16" height="95.5"/>
   <object id="28" name="Wall" type="40" x="0" y="162.5" width="256" height="2.25"/>
   <object id="29" name="Wall" type="40" x="224" y="96" width="16" height="64"/>
   <object id="30" name="Wall" type="40" x="170.75" y="97.25" width="52.5" height="3"/>
@@ -82,8 +82,13 @@
    </properties>
   </object>
   <object id="44" name="Wall" type="40" x="224" y="0" width="16" height="64"/>
-  <object id="45" name="Wall" type="40" x="0" y="0" width="32" height="32"/>
+  <object id="45" name="Wall" type="40" x="0" y="0" width="32" height="65.25"/>
   <object id="53" name="StairEnd" type="42" x="169.875" y="97.5" width="7.25" height="8">
+   <properties>
+    <property name="direct" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="55" name="Stair" type="41" x="82" y="1.25" width="62.75" height="64">
    <properties>
     <property name="direct" type="bool" value="true"/>
    </properties>

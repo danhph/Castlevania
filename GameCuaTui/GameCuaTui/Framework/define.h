@@ -40,10 +40,17 @@ enum eID
 
 
 	MAP_STAGE_21 = 21,
+	MAP_STAGE_22 = 22,
+	MAP_STAGE_23 = 23,
+	MAP_STAGE_31 = 24,
+	MAP_STAGE_32 = 25,
+	MAP_STAGE_33 = 26,
 
 	WALL = 40,
 	STAIR = 41,
 	STAIR_END = 42,
+
+	START = 50,
 };
 
 enum eStatus

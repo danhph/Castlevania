@@ -142,6 +142,11 @@ void Player::updateStatus(float dt)
 		if (_input->isKeyDown(DIK_DOWN))
 			this->setStatus(MOVING_DOWN);
 	}
+	else if ((this->getStatus() & eStatus::STAND_UP) == eStatus::STAND_UP)
+	{
+		if (_input->isKeyDown(DIK_UP))
+			this->setStatus(MOVING_UP);
+	}
 	else if ((this->getStatus() & eStatus::JUMPING) != eStatus::JUMPING)
 	{
 		this->standing();
@@ -261,7 +266,7 @@ void Player::onKeyPressed(KeyEventArg* key_event)
 			}
 		case DIK_DOWN:
 			{
-				if (this->isInStatus(STAND_UP) || this->isInStatus(STAND_DOWN) || this->isInStatus(MOVING_DOWN))
+				if (this->isInStatus(STAND_UP) || this->isInStatus(STAND_DOWN) || this->isInStatus(MOVING_DOWN) || this->isInStatus(MOVING_UP))
 				{
 					moveDown();
 					_holdingKey = true;
@@ -566,16 +571,13 @@ void Player::moveDownToStair()
 
 void Player::moveUp()
 {
-	if (this->getStatus() == NORMAL)
+	if (this->getStatus() == NORMAL || this->isInStatus(MOVING_LEFT) || this->isInStatus(MOVING_RIGHT) || this->isInStatus(RUNNING))
 	{
-		if (this->getPositionX() > _stair->getPositionX() + 32)
+		if (this->getPositionX() > _stair->getBounding().left + 32)
 			return;
-		this->setPositionX(_stair->getPositionX());
+		this->setPositionX(_stair->getBounding().left);
 	}
-	this->removeStatus(MOVING_DOWN);
-	this->removeStatus(STAND_DOWN);
-	this->removeStatus(eStatus::STAND_UP);
-	this->addStatus(eStatus::MOVING_UP);
+	this->setStatus(eStatus::MOVING_UP);
 
 	auto move = (Movement*)this->_componentList["Movement"];
 

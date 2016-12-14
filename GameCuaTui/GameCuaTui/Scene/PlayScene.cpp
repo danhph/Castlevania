@@ -4,6 +4,7 @@
 #include "PlayScene.h"
 #include "../Object/Player.h"
 #include "../Tiles/utils.h"
+#include "../Framework/StageManager.h"
 
 #if _DEBUG
 #include <time.h>
@@ -27,6 +28,33 @@ void PlayScene::setViewport(Viewport* viewport)
 		_viewport = viewport;
 }
 
+void PlayScene::initStage()
+{
+	_tileMap = StageManager::getInstance()->getTileMap(_currentStage);
+	
+	auto quadTreeWidth = (_tileMap->worldWidth() >= _tileMap->worldHeight()) ? _tileMap->worldWidth() : _tileMap->worldHeight();
+	RECT rectMap;
+	rectMap.left = 0;
+	rectMap.bottom = 0;
+	rectMap.top = quadTreeWidth;
+	rectMap.right = quadTreeWidth;
+
+	_root = new QuadTreeNode(rectMap);
+
+	auto listObject = StageManager::getInstance()->getListObject(_currentStage);
+
+	for (auto obj : (*listObject))
+	{
+		if (obj->getId() == START)
+		{
+			_player->setPosition(obj->getPosition());
+		}
+		else
+			_root->Insert(obj);
+	}
+	listObject->clear();
+}
+
 bool PlayScene::init()
 {
 	auto player = new Player();
@@ -35,27 +63,12 @@ bool PlayScene::init()
 	player->getBounding();
 	this->_player = player;
 	_activeObject.push_back(_player);
-
+	
 	_text = new Text(L"Arial", "", 10, 25);
 
-	_tileMap = TileMap::LoadFromFile("Resources//Map//stage21.tmx", eID::MAP_STAGE_21);
+	_currentStage = MAP_STAGE_21;
 
-	auto quadTreeWidth = (_tileMap->worldWidth() >= _tileMap->worldHeight()) ? _tileMap->worldWidth() : _tileMap->worldHeight();
-	RECT rectMap;
-	rectMap.left = 0;
-	rectMap.bottom = 0;
-	rectMap.top = quadTreeWidth;
-	rectMap.right = quadTreeWidth;
-
-
-	_root = new QuadTreeNode(rectMap);
-
-	auto listObject = GetListObjectFromFile("Resources//Map//stage21.tmx");
-	for (auto obj : (*listObject))
-	{
-		_root->Insert(obj);
-	}
-	listObject->clear();
+	initStage();
 
 	return true;
 }
@@ -177,3 +190,9 @@ Player* PlayScene::getPlayer()
 {
 	return (Player*) this->_player;
 }
+
+void PlayScene::setStage(int id)
+{
+	_currentStage = (eID) id;
+}
+

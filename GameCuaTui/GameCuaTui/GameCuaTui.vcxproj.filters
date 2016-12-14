@@ -161,6 +161,9 @@
     <ClCompile Include="Object\StairEnd.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Framework\StageManager.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\define.h">
@@ -288,6 +291,9 @@
     </ClInclude>
     <ClInclude Include="Object\StairEnd.h">
       <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\StageManager.h">
+      <Filter>Header Files\Framework</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
