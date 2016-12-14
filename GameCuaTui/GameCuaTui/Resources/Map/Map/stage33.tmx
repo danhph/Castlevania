@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="77" height="6" tilewidth="32" tileheight="32" nextobjectid="51">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="77" height="6" tilewidth="32" tileheight="32" nextobjectid="53">
  <tileset firstgid="1" name="frame6" tilewidth="32" tileheight="32" tilecount="462" columns="77">
   <image source="frame6.png" width="2464" height="192"/>
  </tileset>
@@ -14,9 +14,7 @@
 </data>
  </layer>
  <objectgroup name="Object Layer 1">
-  <object id="1" name="Player" type="50" x="225" y="128" width="32" height="32"/>
-  <object id="2" name="Stair" type="41" x="232.5" y="151.5" width="16" height="8"/>
-  <object id="3" name="Stair" type="41" x="193.5" y="112" width="16" height="8"/>
+  <object id="1" name="Player" type="50" x="224" y="143.5" width="32" height="32"/>
   <object id="4" name="Wall" type="40" x="161" y="112.5" width="384" height="16"/>
   <object id="5" name="Wall" type="40" x="578" y="113" width="96" height="16"/>
   <object id="6" name="Wall" type="40" x="706" y="112.5" width="128" height="16"/>
@@ -36,7 +34,7 @@
   <object id="22" name="Dinosaur" type="74" x="777" y="80.5" width="16" height="32"/>
   <object id="23" name="Candle" type="61" x="828.5" y="54" width="8" height="8"/>
   <object id="24" name="Candle" type="61" x="890" y="53.5" width="8" height="8"/>
-  <object id="25" name="Door" type="42" x="913" y="32.5" width="16" height="48"/>
+  <object id="25" name="Door" type="43" x="913" y="32.5" width="16" height="48"/>
   <object id="26" name="Candle" type="61" x="953.5" y="55" width="8" height="8"/>
   <object id="27" name="Crow" type="78" x="1187" y="16" width="16" height="16"/>
   <object id="28" name="Crow" type="78" x="1282.5" y="17" width="16" height="16"/>
@@ -60,5 +58,7 @@
   <object id="48" name="Candle" type="61" x="2426.5" y="105" width="8" height="8"/>
   <object id="49" name="Mummy" type="79" x="2418.5" y="121.5" width="16" height="39"/>
   <object id="50" name="Wall" type="40" x="2208" y="160" width="256" height="16"/>
+  <object id="51" name="Stair" type="41" x="199" y="120.5" width="56" height="56"/>
+  <object id="52" name="StairEnd" type="42" x="192" y="112" width="8" height="8"/>
  </objectgroup>
 </map>
