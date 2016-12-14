@@ -10,6 +10,7 @@
 #include "../Tiles/TileMap.h"
 #include "../Object/BaseObject.h"
 #include "../Tiles/utils.h"
+
 class StageManager
 {
 public:

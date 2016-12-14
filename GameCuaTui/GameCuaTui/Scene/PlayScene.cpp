@@ -87,8 +87,12 @@ void PlayScene::update(float dt)
 	if (this->checkEndGame() == true)
 		return;
 
-	RECT viewport_in_transform = _viewport->getBounding();
+	if (_player->isInStatus(eStatus::DIE) == false)
+	{
+		this->updateViewport(_player);
+	}
 
+	RECT viewport_in_transform = _viewport->getBounding();
 
 	_root->DeleteObjects();
 

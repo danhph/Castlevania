@@ -243,7 +243,7 @@ void Player::onKeyPressed(KeyEventArg* key_event)
 	{
 		case DIK_LEFT:
 			{
-				if (this->isInStatus(STAND_UP) || this->isInStatus(STAND_DOWN) || this->isInStatus(STAND_DOWN) || this->isInStatus(MOVING_DOWN))
+				if (this->isInStatus(STAND_UP) || this->isInStatus(MOVING_UP) || this->isInStatus(STAND_DOWN) || this->isInStatus(MOVING_DOWN))
 					break;
 				if (!this->isInStatus(eStatus::JUMPING))
 				{
@@ -255,7 +255,7 @@ void Player::onKeyPressed(KeyEventArg* key_event)
 			}
 		case DIK_RIGHT:
 			{
-				if (this->isInStatus(STAND_UP) || this->isInStatus(STAND_DOWN) || this->isInStatus(STAND_DOWN) || this->isInStatus(MOVING_DOWN))
+				if (this->isInStatus(STAND_UP) || this->isInStatus(MOVING_UP) || this->isInStatus(STAND_DOWN) || this->isInStatus(MOVING_DOWN))
 					break;
 				if (!this->isInStatus(eStatus::JUMPING))
 				{
@@ -552,7 +552,7 @@ void Player::moveDown()
 
 void Player::moveDownToStair()
 {
-	this->addStatus(eStatus::STAND_DOWN);
+	this->setStatus(eStatus::STAND_DOWN);
 
 	if (!_directStair)
 	{

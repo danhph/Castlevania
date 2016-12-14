@@ -1,3 +1,7 @@
+#ifndef __MYUTIL_H__
+#define __MYUTIL_H__
+
+
 #include "../Framework/define.h"
 #include "../pugixml/pugixml.hpp"
 #include "../Object/BaseObject.h"
@@ -13,3 +17,5 @@ BaseObject* GetStair(xml_node item, int mapHeight);
 BaseObject* GetStairEnd(xml_node item, int mapHeight);
 BaseObject* GetObjectByType(xml_node item, eID type, int mapHeight);
 list<BaseObject*>* GetListObjectFromFile(const string path);
+
+#endif
