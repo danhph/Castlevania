@@ -1,15 +1,15 @@
 #ifndef __STAGEMANAGER_H__
 #define __STAGEMANAGER_H__
 
-#include <map> // map contain a pair data with key and value
-// http://www.cplusplus.com/reference/map/map
+#include <map>
+
 #include <fstream>
 
 #include "define.h"
 #include "Sprite.h"
 #include "../Tiles/TileMap.h"
 #include "../Object/BaseObject.h"
-#include "../Tiles/utils.h"
+#include "../Tiles/myutils.h"
 
 class StageManager
 {

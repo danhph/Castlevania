@@ -2,6 +2,7 @@
 #include "../Framework/SceneManager.h"
 #include "Stair.h"
 #include "StairEnd.h"
+#include <thread>
 
 Player::Player(int life) : BaseObject(eID::PLAYER)
 {
@@ -32,6 +33,8 @@ void Player::init()
 	__hook(&CollisionBody::onCollisionBegin, collisionBody, &Player::onCollisionBegin);
 	__hook(&CollisionBody::onCollisionEnd, collisionBody, &Player::onCollisionEnd);
 
+	_rope = new Rope(0, 0);
+
 	_animations[eStatus::NORMAL] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::NORMAL]->addFrameRect(eID::PLAYER, "walk_right_01", NULL);
 
@@ -42,7 +45,7 @@ void Player::init()
 	_animations[eStatus::SIT_DOWN]->addFrameRect(eID::PLAYER, "sit_down", NULL);
 
 	_animations[eStatus::JUMPING] = new Animation(_sprite, 0.1f);
-	_animations[eStatus::JUMPING]->addFrameRect(eID::PLAYER, "sit_down", NULL);
+	_animations[eStatus::JUMPING]->addFrameRect(eID::PLAYER, "jump", NULL);
 
 	_animations[eStatus::FALLING] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::FALLING]->addFrameRect(eID::PLAYER, "walk_right_01", NULL);
@@ -61,11 +64,27 @@ void Player::init()
 	_animations[eStatus::STAND_DOWN]->addFrameRect(eID::PLAYER, "down",NULL);
 
 
+	_animations[eStatus::ATTACKING] = new Animation(_sprite, 0.2f);
+	_animations[eStatus::ATTACKING]->addFrameRect(eID::PLAYER, "stand_and_hit_01", "stand_and_hit_02", "stand_and_hit_03", "stand_and_hit_03", NULL);
+
+	_animations[STAND_UP | ATTACKING] = new Animation(_sprite, 0.2f);
+	_animations[STAND_UP | ATTACKING]->addFrameRect(eID::PLAYER, "up_and_hit_01", "up_and_hit_02", "up_and_hit_03", "up_and_hit_03", NULL);
+
+	_animations[STAND_DOWN | ATTACKING] = new Animation(_sprite, 0.2f);
+	_animations[STAND_DOWN | ATTACKING]->addFrameRect(eID::PLAYER, "down_and_hit_01", "down_and_hit_02", "down_and_hit_03", "down_and_hit_03", NULL);
+
+	_animations[SIT_DOWN | ATTACKING] = new Animation(_sprite, 0.2f);
+	_animations[SIT_DOWN | ATTACKING]->addFrameRect(eID::PLAYER, "jump_and_hit_01", "jump_and_hit_02", "jump_and_hit_03", "jump_and_hit_03", NULL);
+
+	_animations[JUMPING | ATTACKING] = new Animation(_sprite, 0.2f);
+	_animations[JUMPING | ATTACKING]->addFrameRect(eID::PLAYER, "jump_and_hit_01", "jump_and_hit_02", "jump_and_hit_03", "jump_and_hit_03", NULL);
+
 	this->setOrigin(GVector2(0.5f, 0.0f));
 	this->setStatus(eStatus::NORMAL);
 
 	// create stopWatch
 	_stopWatch = new StopWatch();
+	_ropeStopWatch = new StopWatch();
 
 	this->resetValues();
 
@@ -81,6 +100,12 @@ void Player::init()
 void Player::update(float deltatime)
 {
 	this->checkPosition();
+
+	if (_ropeStopWatch->isStopWatch(ATTACK_TIME) && _isAttacking)
+	{
+		_isAttacking = false;
+		this->removeStatus(ATTACKING);
+	}
 
 	this->updateStatus(deltatime);
 
@@ -98,6 +123,17 @@ void Player::updateInput(float dt)
 {
 }
 
+GVector2 Player::getPosition()
+{
+	if (this->getStatus() != NORMAL)
+	{
+		if ((this->getStatus() & eStatus::JUMPING) == eStatus::JUMPING || (this->getStatus() & eStatus::SIT_DOWN) == eStatus::SIT_DOWN)
+			return _sprite->getPosition() + GVector2(0, -16);
+	}
+	return _sprite->getPosition();
+}
+
+
 void Player::updateStatus(float dt)
 {
 	if (this->isInStatus(eStatus::DIE))
@@ -111,6 +147,12 @@ void Player::updateStatus(float dt)
 			this->revive();
 		}
 		return;
+	}
+	if (_isAttacking)
+	{
+		_rope->setScaleX(this->_sprite->getScale().x);
+		_rope->update(dt);
+		_rope->updateRopePos(this->getPosition());
 	}
 
 	if ((this->getStatus() & eStatus::MOVING_LEFT) == eStatus::MOVING_LEFT)
@@ -180,7 +222,8 @@ void Player::updateCurrentAnimateIndex()
 
 	if ((_currentAnimateIndex & eStatus::JUMPING) == eStatus::JUMPING)
 	{
-		_currentAnimateIndex = eStatus::JUMPING;
+		if ((_currentAnimateIndex & eStatus::ATTACKING) != eStatus::ATTACKING)
+			_currentAnimateIndex = eStatus::JUMPING;
 	}
 
 
@@ -194,7 +237,7 @@ void Player::updateCurrentAnimateIndex()
 void Player::resetValues()
 {
 	this->setScale(SCALE_FACTOR);
-
+	_isAttacking = false;
 	_stair = nullptr;
 	_stairEnd = nullptr;
 	_holdingKey = false;
@@ -210,6 +253,11 @@ void Player::resetValues()
 void Player::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
 	_animations[_currentAnimateIndex]->draw(spriteHandle, viewport);
+
+	if (_isAttacking)
+	{
+		_rope->draw(spriteHandle, viewport);
+	}
 
 	_info->draw(spriteHandle, viewport);
 }
@@ -238,11 +286,18 @@ void Player::onKeyPressed(KeyEventArg* key_event)
 {
 	if (this->isInStatus(eStatus::DIE))
 		return;
-
+	if (_isAttacking)
+		return;
 	switch (key_event->_key)
 	{
 		case DIK_LEFT:
 			{
+				if (this->isInStatus(SIT_DOWN))
+				{
+					if (this->getScale().x > 0)
+						this->setScaleX(this->getScale().x * (-1));
+					break;
+				}
 				if (this->isInStatus(STAND_UP) || this->isInStatus(MOVING_UP) || this->isInStatus(STAND_DOWN) || this->isInStatus(MOVING_DOWN))
 					break;
 				if (!this->isInStatus(eStatus::JUMPING))
@@ -255,6 +310,12 @@ void Player::onKeyPressed(KeyEventArg* key_event)
 			}
 		case DIK_RIGHT:
 			{
+				if (this->isInStatus(SIT_DOWN))
+				{
+					if (this->getScale().x < 0)
+						this->setScaleX(this->getScale().x * (-1));
+					break;
+				}
 				if (this->isInStatus(STAND_UP) || this->isInStatus(MOVING_UP) || this->isInStatus(STAND_DOWN) || this->isInStatus(MOVING_DOWN))
 					break;
 				if (!this->isInStatus(eStatus::JUMPING))
@@ -302,6 +363,15 @@ void Player::onKeyPressed(KeyEventArg* key_event)
 				}
 				break;
 			}
+		case DIK_Z:
+			{
+				if (this->isInStatus(MOVING_DOWN) || this->isInStatus(MOVING_UP))
+				{
+					break;
+				}
+				this->hit();
+				break;
+			}
 		default:
 			break;
 	}
@@ -336,6 +406,10 @@ void Player::onKeyReleased(KeyEventArg* key_event)
 		case DIK_UP:
 			{
 				_holdingKey = false;
+				break;
+			}
+		case DIK_Z:
+			{
 				break;
 			}
 		default:
@@ -378,6 +452,7 @@ float Player::checkCollision(BaseObject* object, float dt)
 		return 0.0f;
 
 	auto collisionBody = (CollisionBody*)_componentList["CollisionBody"];
+	auto ropeCollisionBody = _rope->getCollisionBody();
 	eID objectId = object->getId();
 	eDirection direction;
 
@@ -439,6 +514,16 @@ float Player::checkCollision(BaseObject* object, float dt)
 		else if (_stairEnd == object)
 		{
 			_stairEnd = nullptr;
+		}
+	}
+	else if (objectId == CANDLE)
+	{
+		if (_isAttacking)
+		{
+			if (ropeCollisionBody->checkCollision(object, direction, dt, false))
+			{
+				object->setStatus(DESTROY);
+			}
 		}
 	}
 
@@ -654,6 +739,16 @@ void Player::falling()
 
 void Player::hit()
 {
+	_isAttacking = true;
+	this->removeStatus(MOVING_LEFT);
+	this->removeStatus(MOVING_RIGHT);
+	if (this->isInStatus(JUMPING))
+		this->addStatus(eStatus::ATTACKING);
+	this->addStatus(eStatus::ATTACKING);
+	this->_animations[this->getStatus()]->restart();
+	this->_rope->restart();
+	_ropeStopWatch->restart();
+	_ropeStopWatch->isStopWatch(ATTACK_TIME);
 }
 
 void Player::revive()
@@ -690,7 +785,7 @@ void Player::setStatus(eStatus status)
 
 RECT Player::getBounding()
 {
-	int offset = 10;
+	int offset = 16;
 
 	RECT bound = _sprite->getBounding();
 

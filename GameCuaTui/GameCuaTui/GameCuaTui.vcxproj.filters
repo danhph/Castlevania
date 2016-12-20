@@ -137,9 +137,6 @@
     <ClCompile Include="Tiles\TileSet.cpp">
       <Filter>Source Files\Tile</Filter>
     </ClCompile>
-    <ClCompile Include="Tiles\utils.cpp">
-      <Filter>Source Files\Tile</Filter>
-    </ClCompile>
     <ClCompile Include="Framework\Text.cpp">
       <Filter>Source Files\Framework</Filter>
     </ClCompile>
@@ -165,6 +162,18 @@
       <Filter>Source Files\Framework</Filter>
     </ClCompile>
     <ClCompile Include="Object\Start.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Candle.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Soldier.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles\myutils.cpp">
+      <Filter>Source Files\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Rope.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
   </ItemGroup>
@@ -283,9 +292,6 @@
     <ClInclude Include="Object\QuadtreeNode.h">
       <Filter>Header Files\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Tiles\utils.h">
-      <Filter>Header Files\Tile</Filter>
-    </ClInclude>
     <ClInclude Include="Object\Wall.h">
       <Filter>Header Files\Object</Filter>
     </ClInclude>
@@ -299,6 +305,18 @@
       <Filter>Header Files\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Object\Start.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Candle.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Soldier.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles\myutils.h">
+      <Filter>Header Files\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Rope.h">
       <Filter>Header Files\Object</Filter>
     </ClInclude>
   </ItemGroup>

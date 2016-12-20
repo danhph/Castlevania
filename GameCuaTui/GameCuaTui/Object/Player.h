@@ -12,12 +12,13 @@
 
 #include <list>
 #include "Info.h"
+#include "Rope.h"
 
 #define MOVE_SPEED 125
 #define JUMP_VEL 350
 
 #define GRAVITY 800
-#define REVIVE_TIME 2000
+#define ATTACK_TIME 600
 #define PROTECT_TIME 3000
 
 EVENT_RECEIVER
@@ -81,12 +82,15 @@ public:
 	RECT getBounding() override;
 	void resetValues();
 
+	GVector2 getPosition() override;
+
 private:
 	map<int, Animation*> _animations;
 	map<string, IComponent*> _componentList;
 
 	float _movingSpeed;
 	StopWatch* _stopWatch;
+	StopWatch* _ropeStopWatch;
 
 	eStatus _currentAnimateIndex;
 
@@ -106,9 +110,13 @@ private:
 	bool _directStair;
 	bool _holdingKey;
 
+	bool _isAttacking;
+
 	BaseObject* _stairEnd;
 
 	eID _currentStage;
+
+	Rope* _rope;
 };
 
 void safeCheckCollision(BaseObject* activeobj, BaseObject* passiveobj, float dt);

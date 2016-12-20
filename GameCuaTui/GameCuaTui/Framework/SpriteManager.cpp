@@ -38,6 +38,18 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::PLAYER, pSprite));
 	this->loadSpriteInfo(eID::PLAYER, "Resources//Images//simon.txt");
 
+	pSprite = new Sprite(spriteHandle, L"Resources//Images//candle.png");
+	this->_listSprite.insert(pair<eID, Sprite*>(eID::CANDLE, pSprite));
+	this->loadSpriteInfo(eID::CANDLE, "Resources//Images//candle.txt");
+
+	pSprite = new Sprite(spriteHandle, L"Resources//Images//soldier.png");
+	this->_listSprite.insert(pair<eID, Sprite*>(eID::SOLDIER, pSprite));
+	this->loadSpriteInfo(eID::SOLDIER, "Resources//Images//soldier.txt");
+
+	pSprite = new Sprite(spriteHandle, L"Resources//Images//rope_new.png");
+	this->_listSprite.insert(pair<eID, Sprite*>(eID::ROPE, pSprite));
+	this->loadSpriteInfo(eID::ROPE, "Resources//Images//rope_new.txt");
+
 	pSprite = loadXMLDoc(spriteHandle, L"Resources//Map//stage21.tmx");
 	pSprite->setOrigin(VECTOR2ZERO);
 	pSprite->setScale(2.0f);

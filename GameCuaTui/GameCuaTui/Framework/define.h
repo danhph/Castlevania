@@ -51,6 +51,10 @@ enum eID
 	STAIR_END = 42,
 
 	START = 50,
+
+	CANDLE = 61,
+	ROPE = 62,
+	SOLDIER = 71,
 };
 
 enum eStatus
@@ -65,6 +69,8 @@ enum eStatus
 	FALLING = (1 << 6),
 
 	DESTROY = (1 << 7),
+
+	ATTACKING = (1<<8),
 
 	MOVING_UP = (1 << 9),
 	MOVING_DOWN = (1 << 10),

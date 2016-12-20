@@ -104,12 +104,15 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object\BaseObject.cpp" />
+    <ClCompile Include="Object\Candle.cpp" />
     <ClCompile Include="Object\CollisionBody.cpp" />
     <ClCompile Include="Object\EmptyObject.cpp" />
     <ClCompile Include="Object\Help.cpp" />
     <ClCompile Include="Object\Info.cpp" />
     <ClCompile Include="Object\Player.cpp" />
     <ClCompile Include="Object\QuadtreeNode.cpp" />
+    <ClCompile Include="Object\Rope.cpp" />
+    <ClCompile Include="Object\Soldier.cpp" />
     <ClCompile Include="Object\Stair.cpp" />
     <ClCompile Include="Object\StairEnd.cpp" />
     <ClCompile Include="Object\Start.cpp" />
@@ -118,7 +121,7 @@
     <ClCompile Include="pugixml\pugixml.cpp" />
     <ClCompile Include="Scene\IntroScene.cpp" />
     <ClCompile Include="Scene\PlayScene.cpp" />
-    <ClCompile Include="Tiles\utils.cpp" />
+    <ClCompile Include="Tiles\myutils.cpp" />
     <ClCompile Include="Tiles\Tile.cpp" />
     <ClCompile Include="Tiles\TileMap.cpp" />
     <ClCompile Include="Tiles\TileSet.cpp" />
@@ -149,12 +152,15 @@
     <ClInclude Include="Framework\Viewport.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Object\BaseObject.h" />
+    <ClInclude Include="Object\Candle.h" />
     <ClInclude Include="Object\CollisionBody.h" />
     <ClInclude Include="Object\EmptyObject.h" />
     <ClInclude Include="Object\Help.h" />
     <ClInclude Include="Object\Info.h" />
     <ClInclude Include="Object\Player.h" />
     <ClInclude Include="Object\QuadtreeNode.h" />
+    <ClInclude Include="Object\Rope.h" />
+    <ClInclude Include="Object\Soldier.h" />
     <ClInclude Include="Object\Stair.h" />
     <ClInclude Include="Object\StairEnd.h" />
     <ClInclude Include="Object\Start.h" />
@@ -167,7 +173,7 @@
     <ClInclude Include="Tiles\Tile.h" />
     <ClInclude Include="Tiles\TileMap.h" />
     <ClInclude Include="Tiles\TileSet.h" />
-    <ClInclude Include="Tiles\utils.h" />
+    <ClInclude Include="Tiles\myutils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,5 +1,4 @@
-#include "utils.h"
-#include "../Object/Start.h"
+#include "myutils.h"
 
 map<string, string> GetObjectProperties(xml_node node)
 {
@@ -64,6 +63,47 @@ BaseObject* GetWall(xml_node item, int mapHeight)
 	return wall;
 }
 
+BaseObject* GetCandle(xml_node item, int mapHeight)
+{
+	auto properties = GetObjectProperties(item);
+	if (properties.size() == 0)
+		return nullptr;
+	auto width = 2 * stoi(properties["width"]);
+	auto height = 2 * stoi(properties["height"]);
+
+	auto x = 2 * stoi(properties["x"]);
+	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
+
+	x = x + width / 2;
+	y = y + height / 2;
+	auto candle = new Candle(x, y);
+	candle->init();
+	return candle;
+}
+
+BaseObject* GetSoldier(xml_node item, int mapHeight)
+{
+	auto properties = GetObjectProperties(item);
+	if (properties.size() == 0)
+		return nullptr;
+	auto width = 2 * stoi(properties["width"]);
+	auto height = 2 * stoi(properties["height"]);
+
+	auto x = 2 * stoi(properties["x"]);
+	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
+
+	x = x + width / 2;
+	y = y + height / 2;
+
+	auto ActiveBoundX = 2 * stoi(properties["ActiveBoundX"]);
+
+	ActiveBoundX = ActiveBoundX + width / 2;
+	
+	auto soldier = new Soldier(x, y, ActiveBoundX);
+	soldier->init();
+	return soldier;
+}
+
 BaseObject* GetStairEnd(xml_node item, int mapHeight)
 {
 	auto properties = GetObjectProperties(item);
@@ -122,6 +162,12 @@ BaseObject* GetObjectByType(xml_node item, eID type, int mapHeight)
 
 		case START:
 			return GetStart(item, mapHeight);
+
+		case CANDLE:
+			return GetCandle(item, mapHeight);
+
+		case SOLDIER:
+			return GetSoldier(item, mapHeight);
 
 		default:
 			return nullptr;

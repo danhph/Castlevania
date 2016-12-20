@@ -64,12 +64,12 @@
   <object id="4" name="BreakWall" type="60" x="224" y="64" width="16" height="32"/>
   <object id="8" name="Bat" type="70" x="38" y="16" width="16" height="16"/>
   <object id="10" name="Candle" type="61" x="204" y="102" width="8" height="8"/>
-  <object id="11" name="Candle" type="61" x="80" y="104" width="8" height="8"/>
+  <object id="11" name="Candle" type="61" x="83.6667" y="95.0003" width="8" height="8"/>
   <object id="12" name="Candle" type="61" x="141" y="8" width="8" height="8"/>
   <object id="13" name="Soldier" type="71" x="144" y="32" width="16" height="32">
    <properties>
     <property name="ActiveBoundHeight" type="float" value="32"/>
-    <property name="ActiveBoundWitdh" type="float" value="128"/>
+    <property name="ActiveBoundWidth" type="float" value="128"/>
     <property name="ActiveBoundX" type="float" value="32"/>
     <property name="ActiveBoundY" type="float" value="32"/>
    </properties>

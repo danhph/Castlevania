@@ -14,7 +14,7 @@ public:
 
 	static int isExit;
 
-	Game(HINSTANCE, LPWSTR = L"Window Game", int width = 800, int height = 600, int fps = 30, int isFullScreen = 0);
+	Game(HINSTANCE, LPWSTR = L"Window Game", int width = 800, int height = 600, int fps = 60, int isFullScreen = 0);
 	void virtual init();						// init your objects
 	void virtual release();						// release your objects
 

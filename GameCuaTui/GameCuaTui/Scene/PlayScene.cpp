@@ -1,14 +1,5 @@
-﻿#include <algorithm>
-#include "../Framework/SoundManager.h"
-#include "../Scene/IntroScene.h"
-#include "PlayScene.h"
-#include "../Object/Player.h"
-#include "../Tiles/utils.h"
-#include "../Framework/StageManager.h"
+﻿#include "PlayScene.h"
 
-#if _DEBUG
-#include <time.h>
-#endif
 
 
 PlayScene::PlayScene()
@@ -67,8 +58,6 @@ bool PlayScene::init()
 	player->getBounding();
 	this->_player = player;
 	_activeObject.push_back(_player);
-	
-	_text = new Text(L"Arial", "", 10, 25);
 
 	_currentStage = MAP_STAGE_21;
 
@@ -84,10 +73,6 @@ void PlayScene::updateInput(float dt)
 
 void PlayScene::update(float dt)
 {
-	char str[100];
-	sprintf(str, "delta time: %f", dt);
-	_text->setText(str);
-
 	if (this->getPlayer()->getStage() != _currentStage)
 	{
 		_currentStage = this->getPlayer()->getStage();
@@ -158,10 +143,6 @@ void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 	{
 		object->draw(spriteHandle, _viewport);
 	}
-
-#if _DEBUG
-	_text->draw();
-#endif
 }
 
 void PlayScene::release()

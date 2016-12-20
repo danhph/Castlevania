@@ -1,5 +1,5 @@
-﻿#ifndef __STAGE_21_H__
-#define __STAGE_21_H__
+﻿#ifndef __PLAYSCENE_H__
+#define __PLAYSCENE_H__
 
 #include "../Framework/Scene.h"
 #include "../Object/BaseObject.h"
@@ -7,6 +7,12 @@
 #include "../Tiles/TileMap.h"
 #include "../Object/QuadtreeNode.h"
 #include "../Object/Player.h"
+#include <algorithm>
+#include "../Framework/SoundManager.h"
+#include "../Scene/IntroScene.h"
+#include "../Object/Player.h"
+#include "../Tiles/myutils.h"
+#include "../Framework/StageManager.h"
 
 using namespace std;
 
@@ -32,8 +38,6 @@ public:
 
 
 private:
-	Text* _text;
-
 	QuadTreeNode* _root;
 
 	// Danh sách đối tượng nằm trong vùng active.
