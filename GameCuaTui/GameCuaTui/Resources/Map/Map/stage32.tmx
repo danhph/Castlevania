@@ -18,7 +18,7 @@
   <object id="7" name="Wall" type="40" x="119.864" y="79.5" width="39.6364" height="4.5"/>
   <object id="8" name="Candle" type="61" x="155.5" y="54.5" width="8" height="8"/>
   <object id="9" name="Wall" type="40" x="16.5" y="-1" width="16" height="176"/>
-  <object id="10" name="Wall" type="40" x="33.5" y="144.5" width="32" height="32"/>
+  <object id="10" name="Wall" type="40" x="33.5" y="144.5" width="39.5" height="5.25"/>
   <object id="11" name="Wall" type="40" x="161" y="144" width="160" height="16"/>
   <object id="12" name="Wall" type="40" x="224" y="80" width="31.5" height="16"/>
   <object id="13" name="Candle" type="61" x="220" y="119.5" width="8" height="8"/>
