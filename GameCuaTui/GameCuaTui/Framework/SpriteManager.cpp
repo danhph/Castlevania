@@ -53,6 +53,10 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::SOLDIER, pSprite));
 	this->loadSpriteInfo(eID::SOLDIER, "Resources//Images//soldier.txt");
 
+	pSprite = new Sprite(spriteHandle, L"Resources//Images//enemy.png");
+	this->_listSprite.insert(pair<eID, Sprite*>(eID::ENEMY, pSprite));
+	this->loadSpriteInfo(eID::SOLDIER, "Resources//Images//enemy.txt");
+
 	pSprite = new Sprite(spriteHandle, L"Resources//Images//rope_new.png");
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::ROPE, pSprite));
 	this->loadSpriteInfo(eID::ROPE, "Resources//Images//rope_new.txt");
@@ -82,6 +86,7 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	pSprite->setOrigin(VECTOR2ZERO);
 	pSprite->setScale(2.0f);
 	this->_listSprite[eID::MAP_STAGE_22] = pSprite;
+
 
 }
 

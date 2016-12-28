@@ -61,7 +61,16 @@ enum eID
 	BREAKWALL = 62,
 	BREAKWALL1 = 63,
 
+	ENEMY=70,
 	SOLDIER = 71,
+	REDBAT = 72,
+	BLUEBAT = 73,
+	FROG = 74,
+	CROW = 75,
+	BIRD = 76,
+	BONE=77,
+	SKELETON = 78,
+	MONKEY = 79,
 
 	ITEM = 80,
 	HEART = 81,
@@ -72,7 +81,7 @@ enum eID
 	BLUEBAG = 86,
 	WHIPUPGRADE = 87,
 	DAGGER = 88,
-	STOPWATCH = 89,
+	STOPTIME = 89,
 	CROSS= 90,
 	AXE = 91,
 	BOOMERANG = 92,
@@ -84,6 +93,8 @@ enum eID
 	BIGREDII = 98,
 	BALL1 = 99,
 	BALL2=100,
+	DINOSAUR = 101,
+	FIREBALL = 102,
 };
 
 enum eStatus
