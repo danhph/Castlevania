@@ -1,7 +1,5 @@
 ﻿#include "PlayScene.h"
 
-
-
 PlayScene::PlayScene()
 {
 	_viewport = new Viewport(0, WINDOW_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -34,6 +32,7 @@ void PlayScene::initStage()
 	rectMap.right = quadTreeWidth;
 
 	_root = new QuadTreeNode(rectMap);
+	QuadTreeNode::setInstance(_root);
 
 	auto listObject = StageManager::getInstance()->getListObject(_currentStage);
 

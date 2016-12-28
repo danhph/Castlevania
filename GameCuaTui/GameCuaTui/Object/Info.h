@@ -40,6 +40,9 @@ public:
 	void SetTime(int number);
 	int GetTime();
 private:
+	Sprite* _iconEmptyHitPoint;
+	Sprite* _border;
+
 	Sprite* _iconPlayerHitPoint;
 	TextSprite* _textPlayer;
 	int _playerHitPointNumber;
@@ -62,7 +65,9 @@ private:
 	int _stageNumber;
 
 	TextSprite* _textTime;
-	int _timeNumber;	
+	int _timeNumber;
+	
+	float _beginTime;
 };
 
 #endif // !__LIFEUI_H__

@@ -1,8 +1,5 @@
 ﻿#include "Player.h"
-#include "../Framework/SceneManager.h"
-#include "Stair.h"
-#include "StairEnd.h"
-#include <thread>
+
 
 Player::Player(int life) : BaseObject(eID::PLAYER)
 {
@@ -38,7 +35,7 @@ void Player::init()
 	_animations[eStatus::NORMAL] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::NORMAL]->addFrameRect(eID::PLAYER, "walk_right_01", NULL);
 
-	_animations[eStatus::RUNNING] = new Animation(_sprite, 0.12f);
+	_animations[eStatus::RUNNING] = new Animation(_sprite, 0.08f);
 	_animations[eStatus::RUNNING]->addFrameRect(eID::PLAYER, "walk_right_01", "walk_right_02", "walk_right_03", NULL);
 
 	_animations[eStatus::SIT_DOWN] = new Animation(_sprite, 0.1f);
@@ -46,6 +43,9 @@ void Player::init()
 
 	_animations[eStatus::JUMPING] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::JUMPING]->addFrameRect(eID::PLAYER, "jump", NULL);
+
+	_animations[eStatus::BEING_HIT] = new Animation(_sprite, 0.1f);
+	_animations[eStatus::BEING_HIT]->addFrameRect(eID::PLAYER, "be_hit", NULL);
 
 	_animations[eStatus::FALLING] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::FALLING]->addFrameRect(eID::PLAYER, "walk_right_01", NULL);
@@ -92,19 +92,28 @@ void Player::init()
 	_info->SetHeart(0);
 	_info->SetLife(3);
 	_info->SetScore(0);
-	_info->SetStage(0);
-	_info->SetTime(0);
+	_info->SetStage(06);
+	_info->SetTime(300);
+	_info->SetPlayerHitPoint(16);
+	_info->SetEnemyHitPoint(16);
 	_info->init();
 }
 
 void Player::update(float deltatime)
 {
+	if (_protectTime > 0)
+	{
+		_protectTime -= deltatime;
+	}
+
+	_info->update(deltatime);
 	this->checkPosition();
 
 	if (_ropeStopWatch->isStopWatch(ATTACK_TIME) && _isAttacking)
 	{
 		_isAttacking = false;
 		this->removeStatus(ATTACKING);
+		this->_rope->restart();
 	}
 
 	this->updateStatus(deltatime);
@@ -125,11 +134,6 @@ void Player::updateInput(float dt)
 
 GVector2 Player::getPosition()
 {
-	if (this->getStatus() != NORMAL)
-	{
-		if ((this->getStatus() & eStatus::JUMPING) == eStatus::JUMPING || (this->getStatus() & eStatus::SIT_DOWN) == eStatus::SIT_DOWN)
-			return _sprite->getPosition() + GVector2(0, -16);
-	}
 	return _sprite->getPosition();
 }
 
@@ -152,7 +156,10 @@ void Player::updateStatus(float dt)
 	{
 		_rope->setScaleX(this->_sprite->getScale().x);
 		_rope->update(dt);
-		_rope->updateRopePos(this->getPosition());
+		if ((this->getStatus() & eStatus::SIT_DOWN) == eStatus::SIT_DOWN || (this->getStatus() & eStatus::JUMPING) == eStatus::JUMPING)
+			_rope->updateRopePos(this->getPosition() + GVector2(0, -16));
+		else
+			_rope->updateRopePos(this->getPosition());
 	}
 
 	if ((this->getStatus() & eStatus::MOVING_LEFT) == eStatus::MOVING_LEFT)
@@ -189,7 +196,7 @@ void Player::updateStatus(float dt)
 		if (_input->isKeyDown(DIK_UP))
 			this->setStatus(MOVING_UP);
 	}
-	else if ((this->getStatus() & eStatus::JUMPING) != eStatus::JUMPING)
+	else if ((this->getStatus() & eStatus::JUMPING) != eStatus::JUMPING && !this->isInStatus(BEING_HIT))
 	{
 		this->standing();
 	}
@@ -231,6 +238,9 @@ void Player::updateCurrentAnimateIndex()
 	{
 		_currentAnimateIndex = eStatus::DIE;
 	}
+
+	if ((_currentAnimateIndex & eStatus::BEING_HIT) == eStatus::BEING_HIT)
+		_currentAnimateIndex = eStatus::BEING_HIT;
 }
 
 
@@ -243,6 +253,11 @@ void Player::resetValues()
 	_holdingKey = false;
 
 	_movingSpeed = MOVE_SPEED;
+	_protectTime = PROTECT_TIME;
+
+
+	auto move = (Movement*)this->_componentList["Movement"];
+	move->setVelocity(GVector2(0,0));
 
 	for (auto animate : _animations)
 	{
@@ -252,6 +267,15 @@ void Player::resetValues()
 
 void Player::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
+	if (_protectTime > 0)
+	{
+		_animations[_currentAnimateIndex]->enableFlashes(true);
+	}
+	else
+	{
+		_animations[_currentAnimateIndex]->enableFlashes(false);
+	}
+
 	_animations[_currentAnimateIndex]->draw(spriteHandle, viewport);
 
 	if (_isAttacking)
@@ -299,8 +323,19 @@ void Player::onKeyPressed(KeyEventArg* key_event)
 					break;
 				}
 				if (this->isInStatus(STAND_UP) || this->isInStatus(MOVING_UP) || this->isInStatus(STAND_DOWN) || this->isInStatus(MOVING_DOWN))
-					break;
-				if (!this->isInStatus(eStatus::JUMPING))
+				{
+					if (!_directStair)
+					{
+						moveUp();
+						_holdingKey = true;
+					}
+					else
+					{
+						moveDown();
+						_holdingKey = true;
+					}
+				}
+				else if (!this->isInStatus(eStatus::JUMPING))
 				{
 					this->removeStatus(eStatus::MOVING_RIGHT);
 					this->addStatus(eStatus::MOVING_LEFT);
@@ -317,8 +352,19 @@ void Player::onKeyPressed(KeyEventArg* key_event)
 					break;
 				}
 				if (this->isInStatus(STAND_UP) || this->isInStatus(MOVING_UP) || this->isInStatus(STAND_DOWN) || this->isInStatus(MOVING_DOWN))
-					break;
-				if (!this->isInStatus(eStatus::JUMPING))
+				{
+					if (_directStair)
+					{
+						moveUp();
+						_holdingKey = true;
+					}
+					else
+					{
+						moveDown();
+						_holdingKey = true;
+					}
+				}
+				else if (!this->isInStatus(eStatus::JUMPING))
 				{
 					this->removeStatus(eStatus::MOVING_LEFT);
 					this->addStatus(eStatus::MOVING_RIGHT);
@@ -348,7 +394,7 @@ void Player::onKeyPressed(KeyEventArg* key_event)
 
 		case DIK_X:
 			{
-				if (this->isInStatus(STAND_UP) || this->isInStatus(STAND_DOWN) || this->isInStatus(STAND_DOWN) || this->isInStatus(MOVING_DOWN))
+				if (this->isInStatus(STAND_UP) || this->isInStatus(STAND_DOWN) || this->isInStatus(MOVING_UP) || this->isInStatus(MOVING_DOWN))
 					break;
 				if (!this->isInStatus(eStatus::SIT_DOWN) || this->isInStatus(eStatus::MOVING_LEFT) || this->isInStatus(eStatus::MOVING_RIGHT))
 					this->jump();
@@ -386,11 +432,16 @@ void Player::onKeyReleased(KeyEventArg* key_event)
 	{
 		case DIK_RIGHT:
 			{
+				if (this->isInStatus(STAND_UP) || this->isInStatus(STAND_DOWN) || this->isInStatus(MOVING_UP) || this->isInStatus(MOVING_DOWN))
+					_holdingKey = false;
+
 				this->removeStatus(eStatus::MOVING_RIGHT);
 				break;
 			}
 		case DIK_LEFT:
 			{
+				if (this->isInStatus(STAND_UP) || this->isInStatus(STAND_DOWN) || this->isInStatus(MOVING_UP) || this->isInStatus(MOVING_DOWN))
+					_holdingKey = false;
 				this->removeStatus(eStatus::MOVING_LEFT);
 				break;
 			}
@@ -466,15 +517,20 @@ float Player::checkCollision(BaseObject* object, float dt)
 				collisionBody->updateTargetPosition(object, direction, false, GVector2(moveX, moveY));
 			}
 
-
-			if (direction == eDirection::TOP && !(this->getVelocity().y > -200 && this->isInStatus(eStatus::JUMPING)))
-			{
-				auto gravity = (Gravity*)this->_componentList["Gravity"];
-				gravity->setStatus(eGravityStatus::SHALLOWED);
-
-				this->standing();
-				preWall = object;
-			}
+			if (direction == eDirection::TOP)
+				if (!(this->getVelocity().y > -200 && this->isInStatus(eStatus::JUMPING)))
+					if (!(this->getVelocity().y > -200 && this->isInStatus(eStatus::BEING_HIT)))
+					{
+						auto gravity = (Gravity*)this->_componentList["Gravity"];
+						gravity->setStatus(eGravityStatus::SHALLOWED);
+						if (this->isInStatus(eStatus::BEING_HIT))
+						{
+							_protectTime = PROTECT_TIME;
+							_info->SetPlayerHitPoint(_info->GetPlayerHitPoint() - 2);
+						}
+						this->standing();
+						preWall = object;
+					}
 		}
 		else if (preWall == object)
 		{
@@ -486,7 +542,7 @@ float Player::checkCollision(BaseObject* object, float dt)
 				&& !this->isInStatus(eStatus::STAND_UP))
 			{
 				gravity->setStatus(eGravityStatus::FALLING__DOWN);
-				if (!this->isInStatus(eStatus::JUMPING) && !this->isInStatus(eStatus::FALLING))
+				if (!this->isInStatus(eStatus::JUMPING) && !this->isInStatus(eStatus::FALLING) && !this->isInStatus(eStatus::BEING_HIT))
 					this->addStatus(eStatus::FALLING);
 			}
 		}
@@ -520,13 +576,126 @@ float Player::checkCollision(BaseObject* object, float dt)
 	{
 		if (_isAttacking)
 		{
-			if (ropeCollisionBody->checkCollision(object, direction, dt, false))
+			if (!((Candle*)object)->checkWasHit())
 			{
-				object->setStatus(DESTROY);
+				if (ropeCollisionBody->checkCollision(object, direction, dt, false))
+				{
+					((Candle*)object)->wasHit();
+				}
 			}
 		}
 	}
+	else if (objectId == HEART)
+	{
+		if (collisionBody->checkCollision(object, direction, dt, false))
+		{
+			_info->SetHeart(_info->GetHeart() + 1);
+			object->setStatus(DESTROY);
+		}
+	}
+	else if (objectId == BIGHEART)
+	{
+		if (collisionBody->checkCollision(object, direction, dt, false))
+		{
+			_info->SetHeart(_info->GetHeart() + 5);
+			object->setStatus(DESTROY);
+		}
+	}
+	else if (objectId == SOLDIER)
+	{
+		if (!((Soldier*)object)->isDead())
+		{
+			if (_protectTime < 0)
+			{
+				if (collisionBody->checkCollision(object, direction, dt, false))
+				{
+					float moveX, moveY;
+					if (collisionBody->isColliding(object, moveX, moveY, dt))
+					{
+						collisionBody->updateTargetPosition(object, direction, false, GVector2(moveX, moveY));
+					}
+					behit(direction);
+				}
+			}
+			if (ropeCollisionBody->checkCollision(object, direction, dt, false))
+			{
+				((Soldier*)object)->wasHit(1);
+			}
+		}
+	}
+	else if (objectId == END)
+	{
+		if (this->getStatus() == MOVING_UP || this->getStatus() == MOVING_DOWN)
+		{
+			if (collisionBody->checkCollision(object, direction, dt, false))
+			{
+				this->_currentStage = ((End*)object)->getNextStage();
+			}
+		}
+	}
+	else if (objectId == BREAKWALL)
+	{
+		if (collisionBody->checkCollision(object, direction, dt, false) && !this->isInStatus(MOVING_UP))
+		{
+			float moveX, moveY;
+			if (collisionBody->isColliding(object, moveX, moveY, dt))
+			{
+				collisionBody->updateTargetPosition(object, direction, false, GVector2(moveX, moveY));
+			}
+			if (!(this->getVelocity().y > -200 && this->isInStatus(eStatus::JUMPING)))
+				if (!(this->getVelocity().y > -200 && this->isInStatus(eStatus::BEING_HIT)))
+				{
+					auto gravity = (Gravity*)this->_componentList["Gravity"];
+					gravity->setStatus(eGravityStatus::SHALLOWED);
+					if (this->isInStatus(eStatus::BEING_HIT))
+					{
+						_protectTime = PROTECT_TIME;
+						_info->SetPlayerHitPoint(_info->GetPlayerHitPoint() - 2);
+					}
+					this->standing();
+				}
+		}
 
+		if (!((BreakWall*)object)->isBroken())
+		{
+			if (ropeCollisionBody->checkCollision(object, direction, dt, false))
+			{
+				((BreakWall*)object)->wasHit();
+			}
+		}
+	}
+	else if (objectId == BREAKWALL1)
+	{
+		if (collisionBody->checkCollision(object, direction, dt, false) && !this->isInStatus(MOVING_UP))
+		{
+			float moveX, moveY;
+			if (collisionBody->isColliding(object, moveX, moveY, dt))
+			{
+				collisionBody->updateTargetPosition(object, direction, false, GVector2(moveX, moveY));
+			}
+			if (!(this->getVelocity().y > -200 && this->isInStatus(eStatus::JUMPING)))
+				if (!(this->getVelocity().y > -200 && this->isInStatus(eStatus::BEING_HIT)))
+				{
+					auto gravity = (Gravity*)this->_componentList["Gravity"];
+					gravity->setStatus(eGravityStatus::SHALLOWED);
+					if (this->isInStatus(eStatus::BEING_HIT))
+					{
+						_protectTime = PROTECT_TIME;
+						_info->SetPlayerHitPoint(_info->GetPlayerHitPoint() - 2);
+					}
+					this->standing();
+				}
+		}
+
+		if (!((BreakWall1*)object)->isBroken())
+		{
+			if (ropeCollisionBody->checkCollision(object, direction, dt, false))
+			{
+				((BreakWall1*)object)->wasHit();
+			}
+		}
+	}
+	
 	return 1.0f;
 }
 
@@ -550,7 +719,7 @@ void Player::standing()
 {
 	auto move = (Movement*)this->_componentList["Movement"];
 	move->setVelocity(GVector2(0, 0));
-
+	this->removeStatus(BEING_HIT);
 	this->removeStatus(eStatus::JUMPING);
 	this->removeStatus(eStatus::FALLING);
 }
@@ -725,6 +894,49 @@ void Player::jump()
 	//SoundManager::getInstance()->Play(eSoundId::JUMP_SOUND);
 }
 
+void Player::behit(eDirection direct)
+{
+	if (this->isInStatus(eStatus::BEING_HIT))
+		return;
+
+	this->setStatus(eStatus::BEING_HIT);
+
+	auto move = (Movement*)this->_componentList["Movement"];
+
+	switch (direct)
+	{
+		case RIGHT:
+			{
+				if (this->getScale().x > 0)
+					this->setScaleX(this->getScale().x * (-1));
+				move->setVelocity(GVector2(-MOVE_SPEED, JUMP_VEL / 1.5));
+				break;
+			}
+		case LEFT:
+			{
+				if (this->getScale().x < 0)
+					this->setScaleX(this->getScale().x * (-1));
+				move->setVelocity(GVector2(MOVE_SPEED, JUMP_VEL / 1.5));
+				break;
+			}
+		default:
+			{
+				if (this->getScale().x > 0)
+					move->setVelocity(GVector2(-MOVE_SPEED, JUMP_VEL / 1.5));
+				else
+					move->setVelocity(GVector2(MOVE_SPEED, JUMP_VEL / 1.5));
+				break;
+			}
+	}
+
+
+	auto g = (Gravity*)this->_componentList["Gravity"];
+	g->setStatus(eGravityStatus::FALLING__DOWN);
+
+	//SoundManager::getInstance()->Play(eSoundId::JUMP_SOUND);
+}
+
+
 void Player::sitDown()
 {
 	auto move = (Movement*)this->_componentList["Movement"];
@@ -739,6 +951,8 @@ void Player::falling()
 
 void Player::hit()
 {
+	if (this->isInStatus(BEING_HIT))
+		return;
 	_isAttacking = true;
 	this->removeStatus(MOVING_LEFT);
 	this->removeStatus(MOVING_RIGHT);
@@ -788,6 +1002,14 @@ RECT Player::getBounding()
 	int offset = 16;
 
 	RECT bound = _sprite->getBounding();
+
+	if (this->getStatus() != NORMAL)
+	{
+		if ((this->getStatus() & eStatus::SIT_DOWN) == eStatus::SIT_DOWN)
+		{
+			bound.top -= offset;
+		}
+	}
 
 	return bound;
 }

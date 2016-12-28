@@ -41,7 +41,7 @@ void Start::release()
 
 GVector2 Start::getPosition()
 {
-	return GVector2(_bound.left, _bound.top);
+	return GVector2(_bound.left, _bound.bottom);
 }
 
 float Start::getPositionX()

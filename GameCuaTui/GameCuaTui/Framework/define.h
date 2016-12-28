@@ -37,7 +37,7 @@ enum eID
 	INFO = 4,
 	HEART_ICON = 5,
 	HIT_POINT_ICON = 6,
-
+	BORDER = 7,
 
 	MAP_STAGE_21 = 21,
 	MAP_STAGE_22 = 22,
@@ -46,15 +46,26 @@ enum eID
 	MAP_STAGE_32 = 25,
 	MAP_STAGE_33 = 26,
 
+	ROPE = 30,
+	EFFECT = 31,
+	HEAL = 32,
+
 	WALL = 40,
 	STAIR = 41,
 	STAIR_END = 42,
 
 	START = 50,
+	END = 51,
 
 	CANDLE = 61,
-	ROPE = 62,
+	BREAKWALL = 62,
+	BREAKWALL1 = 63,
+
 	SOLDIER = 71,
+
+	ITEM = 80,
+	HEART = 81,
+	BIGHEART = 82,
 };
 
 enum eStatus
@@ -70,13 +81,15 @@ enum eStatus
 
 	DESTROY = (1 << 7),
 
-	ATTACKING = (1<<8),
+	ATTACKING = (1 << 8),
 
 	MOVING_UP = (1 << 9),
 	MOVING_DOWN = (1 << 10),
 
 	STAND_UP = (1 << 11),
 	STAND_DOWN = (1 << 12),
+
+	BEING_HIT = (1 << 13),
 };
 
 enum eDirection
@@ -86,7 +99,7 @@ enum eDirection
 	BOTTOM = 2,
 	LEFT = 4,
 	RIGHT = 8,
-	TOP_BOTTOM = (TOP|BOTTOM),
+	TOP_BOTTOM = (TOP | BOTTOM),
 	ALL = (TOP | BOTTOM | LEFT | RIGHT),
 };
 

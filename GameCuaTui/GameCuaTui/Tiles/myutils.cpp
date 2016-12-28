@@ -24,6 +24,24 @@ map<string, string> GetObjectProperties(xml_node node)
 	return properties;
 }
 
+BaseObject* GetEnd(xml_node item, int mapHeight)
+{
+	auto properties = GetObjectProperties(item);
+	if (properties.size() == 0)
+		return nullptr;
+
+	auto width = 2 * stoi(properties["width"]);
+	auto height = 2 * stoi(properties["height"]);
+
+	auto x = 2 * stoi(properties["x"]);
+	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
+
+
+	auto end = new End(x, y, width, height);
+	end->setNextStage((eID)stoi(properties["next"]));
+	return end;
+}
+
 BaseObject* GetStart(xml_node item, int mapHeight)
 {
 	auto properties = GetObjectProperties(item);
@@ -38,8 +56,6 @@ BaseObject* GetStart(xml_node item, int mapHeight)
 
 
 	auto start = new Start(x, y, width, height);
-	start->init();
-	start->setPosition(GVector2(x, y));
 	start->setStatus((eStatus) stoi(properties["status"]));
 
 	return start;
@@ -79,6 +95,42 @@ BaseObject* GetCandle(xml_node item, int mapHeight)
 	auto candle = new Candle(x, y);
 	candle->init();
 	return candle;
+}
+
+BaseObject* GetBreakWall1(xml_node item, int mapHeight)
+{
+	auto properties = GetObjectProperties(item);
+	if (properties.size() == 0)
+		return nullptr;
+	auto width = 2 * stoi(properties["width"]);
+	auto height = 2 * stoi(properties["height"]);
+
+	auto x = 2 * stoi(properties["x"]);
+	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
+
+	x = x + width / 2;
+	y = y + height / 2;
+	auto breakWall = new BreakWall1(x, y);
+	breakWall->init();
+	return breakWall;
+}
+
+BaseObject* GetBreakWall(xml_node item, int mapHeight)
+{
+	auto properties = GetObjectProperties(item);
+	if (properties.size() == 0)
+		return nullptr;
+	auto width = 2 * stoi(properties["width"]);
+	auto height = 2 * stoi(properties["height"]);
+
+	auto x = 2 * stoi(properties["x"]);
+	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
+
+	x = x + width / 2;
+	y = y + height / 4;
+	auto breakWall = new BreakWall(x, y);
+	breakWall->init();
+	return breakWall;
 }
 
 BaseObject* GetSoldier(xml_node item, int mapHeight)
@@ -147,6 +199,44 @@ BaseObject* GetStair(xml_node item, int mapHeight)
 	return stair;
 }
 
+BaseObject* GetHeart(xml_node item, int mapHeight)
+{
+	auto properties = GetObjectProperties(item);
+	if (properties.size() == 0)
+		return nullptr;
+	auto width = 2 * stoi(properties["width"]);
+	auto height = 2 * stoi(properties["height"]);
+
+	auto x = 2 * stoi(properties["x"]);
+	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
+
+	x = x + width / 2;
+	y = y + height / 2;
+	
+	auto heart = new Heart(x, y);
+	heart->init();
+	return heart;
+}
+
+BaseObject* GetBigHeart(xml_node item, int mapHeight)
+{
+	auto properties = GetObjectProperties(item);
+	if (properties.size() == 0)
+		return nullptr;
+	auto width = 2 * stoi(properties["width"]);
+	auto height = 2 * stoi(properties["height"]);
+
+	auto x = 2 * stoi(properties["x"]);
+	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
+
+	x = x + width / 2;
+	y = y + height / 2;
+
+	auto bigHeart = new BigHeart(x, y);
+	bigHeart->init();
+	return bigHeart;
+}
+
 BaseObject* GetObjectByType(xml_node item, eID type, int mapHeight)
 {
 	switch (type)
@@ -167,7 +257,16 @@ BaseObject* GetObjectByType(xml_node item, eID type, int mapHeight)
 			return GetCandle(item, mapHeight);
 
 		case SOLDIER:
-			return GetSoldier(item, mapHeight);
+			return GetSoldier(item, mapHeight);		
+
+		case END:
+			return GetEnd(item, mapHeight);
+
+		case BREAKWALL:
+			return GetBreakWall(item, mapHeight);
+
+		case BREAKWALL1:
+			return GetBreakWall1(item, mapHeight);
 
 		default:
 			return nullptr;
@@ -211,9 +310,9 @@ list<BaseObject*>* GetListObjectFromFile(const string path)
 			continue;
 		}
 
-		BaseObject* baseObj = GetObjectByType(obj, enumID, mapHeight);
+		auto baseObj = GetObjectByType(obj, enumID, mapHeight);
 
-		if (baseObj != NULL)
+		if (baseObj != nullptr)
 		{
 			listObj->push_back(baseObj);
 		}

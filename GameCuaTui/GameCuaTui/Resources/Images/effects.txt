@@ -1,0 +1,11 @@
+frame_name	left	top	right	bottom
+hit_effect_1	0	0	16	30
+hit_effect_2	16	0	22	30
+hit_effect_3	22	0	35	30
+hit_effect_4	35	0	50	30
+splash_effect	50	0	64	30
+breaking_wall	64	0	71	8
+fire_1		0	30	16	92
+fire_2		16	30	61	92
+fire_3		61	30	109	92
+fire_4		109	30	147	92

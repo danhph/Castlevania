@@ -36,7 +36,6 @@ public:
 
 	Player* getPlayer();
 
-
 private:
 	QuadTreeNode* _root;
 

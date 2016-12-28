@@ -28,6 +28,13 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	pSprite = new Sprite(spriteHandle, L"Resources//Images//life.png");
 	this->_listSprite[eID::HEART_ICON] = pSprite;
 
+	pSprite = new Sprite(spriteHandle, L"Resources//Images//border.png");
+	this->_listSprite[eID::BORDER] = pSprite;
+
+	pSprite = new Sprite(spriteHandle, L"Resources//Images//wall_cube.png");
+	this->_listSprite[eID::WALL] = pSprite;
+
+
 	pSprite = new Sprite(spriteHandle, L"Resources//Fonts//fontEx.png", 30, 10);
 	this->_listSprite[eID::FONTEX] = pSprite;
 
@@ -50,10 +57,32 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::ROPE, pSprite));
 	this->loadSpriteInfo(eID::ROPE, "Resources//Images//rope_new.txt");
 
+	pSprite = new Sprite(spriteHandle, L"Resources//Images//items.png");
+	this->_listSprite.insert(pair<eID, Sprite*>(eID::ITEM, pSprite));
+	this->loadSpriteInfo(eID::ITEM, "Resources//Images//items.txt");
+
+	pSprite = new Sprite(spriteHandle, L"Resources//Images//effects.png");
+	this->_listSprite.insert(pair<eID, Sprite*>(eID::EFFECT, pSprite));
+	this->loadSpriteInfo(eID::EFFECT, "Resources//Images//effects.txt");
+
+	pSprite = new Sprite(spriteHandle, L"Resources//Images//breakwall.png");
+	this->_listSprite.insert(pair<eID, Sprite*>(eID::BREAKWALL, pSprite));
+	this->loadSpriteInfo(eID::BREAKWALL, "Resources//Images//breakwall.txt");
+
+	pSprite = new Sprite(spriteHandle, L"Resources//Images//heal.png");
+	this->_listSprite.insert(pair<eID, Sprite*>(eID::HEAL, pSprite));
+	this->loadSpriteInfo(eID::HEAL, "Resources//Images//heal.txt");
+
 	pSprite = loadXMLDoc(spriteHandle, L"Resources//Map//stage21.tmx");
 	pSprite->setOrigin(VECTOR2ZERO);
 	pSprite->setScale(2.0f);
 	this->_listSprite[eID::MAP_STAGE_21] = pSprite;
+
+	pSprite = loadXMLDoc(spriteHandle, L"Resources//Map//stage22.tmx");
+	pSprite->setOrigin(VECTOR2ZERO);
+	pSprite->setScale(2.0f);
+	this->_listSprite[eID::MAP_STAGE_22] = pSprite;
+
 }
 
 Sprite* SpriteManager::loadXMLDoc(LPD3DXSPRITE spritehandle, LPWSTR path)

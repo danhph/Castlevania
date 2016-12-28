@@ -6,7 +6,11 @@
 #include "..\Framework\IComponent.h"
 #include "CollisionBody.h"
 #include "../FrameWork/Animation.h"
-
+#include "../Framework/StopWatch.h"
+#include "Heart.h"
+#include "BigHeart.h"
+#include "QuadtreeNode.h"
+#include <ctime>
 class Candle : public BaseObject
 {
 public:
@@ -19,8 +23,18 @@ public:
 	void release() override;
 	RECT getBounding() override;
 
+	bool checkWasHit();
+
+	void wasHit();
+
 protected:
+	bool _wasHit;
 	Animation* _animation;
+	Sprite* _effect;
+	Animation* _effectAnimation;
+
+	StopWatch* _stopwatch;
+
 	map<string, IComponent*> _componentList;
 };
 #endif

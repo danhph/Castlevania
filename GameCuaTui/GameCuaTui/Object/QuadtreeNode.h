@@ -17,7 +17,12 @@ public:
 	void Insert(BaseObject* object);
 	void DeleteObjects();
 	void Release();
+
+	static QuadTreeNode* getInstance();
+	static void setInstance(QuadTreeNode* root);
 protected:
+	static QuadTreeNode* _instance;
+
 	short m_level;
 	RECT m_bounds;
 	std::vector<BaseObject*> m_objects; 

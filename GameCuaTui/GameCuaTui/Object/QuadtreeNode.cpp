@@ -193,3 +193,15 @@ void QuadTreeNode::Release()
 			SAFE_DELETE(child);
 		}
 }
+
+QuadTreeNode* QuadTreeNode::_instance = nullptr;
+
+QuadTreeNode* QuadTreeNode::getInstance()
+{
+	return _instance;
+}
+
+void QuadTreeNode::setInstance(QuadTreeNode* root)
+{
+	_instance = root;
+}

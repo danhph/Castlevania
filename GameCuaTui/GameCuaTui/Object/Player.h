@@ -1,5 +1,5 @@
-﻿#ifndef __BILL_H__
-#define __BILL_H__
+﻿#ifndef _PLAYER_H_
+#define _PLAYER_H_
 
 #include "../FrameWork/define.h"
 #include "../FrameWork/Animation.h"
@@ -13,13 +13,24 @@
 #include <list>
 #include "Info.h"
 #include "Rope.h"
+#include "Heart.h"
+#include "BigHeart.h"
+#include "../Framework/SceneManager.h"
+#include "Stair.h"
+#include "StairEnd.h"
+#include "Candle.h"
+#include "End.h"
+#include "Soldier.h"
+#include "BreakWall.h"
+#include "BreakWall1.h"
+#include <thread>
 
 #define MOVE_SPEED 125
 #define JUMP_VEL 350
 
 #define GRAVITY 800
 #define ATTACK_TIME 600
-#define PROTECT_TIME 3000
+#define PROTECT_TIME 1000
 
 EVENT_RECEIVER
 class Player : public BaseObject, public IControlable
@@ -56,6 +67,7 @@ public:
 	void unforceMoveLeft();
 	void forceJump();
 	void unforceJump();
+	
 	void unhookinputevent();
 
 	void standing();
@@ -68,6 +80,9 @@ public:
 	void moveDownToStair();
 
 	void jump();
+
+	void behit(eDirection direct);
+
 	void sitDown();
 	void falling();
 	void hit();
@@ -117,8 +132,10 @@ private:
 	eID _currentStage;
 
 	Rope* _rope;
+
+	float _protectTime;
 };
 
 void safeCheckCollision(BaseObject* activeobj, BaseObject* passiveobj, float dt);
 
-#endif // !__BILL_H__
+#endif // !_PLAYER_H_

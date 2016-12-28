@@ -12,8 +12,6 @@ void Movement::update(float deltatime)
 	if (_refSprite == NULL)
 		return;
 	auto position = this->_refSprite->getPosition();
-	if (this->getVelocity().y != 0)
-		this->setVelocity(this->getVelocity());
 
 	this->_velocity += this->_accelerate * deltatime / 1000;
 	position += this->_velocity * deltatime / 1000;

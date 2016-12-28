@@ -6,11 +6,27 @@
 
 Info::Info() : BaseObject(eID::INFO)
 {
+	_border = SpriteManager::getInstance()->getSprite(BORDER);
+	_border->setScale(0.8f);
+	_border->setPosition(300, 42);
+
+	_iconEmptyHitPoint = SpriteManager::getInstance()->getSprite(HEAL);
+	_iconEmptyHitPoint->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::HEAL, "empty"));
+	_iconEmptyHitPoint->setScale(0.85f);
+
+	_iconPlayerHitPoint = SpriteManager::getInstance()->getSprite(HEAL);
+	_iconPlayerHitPoint->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::HEAL, "red_blood"));
+	_iconPlayerHitPoint->setScale(0.9f);
+
+	_iconEnemyHitPoint = SpriteManager::getInstance()->getSprite(HEAL);
+	_iconEnemyHitPoint->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::HEAL, "pink_blood"));
+	_iconEnemyHitPoint->setScale(0.9f);
+
 	_iconHeart = SpriteManager::getInstance()->getSprite(eID::HEART_ICON);
 	_iconHeart->setScale(SCALE_FACTOR);
 	_iconHeart->setPosition(350, 35);
 
-	_textPlayer = new TextSprite(eID::FONTFULL, "PLAYER", GVector2(10, 45));
+	_textPlayer = new TextSprite(eID::FONTFULL, "PLAYER", GVector2(10, 42));
 	_textPlayer->init();
 	_textPlayer->setScale(1.6);
 	_textPlayer->setOrigin(VECTOR2ZERO);
@@ -57,56 +73,93 @@ void Info::init()
 
 void Info::update(float deltatime)
 {
-}
-
-void Info::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
-{
 	stringstream ssHeart;
-	_iconHeart->render(spriteHandle);
 	_textHeart->setPosition(GVector2(_iconHeart->getPosition().x + GAP / 1.4, _iconHeart->getPosition().y + GAP / 1.4));
 	ssHeart << setw(2) << setfill('0') << _heartNumber;
 	_textHeart->setString("-" + ssHeart.str());
-	_textHeart->draw(spriteHandle);
 
 	stringstream ssStage;
 	ssStage << setw(2) << setfill('0') << _stageNumber;
 	_textStage->setString("STAGE-" + ssStage.str());
-	_textStage->draw(spriteHandle);
 
-	stringstream ssTime;
-	ssTime << setw(4) << setfill('0') << _timeNumber;
-	_textTime->setString("TIME " + ssTime.str());
-	_textTime->draw(spriteHandle);
 
 	stringstream ssScore;
 	ssScore << setw(6) << setfill('0') << _scoreNumber;
 	_textScore->setString("SCORE-" + ssScore.str());
-	_textScore->draw(spriteHandle);
 
 	stringstream ssLife;
 	ssLife << setw(2) << setfill('0') << _lifeNumber;
 	_textLife->setString("P-" + ssLife.str());
+
+
+	int time = _timeNumber - ((int)GameTime::getInstance()->getTotalGameTime() - _beginTime) / 1000;
+
+	stringstream ssTime;
+	ssTime << setw(4) << setfill('0') << time;
+	_textTime->setString("TIME " + ssTime.str());
+}
+
+void Info::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
+{
+	_border->render(spriteHandle);
+	_iconHeart->render(spriteHandle);
+	_textHeart->draw(spriteHandle);
+
+	_textStage->draw(spriteHandle);
+
+	_textTime->draw(spriteHandle);
+
+	_textScore->draw(spriteHandle);
+
 	_textLife->draw(spriteHandle);
 
 	_textPlayer->draw(spriteHandle);
+	auto posPlayer = GVector2(100, 34);
+	for (int i = 0; i < 16; i++)
+	{
+		if (i < _playerHitPointNumber)
+		{
+			_iconPlayerHitPoint->setPosition(posPlayer);
+			_iconPlayerHitPoint->render(spriteHandle);
+		}
+		else
+		{
+			_iconEmptyHitPoint->setPosition(posPlayer);
+			_iconEmptyHitPoint->render(spriteHandle);
+		}
+
+		posPlayer = posPlayer + GVector2(10, 0);
+	}
+
 	_textEnemy->draw(spriteHandle);
+	auto posEnemy = GVector2(100, 53);
+	for (int i = 0; i < 16; i++)
+	{
+		if (i < _enemyHitPointNumber)
+		{
+			_iconEnemyHitPoint->setPosition(posEnemy);
+			_iconEnemyHitPoint->render(spriteHandle);
+		}
+		else
+		{
+			_iconEmptyHitPoint->setPosition(posEnemy);
+			_iconEmptyHitPoint->render(spriteHandle);
+		}
+
+		posEnemy = posEnemy + GVector2(10, 0);
+	}
 }
 
 void Info::release()
 {
 	SAFE_DELETE(_iconPlayerHitPoint);
 	SAFE_DELETE(_textPlayer);
-
 	SAFE_DELETE(_iconEnemyHitPoint);
 	SAFE_DELETE(_textEnemy);
-
 	SAFE_DELETE(_iconHeart);
 	SAFE_DELETE(_textHeart);
-
 	SAFE_DELETE(_textLife);
-
 	SAFE_DELETE(_textScore);
-
 	SAFE_DELETE(_textStage);
 }
 
@@ -178,5 +231,6 @@ void Info::SetStage(int number)
 
 void Info::SetTime(int number)
 {
-	_timeNumber = number;
+	_timeNumber = number + 1;
+	_beginTime = GameTime::getInstance()->getTotalGameTime();
 }
