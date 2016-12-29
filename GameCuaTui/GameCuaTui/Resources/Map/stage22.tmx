@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="6" tilewidth="32" tileheight="32" nextobjectid="93">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="6" tilewidth="32" tileheight="32" nextobjectid="100">
  <properties>
   <property name="checkPoint" type="int" value="768"/>
  </properties>
@@ -278,7 +278,7 @@
   <object id="34" name="Candle" type="61" x="1164" y="10" width="8" height="8"/>
   <object id="36" name="BreakWall1" type="63" x="1120.5" y="65" width="16" height="14.5"/>
   <object id="37" name="Candle" type="61" x="971" y="7.5" width="8" height="8"/>
-  <object id="39" name="Soldier" type="71" x="912.5" y="32.5" width="16" height="32">
+  <object id="39" name="Soldier" type="71" x="912" y="32.25" width="16" height="32">
    <properties>
     <property name="ActiveBoundX" value="865"/>
    </properties>
@@ -305,12 +305,9 @@
   <object id="70" name="Wall" type="40" x="32" y="65" width="256" height="16"/>
   <object id="71" name="Candle" type="61" x="268.5" y="41" width="8" height="8"/>
   <object id="72" name="Candle" type="61" x="204" y="9" width="8" height="8"/>
-  <object id="73" name="Soldier" type="71" x="272.5" y="33" width="16" height="32">
+  <object id="73" name="Soldier" type="71" x="271.25" y="32" width="16" height="32">
    <properties>
-    <property name="ActiveBoundHeight" value="32"/>
-    <property name="ActiveBoundWidth" value="128"/>
-    <property name="ActiveBoundX" value="68"/>
-    <property name="ActiveBoundY" value="32"/>
+    <property name="ActiveBoundX" value="210"/>
    </properties>
   </object>
   <object id="75" name="Candle" type="61" x="139.5" y="42.5" width="8" height="8"/>
@@ -327,7 +324,11 @@
     <property name="direct" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="86" name="Stair" type="41" x="48" y="0" width="32" height="32"/>
+  <object id="86" name="Stair" type="41" x="48" y="0" width="32" height="32">
+   <properties>
+    <property name="direct" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="87" name="BACK" type="52" x="1152.04" y="169.333" width="6.5417" height="5.8333">
    <properties>
     <property name="next" type="int" value="21"/>
@@ -337,6 +338,18 @@
   <object id="91" name="START" type="50" x="1152.87" y="156.625" width="18.25" height="20.75">
    <properties>
     <property name="status" type="int" value="2048"/>
+   </properties>
+  </object>
+  <object id="93" name="END" type="51" x="72.5" y="0.5" width="7.75" height="7.5">
+   <properties>
+    <property name="direct" type="bool" value="true"/>
+    <property name="next" value="23"/>
+    <property name="status" value="4096"/>
+   </properties>
+  </object>
+  <object id="98" name="REVIVE" type="53" x="710" y="42.25" width="19" height="21.5">
+   <properties>
+    <property name="status" value="0"/>
    </properties>
   </object>
  </objectgroup>
