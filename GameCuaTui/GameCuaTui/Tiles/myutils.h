@@ -5,6 +5,7 @@
 #include "../pugixml/pugixml.hpp"
 #include "../Object/BaseObject.h"
 #include <list>
+#include "../Object/Door.h"
 #include "../Object/Wall.h"
 #include "../Object/BreakWall.h"
 #include "../Object/BreakWall1.h"
@@ -12,6 +13,8 @@
 #include "../Object/StairEnd.h"
 #include "../Object/Start.h"
 #include "../Object/End.h"
+#include "../Object/Back.h"
+#include "../Object/Revive.h"
 #include "../Object/Soldier.h"
 #include "../Object/Candle.h"
 #include "../Object/Heart.h"
@@ -22,6 +25,9 @@ using namespace pugi;
 map<string, string> GetObjectProperties(xml_node node);
 BaseObject* GetStart(xml_node item, int mapHeight);
 BaseObject* GetEnd(xml_node item, int mapHeight);
+BaseObject* GetBack(xml_node item, int mapHeight);
+BaseObject* GetRevive(xml_node item, int mapHeight);
+BaseObject* GetDoor(xml_node item, int mapHeight);
 BaseObject* GetWall(xml_node item, int mapHeight);
 BaseObject* GetBreakWall(xml_node item, int mapHeight);
 BaseObject* GetBreakWall1(xml_node item, int mapHeight);

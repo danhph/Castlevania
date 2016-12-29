@@ -56,6 +56,9 @@ enum eID
 
 	START = 50,
 	END = 51,
+	BACK = 52,
+	REVIVE = 53,
+	DOOR = 54,
 
 	CANDLE = 61,
 	BREAKWALL = 62,
@@ -68,10 +71,9 @@ enum eID
 	FROG = 74,
 	CROW = 75,
 	BIRD = 76,
-	BONE=77,
 	SKELETON = 78,
-	MONKEY = 79,
 
+	OBJECTS = 79,
 	ITEM = 80,
 	HEART = 81,
 	BIGHEART = 82,

@@ -52,3 +52,7 @@ End::~End()
 }
 
 
+GVector2 End::getPosition()
+{
+	return GVector2(_bound.left, _bound.bottom);
+}

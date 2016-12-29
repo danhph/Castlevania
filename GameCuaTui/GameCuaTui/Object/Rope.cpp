@@ -74,7 +74,7 @@ void Rope::updateRopePos(GVector2 pos)
 				this->setPosition(pos + GVector2(-16, 40));
 				break;
 			default:
-				this->setPosition(pos + GVector2(40, 40));
+				this->setPosition(pos + GVector2(20+ this->_sprite->getFrameWidth() / 2, 38));
 				break;
 		}
 	}
@@ -89,7 +89,7 @@ void Rope::updateRopePos(GVector2 pos)
 				this->setPosition(pos + GVector2(16, 40));
 				break;
 			default:
-				this->setPosition(pos + GVector2(-40, 40));
+				this->setPosition(pos + GVector2(-20 - this->_sprite->getFrameWidth() / 2, 38));
 				break;
 		}
 	}

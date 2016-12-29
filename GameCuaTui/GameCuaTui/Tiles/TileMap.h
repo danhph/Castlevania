@@ -25,11 +25,16 @@ public:
 	~TileMap();
 	int worldWidth();
 	int worldHeight();
+	int getCheckpoint();
+
+	void setCheckpoint(int checkPoint);
 
 private:
 
 	int _frameWidth;
 	int _frameHeight;
+
+	int _checkPoint;
 
 	// Kích thước map tính theo số ô Tile.
 	GVector2 _mapSize;

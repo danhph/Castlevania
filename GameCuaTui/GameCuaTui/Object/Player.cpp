@@ -35,6 +35,10 @@ void Player::init()
 	_animations[eStatus::NORMAL] = new Animation(_sprite, 0.1f);
 	_animations[eStatus::NORMAL]->addFrameRect(eID::PLAYER, "walk_right_01", NULL);
 
+	_animations[eStatus::DIE] = new Animation(_sprite, 1.0f);
+	_animations[eStatus::DIE]->addFrameRect(eID::PLAYER, "death", "death", NULL);
+	_animations[eStatus::DIE]->animateFromTo(0, 1, false);
+
 	_animations[eStatus::RUNNING] = new Animation(_sprite, 0.08f);
 	_animations[eStatus::RUNNING]->addFrameRect(eID::PLAYER, "walk_right_01", "walk_right_02", "walk_right_03", NULL);
 
@@ -83,9 +87,11 @@ void Player::init()
 	this->setStatus(eStatus::NORMAL);
 
 	// create stopWatch
-	_stopWatch = new StopWatch();
+	_stairStopWatch = new StopWatch();
 	_ropeStopWatch = new StopWatch();
 
+	this->_isRevive = false;
+	this->_isBack = false;
 	this->resetValues();
 
 	_info = new Info();
@@ -101,6 +107,27 @@ void Player::init()
 
 void Player::update(float deltatime)
 {
+	if (_isPlayingMovie)
+	{
+		if (_movieStartMove)
+		{
+			if (_mapDirect == RIGHT)
+			{
+				if (this->getPosition().x > _endMoviePosX)
+					this->setStatus(eStatus::MOVING_LEFT);
+				else
+					this->setStatus(eStatus::NORMAL);
+			}
+			else
+			{
+				if (this->getPosition().x < _endMoviePosX)
+					this->setStatus(eStatus::MOVING_RIGHT);
+				else
+					this->setStatus(eStatus::NORMAL);
+			}
+		}
+	}
+
 	if (_protectTime > 0)
 	{
 		_protectTime -= deltatime;
@@ -246,7 +273,9 @@ void Player::updateCurrentAnimateIndex()
 
 void Player::resetValues()
 {
-	this->setScale(SCALE_FACTOR);
+	_endMoviePosX = -1;
+	_isPlayingMovie = false;
+	_movieStartMove = false;
 	_isAttacking = false;
 	_stair = nullptr;
 	_stairEnd = nullptr;
@@ -255,14 +284,27 @@ void Player::resetValues()
 	_movingSpeed = MOVE_SPEED;
 	_protectTime = PROTECT_TIME;
 
+	if (_isRevive)
+	{
+		this->setScale(SCALE_FACTOR);
+		this->setPosition(this->_revivePos);
+	}
+	else if (_isBack)
+	{
+		this->setPosition(_backPos);
+		this->setStatus(_backStatus);
+	}
 
 	auto move = (Movement*)this->_componentList["Movement"];
-	move->setVelocity(GVector2(0,0));
+	move->setVelocity(GVector2(0, 0));
 
 	for (auto animate : _animations)
 	{
 		animate.second->setColorFlash(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 	}
+
+	_isRevive = false;
+	_isBack = false;
 }
 
 void Player::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
@@ -301,13 +343,15 @@ void Player::release()
 	_componentList.clear();
 
 	SAFE_DELETE(_sprite);
-	SAFE_DELETE(_stopWatch);
+	SAFE_DELETE(_stairStopWatch);
 	SAFE_DELETE(_info);
 	this->unhookinputevent();
 }
 
 void Player::onKeyPressed(KeyEventArg* key_event)
 {
+	if (_isPlayingMovie)
+		return;
 	if (this->isInStatus(eStatus::DIE))
 		return;
 	if (_isAttacking)
@@ -416,6 +460,11 @@ void Player::onKeyPressed(KeyEventArg* key_event)
 					break;
 				}
 				this->hit();
+				break;
+			}
+		case DIK_Q:
+			{
+				_rope->upgradeRope();
 				break;
 			}
 		default:
@@ -607,7 +656,14 @@ float Player::checkCollision(BaseObject* object, float dt)
 		{
 			if (_protectTime < 0)
 			{
-				if (collisionBody->checkCollision(object, direction, dt, false))
+				if (this->isInStatus(STAND_UP) || this->isInStatus(MOVING_UP) || this->isInStatus(STAND_DOWN) || this->isInStatus(MOVING_DOWN))
+				{
+					if (collisionBody->checkCollision(object, direction, dt, false))
+					{
+						behit(NONE);
+					}
+				}
+				else if (collisionBody->checkCollision(object, direction, dt, false))
 				{
 					float moveX, moveY;
 					if (collisionBody->isColliding(object, moveX, moveY, dt))
@@ -625,11 +681,26 @@ float Player::checkCollision(BaseObject* object, float dt)
 	}
 	else if (objectId == END)
 	{
-		if (this->getStatus() == MOVING_UP || this->getStatus() == MOVING_DOWN)
+		if (this->getStatus() == MOVING_UP)
 		{
 			if (collisionBody->checkCollision(object, direction, dt, false))
 			{
 				this->_currentStage = ((End*)object)->getNextStage();
+				this->_isChangedStage = true;
+				this->_backPos = ((End*)object)->getPosition();
+				this->_backStatus = ((End*)object)->getStatus();
+			}
+		}
+	}
+	else if (objectId == BACK)
+	{
+		if (this->getStatus() != STAND_UP && this->getStatus() != MOVING_UP)
+		{
+			if (collisionBody->checkCollision(object, direction, dt, false))
+			{
+				this->_currentStage = ((Back*)object)->getNextStage();
+				this->_isChangedStage = true;
+				this->_isBack = true;
 			}
 		}
 	}
@@ -695,7 +766,38 @@ float Player::checkCollision(BaseObject* object, float dt)
 			}
 		}
 	}
-	
+	else if (objectId == REVIVE)
+	{
+		_revivePos = object->getPosition();
+		_reviveStage = this->_currentStage;
+	}
+	else if (objectId == DOOR)
+	{
+		if (collisionBody->checkCollision(object, direction, dt, false))
+		{
+			float moveX, moveY;
+			if (collisionBody->isColliding(object, moveX, moveY, dt))
+			{
+				collisionBody->updateTargetPosition(object, direction, false, GVector2(moveX, moveY));
+			}
+			if (direction == _mapDirect)
+			{
+				if (_endMoviePosX == -1)
+				{
+					if (_mapDirect == RIGHT)
+					{
+						_endMoviePosX = this->getPositionX() - 128;
+					}
+					else
+					{
+						_endMoviePosX = this->getPositionX() + 128;
+					}
+				}
+				((Door*)object)->Open();
+				_isPlayingMovie = true;
+			}
+		}
+	}
 	return 1.0f;
 }
 
@@ -711,6 +813,8 @@ void Player::checkPosition()
 	{
 		if (_status != eStatus::DIE)
 			_status = eStatus::DIE;
+		if (_protectTime > 0)
+			_protectTime = 0;
 		this->die();
 	}
 }
@@ -777,18 +881,17 @@ void Player::moveDown()
 	}
 
 	int x = this->getPositionX() - _stair->getBounding().left;
-	int y = this->getPositionY() - _stair->getBounding().bottom;
 
 	x = (x + 9) / 16 * 16;
-	y = (y + 9) / 16 * 16;
 
-	if (x == 0 || y == 0)
+	if (x == 0)
 	{
+		this->setPosition(_stair->getBounding().left, _stair->getBounding().bottom);
 		this->setStatus(NORMAL);
 	}
 
 
-	if (_stopWatch->isTimeLoop(120))
+	if (_stairStopWatch->isTimeLoop(120))
 	{
 		if (!_holdingKey)
 		{
@@ -800,7 +903,7 @@ void Player::moveDown()
 			this->setStatus(STAND_DOWN);
 		}
 
-		_stopWatch->restart();
+		_stairStopWatch->restart();
 	}
 }
 
@@ -839,7 +942,7 @@ void Player::moveUp()
 	if (_stair == nullptr)
 	{
 		this->setStatus(NORMAL);
-		_stopWatch->restart();
+		_stairStopWatch->restart();
 		return;
 	}
 
@@ -856,7 +959,7 @@ void Player::moveUp()
 		move->setVelocity(GVector2(-_movingSpeed, _movingSpeed));
 	}
 
-	if (_stopWatch->isTimeLoop(120))
+	if (_stairStopWatch->isTimeLoop(120))
 	{
 		if (!_holdingKey)
 		{
@@ -866,7 +969,11 @@ void Player::moveUp()
 			int y = this->getPositionY() - _stair->getBounding().bottom;
 
 			x = x / 16 * 16;
-			y = y / 16 * 16;
+
+			if (x == 0)
+			{
+				x = 1;
+			}
 
 			this->setPositionX(x + _stair->getBounding().left);
 			this->setPositionY(x + _stair->getBounding().bottom);
@@ -874,7 +981,7 @@ void Player::moveUp()
 			this->setStatus(STAND_UP);
 		}
 
-		_stopWatch->restart();
+		_stairStopWatch->restart();
 	}
 }
 
@@ -896,12 +1003,22 @@ void Player::jump()
 
 void Player::behit(eDirection direct)
 {
+	if (direct == NONE)
+	{
+		_protectTime = PROTECT_TIME;
+		_info->SetPlayerHitPoint(_info->GetPlayerHitPoint() - 2);
+		return;
+	}
+
 	if (this->isInStatus(eStatus::BEING_HIT))
 		return;
 
 	this->setStatus(eStatus::BEING_HIT);
 
 	auto move = (Movement*)this->_componentList["Movement"];
+
+	auto g = (Gravity*)this->_componentList["Gravity"];
+	g->setStatus(eGravityStatus::FALLING__DOWN);
 
 	switch (direct)
 	{
@@ -928,10 +1045,6 @@ void Player::behit(eDirection direct)
 				break;
 			}
 	}
-
-
-	auto g = (Gravity*)this->_componentList["Gravity"];
-	g->setStatus(eGravityStatus::FALLING__DOWN);
 
 	//SoundManager::getInstance()->Play(eSoundId::JUMP_SOUND);
 }
@@ -967,6 +1080,9 @@ void Player::hit()
 
 void Player::revive()
 {
+	this->setStage(_reviveStage);
+	this->_isChangedStage = true;
+	this->_isRevive = true;
 }
 
 void Player::die()
@@ -1075,12 +1191,44 @@ void safeCheckCollision(BaseObject* activeobj, BaseObject* passiveobj, float dt)
 	}
 }
 
-eID Player::getStage()
+bool Player::isChangedStage()
 {
-	return _currentStage;
+	return _isChangedStage;
 }
 
 void Player::setStage(eID id)
 {
 	_currentStage = id;
+
+	if (((int)id) >= 24)
+		_mapDirect = LEFT;
+	else
+		_mapDirect = RIGHT;
+
+	_isChangedStage = false;
+}
+
+eID Player::getStage()
+{
+	return _currentStage;
+}
+
+bool Player::IsPlayingMove()
+{
+	return _isPlayingMovie;
+}
+
+eDirection Player::getMapDirection()
+{
+	return _mapDirect;
+}
+
+void Player::StopMovie()
+{
+	_isPlayingMovie = false;
+}
+
+void Player::StartMovieMove()
+{
+	_movieStartMove = true;
 }

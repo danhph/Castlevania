@@ -47,13 +47,16 @@ private:
 
 	BaseObject* _player;
 
-	void updateViewport(BaseObject* objTracker);
+	void updateViewport(Player* player, float dt);
 
 	bool checkEndGame();
 
 	void initStage();
 
 	eID _currentStage;
+
+
+	bool _isPlayingMovie;
 };
 
 #endif //

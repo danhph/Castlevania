@@ -20,6 +20,8 @@
 #include "StairEnd.h"
 #include "Candle.h"
 #include "End.h"
+#include "Door.h"
+#include "Back.h"
 #include "Soldier.h"
 #include "BreakWall.h"
 #include "BreakWall1.h"
@@ -30,7 +32,7 @@
 
 #define GRAVITY 800
 #define ATTACK_TIME 600
-#define PROTECT_TIME 1000
+#define PROTECT_TIME 1500
 
 EVENT_RECEIVER
 class Player : public BaseObject, public IControlable
@@ -93,18 +95,25 @@ public:
 
 	void setStage(eID id);
 	eID getStage();
+	
+	bool isChangedStage();
 
 	RECT getBounding() override;
 	void resetValues();
 
 	GVector2 getPosition() override;
 
+	bool IsPlayingMove();
+	void StartMovieMove();
+	void StopMovie();
+
+	eDirection getMapDirection();
 private:
 	map<int, Animation*> _animations;
 	map<string, IComponent*> _componentList;
 
 	float _movingSpeed;
-	StopWatch* _stopWatch;
+	StopWatch* _stairStopWatch;
 	StopWatch* _ropeStopWatch;
 
 	eStatus _currentAnimateIndex;
@@ -128,12 +137,26 @@ private:
 	bool _isAttacking;
 
 	BaseObject* _stairEnd;
+	GVector2 _backPos;
+	eStatus _backStatus;
+	bool _isBack;
 
 	eID _currentStage;
+	bool _isChangedStage;
 
 	Rope* _rope;
 
 	float _protectTime;
+
+	eID _reviveStage;
+	GVector2 _revivePos;
+	bool _isRevive;
+	
+	bool _isPlayingMovie;
+	bool _movieStartMove;
+	eDirection _mapDirect;
+
+	int _endMoviePosX;
 };
 
 void safeCheckCollision(BaseObject* activeobj, BaseObject* passiveobj, float dt);

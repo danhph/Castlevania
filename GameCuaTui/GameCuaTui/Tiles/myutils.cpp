@@ -39,6 +39,43 @@ BaseObject* GetEnd(xml_node item, int mapHeight)
 
 	auto end = new End(x, y, width, height);
 	end->setNextStage((eID)stoi(properties["next"]));
+	end->setStatus((eStatus)stoi(properties["status"]));
+	return end;
+}
+
+BaseObject* GetBack(xml_node item, int mapHeight)
+{
+	auto properties = GetObjectProperties(item);
+	if (properties.size() == 0)
+		return nullptr;
+
+	auto width = 2 * stoi(properties["width"]);
+	auto height = 2 * stoi(properties["height"]);
+
+	auto x = 2 * stoi(properties["x"]);
+	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
+
+
+	auto back = new Back(x, y, width, height);
+	back->setNextStage((eID)stoi(properties["next"]));
+	return back;
+	
+}
+
+BaseObject* GetRevive(xml_node item, int mapHeight)
+{
+	auto properties = GetObjectProperties(item);
+	if (properties.size() == 0)
+		return nullptr;
+
+	auto width = 2 * stoi(properties["width"]);
+	auto height = 2 * stoi(properties["height"]);
+
+	auto x = 2 * stoi(properties["x"]);
+	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
+
+
+	auto end = new Revive(x, y, width, height);
 	return end;
 }
 
@@ -59,6 +96,24 @@ BaseObject* GetStart(xml_node item, int mapHeight)
 	start->setStatus((eStatus) stoi(properties["status"]));
 
 	return start;
+}
+
+BaseObject* GetDoor(xml_node item, int mapHeight)
+{
+	auto properties = GetObjectProperties(item);
+	if (properties.size() == 0)
+		return nullptr;
+	auto width = 2 * stoi(properties["width"]);
+	auto height = 2 * stoi(properties["height"]);
+
+	auto x = 2 * stoi(properties["x"]);
+	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
+
+	x = x + width / 2;
+	y = y + height / 2;
+	auto door = new Door(x, y);
+	door->init();
+	return door;
 }
 
 BaseObject* GetWall(xml_node item, int mapHeight)
@@ -246,12 +301,15 @@ BaseObject* GetObjectByType(xml_node item, eID type, int mapHeight)
 			
 		case STAIR:
 			return GetStair(item, mapHeight);
-		
 		case STAIR_END:
 			return GetStairEnd(item, mapHeight);
 
 		case START:
 			return GetStart(item, mapHeight);
+		case BACK:
+			return GetBack(item, mapHeight);
+		case END:
+			return GetEnd(item, mapHeight);
 
 		case CANDLE:
 			return GetCandle(item, mapHeight);
@@ -259,12 +317,14 @@ BaseObject* GetObjectByType(xml_node item, eID type, int mapHeight)
 		case SOLDIER:
 			return GetSoldier(item, mapHeight);		
 
-		case END:
-			return GetEnd(item, mapHeight);
+		
+		case REVIVE:
+			return GetRevive(item, mapHeight);
+		case DOOR:
+			return GetDoor(item, mapHeight);
 
 		case BREAKWALL:
 			return GetBreakWall(item, mapHeight);
-
 		case BREAKWALL1:
 			return GetBreakWall1(item, mapHeight);
 

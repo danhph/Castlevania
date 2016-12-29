@@ -19,11 +19,8 @@ void PlayScene::setViewport(Viewport* viewport)
 
 void PlayScene::initStage()
 {
-	this->getPlayer()->setStage(_currentStage);
-	this->getPlayer()->resetValues();
-
 	_tileMap = StageManager::getInstance()->getTileMap(_currentStage);
-	
+
 	auto quadTreeWidth = (_tileMap->worldWidth() >= _tileMap->worldHeight()) ? _tileMap->worldWidth() : _tileMap->worldHeight();
 	RECT rectMap;
 	rectMap.left = 0;
@@ -47,6 +44,9 @@ void PlayScene::initStage()
 			_root->Insert(obj);
 	}
 	listObject->clear();
+
+	this->getPlayer()->setStage(_currentStage);
+	this->getPlayer()->resetValues();
 }
 
 bool PlayScene::init()
@@ -72,7 +72,7 @@ void PlayScene::updateInput(float dt)
 
 void PlayScene::update(float dt)
 {
-	if (this->getPlayer()->getStage() != _currentStage)
+	if (this->getPlayer()->isChangedStage())
 	{
 		_currentStage = this->getPlayer()->getStage();
 		initStage();
@@ -85,7 +85,7 @@ void PlayScene::update(float dt)
 
 	if (_player->isInStatus(eStatus::DIE) == false)
 	{
-		this->updateViewport(_player);
+		this->updateViewport(this->getPlayer(), dt);
 	}
 
 	RECT viewport_in_transform = _viewport->getBounding();
@@ -94,19 +94,24 @@ void PlayScene::update(float dt)
 
 	_activeObject.clear();
 	_activeObject = _root->Retrieve(viewport_in_transform);
-	_activeObject.push_back(_player);
 
 	for (auto obj : _activeObject)
+		_player->checkCollision(obj, dt);
+
+	auto i = 0;
+	int j;
+	while (i < _activeObject.size())
 	{
-		if (obj == nullptr || obj->isInStatus(eStatus::DESTROY) || obj->getId() == eID::WALL)
-			continue;
-		for (BaseObject* passiveObj : _activeObject)
+		j = i + 1;
+		while (j < _activeObject.size())
 		{
-			if (passiveObj == nullptr || passiveObj == obj || passiveObj->isInStatus(eStatus::DESTROY))
-				continue;
-			obj->checkCollision(passiveObj, dt);
+			_activeObject[i]->checkCollision(_activeObject[j], dt);
+			j++;
 		}
+		i++;
 	}
+
+	_player->update(dt);
 
 	for (BaseObject* obj : _activeObject)
 	{
@@ -114,18 +119,56 @@ void PlayScene::update(float dt)
 	}
 }
 
-void PlayScene::updateViewport(BaseObject* objTracker)
+void PlayScene::updateViewport(Player* player, float dt)
 {
 	GVector2 current_position = _viewport->getPositionWorld();
 	GVector2 worldsize = this->_tileMap->getWorldSize();
 
-	GVector2 new_position = GVector2(max(objTracker->getPositionX() - 260, 0), WINDOW_HEIGHT);
+	auto playerX = player->getPositionX();
+	auto isPlayingMovie = player->IsPlayingMove();
+	auto checkPoint = _tileMap->getCheckpoint();
 
-	if (new_position.x < current_position.x)
+	GVector2 new_position = GVector2(max(playerX - 260, 0), WINDOW_HEIGHT);
+
+	if (!isPlayingMovie)
 	{
-		new_position.x = current_position.x;
+		if (playerX > checkPoint && new_position.x < checkPoint)
+		{
+			new_position.x = checkPoint;
+		}
+		if (playerX < checkPoint + 32 && new_position.x + WINDOW_WIDTH > checkPoint)
+		{
+			new_position.x = checkPoint - WINDOW_WIDTH;
+		}
 	}
+	else if (_player->getVelocity().x == 0)
+	{
+		new_position = _viewport->getPositionWorld();
+		
+		if (new_position.x + WINDOW_WIDTH / 2 <= checkPoint)
+			player->StartMovieMove();
+		
+		if (player->getMapDirection() == RIGHT)
+		{
+			new_position.x -= 125 * dt/1000;
+			if (new_position.x + WINDOW_WIDTH <= checkPoint)
+			{
+				new_position.x = checkPoint - WINDOW_WIDTH;
+				player->StopMovie();
+			}
+		}
+		else
+		{
+			new_position.x += 125 * dt/1000;
+			if (new_position.x  >= checkPoint)
+			{
+				new_position.x = checkPoint;
+				player->StopMovie();
+			}
+		}
 
+		
+	}
 	if (new_position.x + WINDOW_WIDTH > worldsize.x)
 	{
 		new_position.x = worldsize.x - WINDOW_WIDTH;
@@ -137,11 +180,22 @@ void PlayScene::updateViewport(BaseObject* objTracker)
 void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 {
 	_tileMap->draw(spriteHandle, _viewport);
-
-	for (BaseObject* object : _activeObject)
+	if (!this->getPlayer()->IsPlayingMove())
 	{
-		object->draw(spriteHandle, _viewport);
+		for (BaseObject* object : _activeObject)
+		{
+			object->draw(spriteHandle, _viewport);
+		}
 	}
+	else
+	{
+		for (BaseObject* object : _activeObject)
+		{
+			if (object->getId() == DOOR)
+				object->draw(spriteHandle, _viewport);
+		}
+	}
+	_player->draw(spriteHandle, _viewport);
 }
 
 void PlayScene::release()

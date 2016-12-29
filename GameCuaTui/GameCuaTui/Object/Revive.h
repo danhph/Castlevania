@@ -1,25 +1,24 @@
-#ifndef __END_H__
-#define __END_H__
+#ifndef __REVIVE_H__
+#define __REVIVE_H__
 
 #include "..\FrameWork\define.h"
 #include "BaseObject.h"
 #include "..\Framework\IComponent.h"
 #include "CollisionBody.h"
 
-class End : public BaseObject
+class Revive : public BaseObject
 {
 public:
-	End(int x, int y, int width, int height);
-	~End();
+	Revive(int x, int y, int width, int height);
+	~Revive();
 
 	void init() override;
 	void update(float deltatime) override;
 	void draw(LPD3DXSPRITE, Viewport*) override;
 	void release() override;
 	RECT getBounding() override;
+
 	GVector2 getPosition() override;
-	eID getNextStage();
-	void setNextStage(eID id);
 private:
 	map<string, IComponent*> _listComponent;
 
@@ -29,4 +28,4 @@ private:
 };
 
 
-#endif // !__END_H__
+#endif // !__REVIVE_H__

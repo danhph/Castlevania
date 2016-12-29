@@ -7,6 +7,7 @@ TileMap::TileMap()
 
 TileMap::~TileMap()
 {
+	_checkPoint = -1;
 }
 
 void TileMap::release()
@@ -50,6 +51,12 @@ GVector2 TileMap::getWorldSize()
 	return result;
 }
 
+void TileMap::setCheckpoint(int checkPoint)
+{
+	_checkPoint = checkPoint;
+}
+
+
 TileMap* TileMap::LoadFromFile(const string path, eID spriteId)
 {
 	xml_document doc;
@@ -64,6 +71,13 @@ TileMap* TileMap::LoadFromFile(const string path, eID spriteId)
 	xml_node map = doc.child("map");
 	if (map == NULL)
 		return nullptr;
+
+	xml_node properties = map.child("properties");
+	if (properties != NULL)
+	{
+		tileMap->setCheckpoint(properties.child("property").attribute("value").as_int()*2);
+	}
+	
 
 	xml_node tileset = map.child("tileset");
 	tileMap->_tileSet = new TileSet(spriteId);
@@ -115,3 +129,7 @@ int TileMap::worldWidth()
 	return _frameHeight * _mapSize.y;
 }
 
+int TileMap::getCheckpoint()
+{
+	return _checkPoint;
+}

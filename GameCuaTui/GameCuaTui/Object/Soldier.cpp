@@ -80,9 +80,9 @@ void Soldier::update(float deltatime)
 			auto ran = rand() % 10;
 			BaseObject* heart = nullptr;
 			if (ran < 3)
-				heart = new BigHeart(this->getPositionX(), this->getPositionY());
+				heart = new BigHeart(this->getPositionX(), this->getPositionY() + 32);
 			else
-				heart = new Heart(this->getPositionX(), this->getPositionY());
+				heart = new Heart(this->getPositionX(), this->getPositionY() + 32);
 
 			if (heart != nullptr)
 			{

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="8" height="6" tilewidth="32" tileheight="32" nextobjectid="60">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="8" height="6" tilewidth="32" tileheight="32" nextobjectid="62">
  <tileset firstgid="1" name="frame0" tilewidth="32" tileheight="32" tilecount="48" columns="8">
   <image source="frame0.png" width="256" height="192"/>
  </tileset>
@@ -56,7 +56,7 @@
   </data>
  </layer>
  <objectgroup name="Object Layer 1">
-  <object id="1" name="START" type="50" x="53.9167" y="141.5" width="18.25" height="20.75">
+  <object id="1" name="REVIVE" type="53" x="53.9167" y="141.5" width="18.25" height="20.75">
    <properties>
     <property name="status" type="int" value="0"/>
    </properties>
@@ -80,7 +80,7 @@
   <object id="29" name="Wall" type="40" x="224" y="96" width="16" height="64"/>
   <object id="30" name="Wall" type="40" x="170.75" y="97.25" width="52.5" height="4"/>
   <object id="31" name="Wall" type="40" x="240" y="64" width="16" height="32"/>
-  <object id="32" name="Stair" type="41" x="112" y="104.5" width="57.5" height="57">
+  <object id="32" name="Stair" type="41" x="112" y="104.5" width="58.25" height="57">
    <properties>
     <property name="direct" type="bool" value="true"/>
    </properties>
@@ -97,12 +97,18 @@
     <property name="direct" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="57" name="END" type="51" x="136.208" y="129.542" width="7.6667" height="7.5833">
+  <object id="57" name="END" type="51" x="136.549" y="1.67836" width="7.6667" height="7.5833">
    <properties>
-    <property name="dỉrect" type="bool" value="true"/>
+    <property name="direct" type="bool" value="true"/>
     <property name="next" type="int" value="22"/>
+    <property name="status" type="int" value="4096"/>
    </properties>
   </object>
   <object id="58" name="Wall" type="40" x="17" y="49.625" width="15" height="62"/>
+  <object id="60" name="START" type="50" x="54.125" y="141.375" width="18.25" height="20.75">
+   <properties>
+    <property name="status" type="int" value="0"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

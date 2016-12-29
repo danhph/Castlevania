@@ -1,23 +1,23 @@
-#ifndef __END_H__
-#define __END_H__
+#ifndef __BACK_H__
+#define __BACK_H__
 
 #include "..\FrameWork\define.h"
 #include "BaseObject.h"
 #include "..\Framework\IComponent.h"
 #include "CollisionBody.h"
 
-class End : public BaseObject
+class Back : public BaseObject
 {
 public:
-	End(int x, int y, int width, int height);
-	~End();
+	Back(int x, int y, int width, int height);
+	~Back();
 
 	void init() override;
 	void update(float deltatime) override;
 	void draw(LPD3DXSPRITE, Viewport*) override;
 	void release() override;
 	RECT getBounding() override;
-	GVector2 getPosition() override;
+
 	eID getNextStage();
 	void setNextStage(eID id);
 private:
@@ -29,4 +29,4 @@ private:
 };
 
 
-#endif // !__END_H__
+#endif // !__BACK_H__

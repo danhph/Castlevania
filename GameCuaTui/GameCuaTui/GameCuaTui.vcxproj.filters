@@ -191,85 +191,13 @@
     <ClCompile Include="Object\BreakWall1.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object\YellowBag.cpp">
+    <ClCompile Include="Object\Revive.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object\WhipUpgrade.cpp">
+    <ClCompile Include="Object\Back.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object\SmallRedII.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\SmallBlueII.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\RedBag.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\PotRoast.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\HolyWater.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Dagger.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Cross.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Boomerang.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\BlueBag.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\BigRedII.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\BigBlueII.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Ball2.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Ball1.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Axe.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\StopTime.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\RedBat.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\BlueBat.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Frog.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Crow.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Bird.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Bone.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Skeleton.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Dinosaur.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\FireBall.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Monkey.cpp">
+    <ClCompile Include="Object\Door.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
   </ItemGroup>
@@ -430,85 +358,13 @@
     <ClInclude Include="Object\BreakWall1.h">
       <Filter>Header Files\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object\YellowBag.h">
+    <ClInclude Include="Object\Revive.h">
       <Filter>Header Files\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object\WhipUpgrade.h">
+    <ClInclude Include="Object\Back.h">
       <Filter>Header Files\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object\SmallRedII.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\SmallBlueII.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\RedBag.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\PotRoast.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\HolyWater.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Dagger.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Cross.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Boomerang.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\BlueBag.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\BigRedII.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\BigBlueII.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Ball2.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Ball1.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Axe.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\StopTime.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\RedBat.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\BlueBat.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Frog.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Crow.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Bird.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Bone.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Skeleton.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Dinosaur.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\FireBall.h">
-      <Filter>Header Files\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Monkey.h">
+    <ClInclude Include="Object\Door.h">
       <Filter>Header Files\Object</Filter>
     </ClInclude>
   </ItemGroup>

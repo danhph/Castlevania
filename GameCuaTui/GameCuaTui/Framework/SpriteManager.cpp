@@ -69,6 +69,10 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::EFFECT, pSprite));
 	this->loadSpriteInfo(eID::EFFECT, "Resources//Images//effects.txt");
 
+	pSprite = new Sprite(spriteHandle, L"Resources//Images//objects.png");
+	this->_listSprite.insert(pair<eID, Sprite*>(eID::OBJECTS, pSprite));
+	this->loadSpriteInfo(eID::OBJECTS, "Resources//Images//objects.txt");
+
 	pSprite = new Sprite(spriteHandle, L"Resources//Images//breakwall.png");
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::BREAKWALL, pSprite));
 	this->loadSpriteInfo(eID::BREAKWALL, "Resources//Images//breakwall.txt");
@@ -86,7 +90,6 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	pSprite->setOrigin(VECTOR2ZERO);
 	pSprite->setScale(2.0f);
 	this->_listSprite[eID::MAP_STAGE_22] = pSprite;
-
 
 }
 
