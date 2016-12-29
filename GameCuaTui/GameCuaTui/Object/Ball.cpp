@@ -1,16 +1,16 @@
-#include "RedBat.h"
+#include "Ball.h"
 
 
-RedBat::RedBat(int x, int y, int activeX) : BaseObject(REDBAT)
+Ball::Ball(int x, int y, int activeX) : BaseObject(BALL)
 {
-	_sprite = SpriteManager::getInstance()->getSprite(eID::ENEMY);
-	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ENEMY, "red_bat_1"));
+	_sprite = SpriteManager::getInstance()->getSprite(eID::ITEM);
+	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ITEM, "ball_1"));
 	_sprite->setPosition(x, y);
 	_sprite->setScale(2.0);
 	_animation = new Animation(_sprite, 0.2f);
 	_activeXLeft = activeX;
 	_activeXRight = x;
-	_animation->addFrameRect(eID::ENEMY, "red_bat_1", "red_bat_2", "red_bat_3", "red_bat_4",NULL);
+	_animation->addFrameRect(eID::ITEM, "ball_1", "ball_2", NULL);
 
 	_effect = SpriteManager::getInstance()->getSprite(eID::EFFECT);
 	_effect->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::EFFECT, "hit_effect_1"));
@@ -20,7 +20,7 @@ RedBat::RedBat(int x, int y, int activeX) : BaseObject(REDBAT)
 	_hitPoint = 2;
 }
 
-void RedBat::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
+void Ball::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
 	if (_hitPoint > 0)
 		_animation->draw(spriteHandle, viewport);
@@ -30,7 +30,7 @@ void RedBat::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 	}
 }
 
-void RedBat::update(float deltatime)
+void Ball::update(float deltatime)
 {
 	_effect->setPosition(this->getPosition());
 	if (_hitPoint > 0)
@@ -51,23 +51,23 @@ void RedBat::update(float deltatime)
 		}
 		else if (this->getPositionX() < _activeXLeft)
 		{
-			move->setVelocity(GVector2(BAT_MOVE_SPEED, 0));
+			move->setVelocity(GVector2(BALL_MOVE_SPEED, 0));
 			
 			if (this->_sprite->getScale().x > 0)
 				this->_sprite->setScaleX(this->_sprite->getScale().x * (-1));
 		}
 		else if (this->getPositionX() > _activeXRight)
 		{
-			move->setVelocity(GVector2(-BAT_MOVE_SPEED, 0));
+			move->setVelocity(GVector2(-BALL_MOVE_SPEED, 0));
 			if (this->_sprite->getScale().x < 0)
 				this->_sprite->setScaleX(this->_sprite->getScale().x * (-1));
 		}
 		else
 		{
 			if (this->_sprite->getScale().x < 0)
-				move->setVelocity(GVector2(BAT_MOVE_SPEED, 0));
+				move->setVelocity(GVector2(BALL_MOVE_SPEED, 0));
 			else
-				move->setVelocity(GVector2(-BAT_MOVE_SPEED, 0));
+				move->setVelocity(GVector2(-BALL_MOVE_SPEED, 0));
 		}
 	}
 	else
@@ -98,7 +98,7 @@ void RedBat::update(float deltatime)
 	}
 }
 
-void RedBat::release()
+void Ball::release()
 {
 	SAFE_DELETE(_animation);
 	for (auto it = _componentList.begin(); it != _componentList.end(); it++)
@@ -108,12 +108,12 @@ void RedBat::release()
 	_componentList.clear();
 }
 
-void RedBat::init()
+void Ball::init()
 {
 	auto collisionBody = new CollisionBody(this);
 	_componentList["CollisionBody"] = collisionBody;
 
-	auto movement = new Movement(GVector2(0, 0), GVector2(-BAT_MOVE_SPEED, 0), _sprite);
+	auto movement = new Movement(GVector2(0, 0), GVector2(-BALL_MOVE_SPEED, 0), _sprite);
 	_componentList["Movement"] = movement;
 
 	_effectStopWatch = new StopWatch();
@@ -121,7 +121,7 @@ void RedBat::init()
 	_startHit = false;
 }
 
-void RedBat::wasHit(int hitpoint)
+void Ball::wasHit(int hitpoint)
 {
 	if (!_startHit)
 	{
@@ -139,7 +139,7 @@ void RedBat::wasHit(int hitpoint)
 	}
 }
 
-bool RedBat::isDead()
+bool Ball::isDead()
 {
 	return (_hitPoint <= 0);
 }

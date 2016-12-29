@@ -1,5 +1,5 @@
-#ifndef _REDBAT_H
-#define _REDBAT_H
+#ifndef _BALL_H
+#define _BALL_H
 
 #include "..\FrameWork\define.h"
 #include "BaseObject.h"
@@ -12,12 +12,12 @@
 #include "BigHeart.h"
 #include "Heart.h"
 
-#define BAT_MOVE_SPEED 70
+#define BALL_MOVE_SPEED 70
 
-class RedBat : public BaseObject
+class Ball : public BaseObject
 {
 public:
-	RedBat(int x, int y, int activeX);
+	Ball(int x, int y, int activeX);
 
 
 	void init() override;
