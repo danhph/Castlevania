@@ -12,6 +12,8 @@ FireBall::FireBall(int x, int y, bool direct) :BaseObject(FIREBALL)
 		movement->setVelocity(GVector2(FIREBALL_SPEED, 0));
 	else
 		movement->setVelocity(GVector2(-FIREBALL_SPEED, 0));
+
+	_isDead = false;
 }
 
 void FireBall::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
@@ -49,11 +51,11 @@ void FireBall::init()
 
 bool FireBall::isDead()
 {
-	return false;
+	return _isDead;
 }
 
 void FireBall::wasHit()
 {
-	
+	_isDead = true;
 }
 
