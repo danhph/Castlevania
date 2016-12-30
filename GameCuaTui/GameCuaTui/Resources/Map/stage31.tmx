@@ -169,8 +169,8 @@
   <object id="12" name="Candle" type="61" x="285" y="135" width="8" height="8"/>
   <object id="13" name="Monkey" type="76" x="295.5" y="96.5" width="16" height="16"/>
   <object id="14" name="Candle" type="61" x="348" y="135" width="8" height="8"/>
-  <object id="15" name="Wall" type="40" x="303.667" y="113" width="16" height="16"/>
-  <object id="16" name="BreakWall" type="60" x="287.667" y="113" width="16" height="16"/>
+  <object id="15" name="Wall" type="40" x="303.667" y="113" width="16" height="14"/>
+  <object id="16" name="BreakWall" type="60" x="287.667" y="113" width="16" height="13.6667"/>
   <object id="17" name="Candle" type="61" x="220.667" y="135.333" width="8" height="8"/>
   <object id="18" name="Monkey" type="76" x="167.667" y="64.3333" width="16" height="16"/>
   <object id="19" name="Candle" type="61" x="158.667" y="56.3333" width="8" height="8"/>
@@ -178,7 +178,7 @@
   <object id="21" name="Skeleton" type="77" x="32.3333" y="80.3333" width="16" height="32"/>
   <object id="22" name="Wall" type="40" x="671.333" y="144.333" width="96" height="16"/>
   <object id="23" name="Wall" type="40" x="416.333" y="112.333" width="32" height="16"/>
-  <object id="25" name="Wall" type="40" x="128.667" y="159.333" width="544" height="16"/>
+  <object id="25" name="Wall" type="40" x="128.667" y="161" width="544" height="14.3333"/>
   <object id="26" name="Wall" type="40" x="64.3333" y="144" width="64" height="16"/>
   <object id="27" name="Wall" type="40" x="96.6667" y="81" width="96" height="16"/>
   <object id="28" name="Wall" type="40" x="32" y="112.667" width="32" height="16"/>
