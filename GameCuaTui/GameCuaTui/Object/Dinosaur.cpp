@@ -13,9 +13,11 @@ Dinosaur::Dinosaur(int x, int y) :BaseObject(DINOSAUR)
 	_effect->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::EFFECT, "hit_effect_1"));
 	_effectAnimation = new Animation(_effect, 0.15f);
 	_effectAnimation->addFrameRect(EFFECT, "hit_effect_1", "hit_effect_2", "hit_effect_3", "hit_effect_4", NULL);
+	_effect->setPosition(this->getPosition());
 
 	_hitPoint = 6;
 	_direct = false;
+	_startHit = false;
 	_ready = 0;
 }
 
@@ -32,6 +34,7 @@ void Dinosaur::shoot()
 	else
 		y += 14;
 	auto fireball = new FireBall(this->getPositionX(), y, _direct);
+	fireball->init();
 	QuadTreeNode::getInstance()->Insert(fireball);
 }
 
@@ -45,29 +48,61 @@ void Dinosaur::update(float deltatime)
 {
 	_animation->update(deltatime);
 
-	if (_readyStopWatch->isTimeLoop(SHOOT_DELAY))
+	if (_hitPoint > 0)
 	{
-		_ready = 30;
-	}
+		if (_startHit)
+		{
+			if (_hitStopWatch->isStopWatch(400))
+			{
+				_startHit = false;
+				_hitStopWatch->restart();
+			}
+		}
 
-	if (_ready > 0)
-	{
-		_animation->enableFlashes(true);
-		_ready--;
+		if (_readyStopWatch->isTimeLoop(SHOOT_DELAY))
+		{
+			_ready = 30;
+		}
+
+		if (_ready > 0)
+		{
+			_animation->enableFlashes(true);
+			_ready--;
+		}
+		else
+			_animation->enableFlashes(false);
+
+		if (_shoot1StopWatch->isTimeLoop(SHOOT_DELAY))
+		{
+			this->shoot();
+		}
+
+		if (_shoot2StopWatch->isTimeLoop(SHOOT_DELAY))
+		{
+			this->shoot();
+		}
 	}
 	else
-		_animation->enableFlashes(false);
-
-	if (_shoot1StopWatch->isTimeLoop(SHOOT_DELAY))
 	{
-		this->shoot();
-	}
+		_effectAnimation->update(deltatime);
+		if (_effectStopWatch->isStopWatch(600))
+		{
+			this->setStatus(DESTROY);
+			srand(time(0));
+			auto ran = rand() % 10;
+			BaseObject* heart = nullptr;
+			if (ran < 3)
+				heart = new Heart(this->getPositionX(), this->getPositionY() + 32);
+			else
+				heart = new Heart(this->getPositionX(), this->getPositionY() + 32);
 
-	if (_shoot2StopWatch->isTimeLoop(SHOOT_DELAY))
-	{
-		this->shoot();
+			if (heart != nullptr)
+			{
+				heart->init();
+				QuadTreeNode::getInstance()->Insert(heart);
+			}
+		}
 	}
-
 	for (auto it = _componentList.begin(); it != _componentList.end(); it++)
 	{
 		it->second->update(deltatime);
@@ -101,10 +136,16 @@ void Dinosaur::init()
 
 bool Dinosaur::isDead()
 {
-	return false;
+	return (_hitPoint <= 0);
 }
 
 void Dinosaur::wasHit(int hitpoint)
 {
-	
+	if (!_startHit)
+	{
+		_hitPoint -= hitpoint;
+		_hitStopWatch->restart();
+		_hitStopWatch->isTimeLoop(400);
+		_startHit = true;
+	}
 }

@@ -1202,9 +1202,19 @@ void Player::moveUp()
 {
 	if (this->getStatus() == NORMAL || this->isInStatus(MOVING_LEFT) || this->isInStatus(MOVING_RIGHT) || this->isInStatus(RUNNING))
 	{
-		if (this->getPositionX() > _stair->getBounding().left + 32)
-			return;
-		this->setPositionX(_stair->getBounding().left);
+		if (_directStair)
+		{
+			if (this->getPositionX() > _stair->getBounding().left + 32 || this->getPositionY() + 8 < _stair->getBounding().bottom)
+				return;
+			this->setPositionX(_stair->getBounding().left);
+		}
+		else
+		{
+			if (this->getPositionX() < _stair->getBounding().right - 32 || this->getPositionY() + 8 < _stair->getBounding().bottom)
+				return;
+			this->setPositionX(_stair->getBounding().right);
+		}
+		
 	}
 	this->setStatus(eStatus::MOVING_UP);
 

@@ -17,31 +17,29 @@
 class BlueBat : public BaseObject
 {
 public:
-	BlueBat(int x, int y, int activeX);
+	BlueBat(int x, int y);
 
 
 	void init() override;
 	void update(float deltatime) override;
 	void draw(LPD3DXSPRITE, Viewport*) override;
 	void release() override;
-	void wasHit(int hitpoint);
-
+	
+	void wasHit();
 	bool isDead();
+
+	void Active(bool direct);
 
 protected:
 	Animation* _animation;
 	map<string, IComponent*> _componentList;
-	int _activeXLeft;
-	int _activeXRight;
+	
+	bool _isDead;
 
-	int _hitPoint;
+	bool _isActive;
 
 	Sprite* _effect;
 	Animation* _effectAnimation;
 	StopWatch* _effectStopWatch;
-
-	StopWatch* _hitStopWatch;
-	bool _startHit;
-
 };
 #endif
