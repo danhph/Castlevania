@@ -48,7 +48,7 @@
   <object id="39" name="Candle" type="61" x="667.5" y="119" width="8" height="8"/>
   <object id="40" name="Skeleton" type="77" x="655" y="111.5" width="16" height="32"/>
   <object id="41" name="Candle" type="61" x="729.5" y="70" width="8" height="8"/>
-  <object id="42" name="Door" type="43" x="752.5" y="64" width="16" height="48"/>
+  <object id="42" name="Door" type="54" x="752.5" y="64" width="16" height="48"/>
   <object id="43" name="Wall" type="40" x="737" y="112.5" width="16" height="64"/>
   <object id="44" name="Wall" type="40" x="753.5" y="112.5" width="752" height="16"/>
   <object id="45" name="Candle" type="61" x="792.5" y="55" width="8" height="8"/>

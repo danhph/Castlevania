@@ -19,7 +19,7 @@
     <property name="status" value="0"/>
    </properties>
   </object>
-  <object id="2" name="Door" type="43" x="751.5" y="96" width="16" height="48"/>
+  <object id="2" name="Door" type="54" x="751.5" y="96" width="16" height="48"/>
   <object id="3" name="Candle" type="61" x="730.5" y="115.5" width="8" height="8"/>
   <object id="4" name="Candle" type="61" x="667" y="135.5" width="8" height="8"/>
   <object id="6" name="Candle" type="61" x="604" y="134.5" width="8" height="8"/>

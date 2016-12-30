@@ -38,7 +38,7 @@
   <object id="22" name="Dinosaur" type="74" x="777" y="80.5" width="16" height="32"/>
   <object id="23" name="Candle" type="61" x="828.5" y="54" width="8" height="8"/>
   <object id="24" name="Candle" type="61" x="890" y="53.5" width="8" height="8"/>
-  <object id="25" name="Door" type="43" x="913" y="32.5" width="16" height="48"/>
+  <object id="25" name="Door" type="54" x="913" y="32.5" width="16" height="48"/>
   <object id="26" name="Candle" type="61" x="953.5" y="55" width="8" height="8"/>
   <object id="27" name="Crow" type="78" x="1187" y="16" width="16" height="16"/>
   <object id="28" name="Crow" type="78" x="1282.5" y="17" width="16" height="16"/>
