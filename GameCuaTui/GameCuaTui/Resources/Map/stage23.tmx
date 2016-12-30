@@ -390,7 +390,7 @@
   <object id="64" name="Dinosaur" type="101" x="241" y="34" width="16" height="32"/>
   <object id="65" name="Frog" type="75" x="369" y="112.5" width="16" height="16"/>
   <object id="67" name="Candle" type="61" x="139.5" y="68.1667" width="8" height="8"/>
-  <object id="68" name="Bat" type="70" x="136" y="33" width="16" height="16"/>
+  <object id="68" name="Bat" type="73" x="136" y="33" width="16" height="16"/>
   <object id="69" name="Candle" type="61" x="75.5" y="68" width="8" height="8"/>
   <object id="70" name="Wall" type="40" x="257" y="34.5" width="544" height="16"/>
   <object id="71" name="Stair" type="41" x="655.5" y="0.33333" width="32" height="33">
@@ -419,7 +419,7 @@
   <object id="80" name="END" type="51" x="679.75" y="0.25" width="7.5" height="7.5">
    <properties>
     <property name="direct" type="bool" value="true"/>
-    <property name="next" value="24"/>
+    <property name="next" value="27"/>
     <property name="status" value="4096"/>
    </properties>
   </object>
