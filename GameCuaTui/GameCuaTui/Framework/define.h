@@ -50,6 +50,7 @@ enum eID
 	MAP_STAGE_31 = 24,
 	MAP_STAGE_32 = 25,
 	MAP_STAGE_33 = 26,
+	MAP_STAGE_24 = 27,
 
 	ROPE = 30,
 	EFFECT = 31,

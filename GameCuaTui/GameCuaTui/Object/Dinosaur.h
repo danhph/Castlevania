@@ -9,7 +9,9 @@
 #include "../Framework/StopWatch.h"
 #include "QuadtreeNode.h"
 #include "FireBall.h"
-
+#include <ctime>
+#include "BigHeart.h"
+#include "Heart.h"
 #define SHOOT_DELAY 4500
 
 class Dinosaur : public BaseObject
