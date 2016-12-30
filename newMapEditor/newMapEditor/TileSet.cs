@@ -101,8 +101,8 @@ namespace newMapEditor
             _name = name;
             _tileWidth = tileWidth;
             _tileHeight = tileHeight;
-            _rows = _image.Width / _tileHeight;
-            _columns = _image.Height / _tileWidth;
+            _columns = _image.Width / _tileHeight;
+            _rows = _image.Height / _tileWidth;
             _count = _rows * _columns;
             dictTiles = new Dictionary<int, Tile>();
             for (int i=0;i<_count;i++)
@@ -110,7 +110,7 @@ namespace newMapEditor
                 try
                 {
                     Rectangle r = new Rectangle((i % _columns) * _tileWidth, (i / _columns) * _tileHeight, _tileWidth, _tileHeight);
-                    dictTiles.Add(i, new Tile(((Bitmap)_image).Clone(r, Image.PixelFormat), _tileWidth, _tileHeight));
+                    dictTiles.Add(i+1, new Tile(((Bitmap)_image).Clone(r, Image.PixelFormat), _tileWidth, _tileHeight));
                 }
                 catch
                 {

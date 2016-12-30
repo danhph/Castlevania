@@ -15,11 +15,12 @@ namespace newMapEditor
         int _id;
         String _name;
         int _type;
-        int _X;
-        int _Y;
-        int _width;
-        int _height;
-        public Object(int id, String name, int type, int X, int Y, int Width, int Height)
+        float _X;
+        float _Y;
+        float _width;
+        float _height;
+        Dictionary<String, String> _properties;
+        public Object(int id, String name, int type, float X, float Y, float Width, float Height)
         {
             _id = id;
             _name = name;
@@ -28,6 +29,7 @@ namespace newMapEditor
             _Y = Y;
             _width = Width;
             _height = Height;
+            _properties = new Dictionary<String, String>();
         }
         public Object(int X, int Y, int Width, int Height)
         {
@@ -37,8 +39,32 @@ namespace newMapEditor
             _Y = Y;
             _width = Width;
             _height = Height;
+            _properties = new Dictionary<String, String>();
         }
+        public Dictionary<String, String> Property
+        {
+            get
+            {
+                return _properties;
+            }
+            set
+            {
+                _properties = value;
+            }
+        }
+        public String this[String key]
+        {
+            get
+            {
+                return _properties[key];
+            }
+            set
+            {
 
+                _properties[key] = value;
+            }
+
+        }
         [Browsable(false)]
         public Boolean Selected
         {
@@ -84,7 +110,7 @@ namespace newMapEditor
                 _type = value;
             }
         }
-        public int X
+        public float X
         {
             get
             {
@@ -95,7 +121,7 @@ namespace newMapEditor
                 _X = value;
             }
         }
-        public int Y
+        public float Y
         {
             get
             {
@@ -106,7 +132,7 @@ namespace newMapEditor
                 _Y = value;
             }
         }
-        public int Width
+        public float Width
         {
             get
             {
@@ -117,7 +143,7 @@ namespace newMapEditor
                 _width = value;
             }
         }
-        public int Height
+        public float Height
         {
             get
             {
@@ -131,7 +157,7 @@ namespace newMapEditor
         public void Draw(Graphics g,float scaleFactor)
         {
             g.FillRectangle(new SolidBrush(Color.FromArgb(128, 0, 0, 255)), new Rectangle((int)(_X * scaleFactor), (int)(_Y * scaleFactor), (int)(_width * scaleFactor) + 1, (int)(_height * scaleFactor) + 1));
-            g.DrawString(_name, new Font(FontFamily.GenericSansSerif,8*scaleFactor, FontStyle.Regular),Brushes.Black, (int)(_X * scaleFactor), (int)(_Y * scaleFactor));
+            g.DrawString(_name, new Font(FontFamily.GenericSansSerif,8, FontStyle.Regular),Brushes.White, (int)(_X * scaleFactor), (int)(_Y * scaleFactor));
             if (_selected==true)
             {
                 g.DrawRectangle(new Pen(Brushes.Red, 2), new Rectangle((int)(_X*scaleFactor), (int)(_Y*scaleFactor),(int)(_width*scaleFactor)+1, (int)(_height*scaleFactor)+1));

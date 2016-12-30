@@ -35,19 +35,22 @@ namespace newMapEditor
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.picMain = new System.Windows.Forms.PictureBox();
             this.lstObject = new System.Windows.Forms.ListView();
-            this.Objects = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.NameHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.TypeHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.proObject = new System.Windows.Forms.PropertyGrid();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnDrawObject = new System.Windows.Forms.Button();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnClearAllObject = new System.Windows.Forms.Button();
+            this.btnAddProperty = new System.Windows.Forms.Button();
+            this.btnRemoveProperty = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picMain)).BeginInit();
@@ -72,14 +75,14 @@ namespace newMapEditor
             this.saveToolStripMenuItem,
             this.openToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.newToolStripMenuItem.Text = "New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
@@ -87,9 +90,17 @@ namespace newMapEditor
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -103,7 +114,7 @@ namespace newMapEditor
             // 
             this.resizeToolStripMenuItem.Name = "resizeToolStripMenuItem";
             this.resizeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.resizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.resizeToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.resizeToolStripMenuItem.Text = "Resize";
             this.resizeToolStripMenuItem.Click += new System.EventHandler(this.resizeToolStripMenuItem_Click);
             // 
@@ -139,7 +150,8 @@ namespace newMapEditor
             // 
             this.lstObject.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lstObject.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.Objects});
+            this.NameHeader,
+            this.TypeHeader});
             this.lstObject.Location = new System.Drawing.Point(764, 27);
             this.lstObject.Name = "lstObject";
             this.lstObject.Size = new System.Drawing.Size(200, 195);
@@ -150,10 +162,15 @@ namespace newMapEditor
             this.lstObject.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstObject_KeyDown);
             this.lstObject.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lstObject_KeyPress);
             // 
-            // Objects
+            // NameHeader
             // 
-            this.Objects.Name = "Objects";
-            this.Objects.Text = "";
+            this.NameHeader.Text = "Name";
+            this.NameHeader.Width = 150;
+            // 
+            // TypeHeader
+            // 
+            this.TypeHeader.Text = "Type";
+            this.TypeHeader.Width = 50;
             // 
             // proObject
             // 
@@ -162,9 +179,10 @@ namespace newMapEditor
             this.proObject.Location = new System.Drawing.Point(970, 27);
             this.proObject.Name = "proObject";
             this.proObject.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.proObject.Size = new System.Drawing.Size(185, 195);
+            this.proObject.Size = new System.Drawing.Size(185, 159);
             this.proObject.TabIndex = 3;
             this.proObject.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.proObject_PropertyValueChanged);
+            this.proObject.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.proObject_SelectedGridItemChanged);
             // 
             // btnAdd
             // 
@@ -215,14 +233,6 @@ namespace newMapEditor
             this.btnDrawObject.UseVisualStyleBackColor = true;
             this.btnDrawObject.Click += new System.EventHandler(this.btnDrawObject_Click);
             // 
-            // openToolStripMenuItem
-            // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.openToolStripMenuItem.Text = "Open";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
-            // 
             // btnClearAllObject
             // 
             this.btnClearAllObject.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -235,11 +245,33 @@ namespace newMapEditor
             this.btnClearAllObject.UseVisualStyleBackColor = true;
             this.btnClearAllObject.Click += new System.EventHandler(this.button1_Click);
             // 
+            // btnAddProperty
+            // 
+            this.btnAddProperty.Location = new System.Drawing.Point(971, 193);
+            this.btnAddProperty.Name = "btnAddProperty";
+            this.btnAddProperty.Size = new System.Drawing.Size(75, 23);
+            this.btnAddProperty.TabIndex = 6;
+            this.btnAddProperty.Text = "Add";
+            this.btnAddProperty.UseVisualStyleBackColor = true;
+            this.btnAddProperty.Click += new System.EventHandler(this.btnAddProperty_Click);
+            // 
+            // btnRemoveProperty
+            // 
+            this.btnRemoveProperty.Location = new System.Drawing.Point(1052, 193);
+            this.btnRemoveProperty.Name = "btnRemoveProperty";
+            this.btnRemoveProperty.Size = new System.Drawing.Size(75, 23);
+            this.btnRemoveProperty.TabIndex = 6;
+            this.btnRemoveProperty.Text = "Remove";
+            this.btnRemoveProperty.UseVisualStyleBackColor = true;
+            this.btnRemoveProperty.Click += new System.EventHandler(this.btnRemoveProperty_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1167, 490);
+            this.Controls.Add(this.btnRemoveProperty);
+            this.Controls.Add(this.btnAddProperty);
             this.Controls.Add(this.btnClearAllObject);
             this.Controls.Add(this.btnDrawObject);
             this.Controls.Add(this.btnDelete);
@@ -274,13 +306,16 @@ namespace newMapEditor
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.Panel panel2;
-        private ColumnHeader Objects;
         private Button btnDrawObject;
         private ToolStripMenuItem saveToolStripMenuItem;
         private ToolStripMenuItem editToolStripMenuItem;
         private ToolStripMenuItem resizeToolStripMenuItem;
         private ToolStripMenuItem openToolStripMenuItem;
         private Button btnClearAllObject;
+        private Button btnAddProperty;
+        private Button btnRemoveProperty;
+        private ColumnHeader NameHeader;
+        private ColumnHeader TypeHeader;
     }
 }
 
