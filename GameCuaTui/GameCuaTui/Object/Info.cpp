@@ -4,8 +4,52 @@
 #include <sstream>
 #include <iomanip>
 
+eID Info::GetCurrentWeapon()
+{
+	return _weaponID;
+}
+
+void Info::SetWeapon(eID id)
+{
+	_weaponID = id;
+
+	switch (id)
+	{
+		case DAGGER:
+			{
+				_weaponSprite = SpriteManager::getInstance()->getSprite(ITEM);
+				_weaponSprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ITEM, "dagger"));
+				_weaponSprite->setPosition(300, 42);
+				break;
+			}
+		case AXE:
+			{
+				_weaponSprite = SpriteManager::getInstance()->getSprite(ITEM);
+				_weaponSprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ITEM, "axe"));
+				_weaponSprite->setPosition(300, 42);
+				break;
+			}
+		case BOOMERANG:
+			{
+				_weaponSprite = SpriteManager::getInstance()->getSprite(ITEM);
+				_weaponSprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ITEM, "boomerang"));
+				_weaponSprite->setPosition(300, 42);
+				break;
+			}
+		default:
+			_weaponSprite = nullptr;
+			break;
+	}
+}
+
+
 Info::Info() : BaseObject(eID::INFO)
 {
+	_weaponID = WEAPON;
+	_weaponSprite = nullptr;
+	_maxWeaponSprite = nullptr;
+	_maxWeapon = 1;
+
 	_border = SpriteManager::getInstance()->getSprite(BORDER);
 	_border->setScale(0.8f);
 	_border->setPosition(300, 42);
@@ -114,6 +158,13 @@ void Info::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 	_textLife->draw(spriteHandle);
 
 	_textPlayer->draw(spriteHandle);
+
+	if (_weaponSprite != nullptr)
+		_weaponSprite->render(spriteHandle);
+
+	if (_maxWeaponSprite != nullptr)
+		_maxWeaponSprite->render(spriteHandle);
+
 	auto posPlayer = GVector2(100, 34);
 	for (int i = 0; i < 16; i++)
 	{
@@ -195,7 +246,7 @@ int Info::GetStage()
 
 int Info::GetTime()
 {
-	return _timeNumber;
+	return _timeNumber - ((int)GameTime::getInstance()->getTotalGameTime() - _beginTime) / 1000;
 }
 
 
@@ -207,6 +258,8 @@ void Info::SetEnemyHitPoint(int number)
 void Info::SetHeart(int number)
 {
 	_heartNumber = number;
+	if (_heartNumber >= 100)
+		_heartNumber = 99;
 }
 
 void Info::SetLife(int number)
@@ -233,4 +286,31 @@ void Info::SetTime(int number)
 {
 	_timeNumber = number + 1;
 	_beginTime = GameTime::getInstance()->getTotalGameTime();
+}
+
+void Info::SetMaxWeapon(int num)
+{
+	switch(num)
+	{
+	case 2:
+		_maxWeaponSprite = SpriteManager::getInstance()->getSprite(ITEM);
+		_maxWeaponSprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ITEM, "small2"));
+		_maxWeaponSprite->setPosition(420, 45);
+		break;
+	case 3:
+		_maxWeaponSprite = SpriteManager::getInstance()->getSprite(ITEM);
+		_maxWeaponSprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ITEM, "small3"));
+		_maxWeaponSprite->setPosition(420, 45);
+		break;
+	default:
+		num = 1;
+		_maxWeaponSprite = nullptr;
+		break;
+	}
+	_maxWeapon = num;
+}
+
+int Info::GetMaxWeapon()
+{
+	return _maxWeapon;
 }

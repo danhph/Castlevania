@@ -1,0 +1,10 @@
+frame_name	left	top	right	bottom
+cross_1		0	0	28	28
+cross_2		28	0	56	28
+cross_3		56	0	84	28
+axe_1		84	0	114	28
+axe_2		114	0	144	28
+axe_3		144	0	174	28
+axe_4		174	0	204	28
+dagger		204	0	238	18
+stopwatch	238	0	268	32

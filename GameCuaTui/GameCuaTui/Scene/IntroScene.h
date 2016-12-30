@@ -13,6 +13,8 @@
 
 #include "../Framework/Scene.h"
 
+#include "PlayScene.h"
+
 EVENT_RECEIVER
 class IntroScene : public Scene, public IControlable
 {

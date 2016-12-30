@@ -13,6 +13,8 @@ using namespace std;
 // Dùng trong hệ top left
 bool isIntersectd(RECT rect1, RECT rect2);
 
+bool isIntersectedInGame(RECT rect1, RECT rect2);
+
 // Kiểm tra rect1 có chứa rect2 không.
 bool isContains(RECT rect1, RECT rect2);
 

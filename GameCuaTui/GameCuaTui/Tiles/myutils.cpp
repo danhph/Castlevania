@@ -59,7 +59,6 @@ BaseObject* GetBack(xml_node item, int mapHeight)
 	auto back = new Back(x, y, width, height);
 	back->setNextStage((eID)stoi(properties["next"]));
 	return back;
-	
 }
 
 BaseObject* GetRevive(xml_node item, int mapHeight)
@@ -134,6 +133,47 @@ BaseObject* GetWall(xml_node item, int mapHeight)
 	return wall;
 }
 
+BaseObject* GetDinosaur(xml_node item, int mapHeight)
+{
+	auto properties = GetObjectProperties(item);
+	if (properties.size() == 0)
+		return nullptr;
+	auto width = 2 * stoi(properties["width"]);
+	auto height = 2 * stoi(properties["height"]);
+
+	auto x = 2 * stoi(properties["x"]);
+	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
+
+	x = x + width / 2;
+	y = y + height / 2;
+
+	auto dinosaur = new Dinosaur(x, y);
+	dinosaur->init();
+	return dinosaur;
+}
+
+BaseObject* GetTrident(xml_node item, int mapHeight)
+{
+	auto properties = GetObjectProperties(item);
+	if (properties.size() == 0)
+		return nullptr;
+	auto width = 2 * stoi(properties["width"]);
+	auto height = 2 * stoi(properties["height"]);
+
+	auto x = 2 * stoi(properties["x"]);
+	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
+
+	x = x + width / 2;
+	y = y + height / 2;
+	BaseObject* trident;
+	if (properties["half"] != "")
+		trident = new Trident(x, y, false);
+	else
+		trident = new Trident(x, y);
+	trident->init();
+	return trident;
+}
+
 BaseObject* GetCandle(xml_node item, int mapHeight)
 {
 	auto properties = GetObjectProperties(item);
@@ -205,7 +245,7 @@ BaseObject* GetSoldier(xml_node item, int mapHeight)
 	auto ActiveBoundX = 2 * stoi(properties["ActiveBoundX"]);
 
 	ActiveBoundX = ActiveBoundX + width / 2;
-	
+
 	auto soldier = new Soldier(x, y, ActiveBoundX);
 	soldier->init();
 	return soldier;
@@ -230,6 +270,29 @@ BaseObject* GetStairEnd(xml_node item, int mapHeight)
 	auto stair = new StairEnd(x, y, width, height, direct);
 	stair->init();
 	return stair;
+}
+
+BaseObject* GetMovingStair(xml_node item, int mapHeight)
+{
+	auto properties = GetObjectProperties(item);
+	if (properties.size() == 0)
+		return nullptr;
+	auto width = 2 * stoi(properties["width"]);
+	auto height = 2 * stoi(properties["height"]);
+
+	auto x = 2 * stoi(properties["x"]);
+	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
+
+	x = x + width / 2;
+	y = y + height / 2;
+
+	auto ActiveBoundX = 2 * stoi(properties["ActiveBoundX"]);
+
+	ActiveBoundX = ActiveBoundX + width / 2;
+
+	auto movingStair = new MovingStair(x, y, ActiveBoundX);
+	movingStair->init();
+	return movingStair;
 }
 
 BaseObject* GetStair(xml_node item, int mapHeight)
@@ -267,7 +330,7 @@ BaseObject* GetHeart(xml_node item, int mapHeight)
 
 	x = x + width / 2;
 	y = y + height / 2;
-	
+
 	auto heart = new Heart(x, y);
 	heart->init();
 	return heart;
@@ -298,11 +361,13 @@ BaseObject* GetObjectByType(xml_node item, eID type, int mapHeight)
 	{
 		case WALL:
 			return GetWall(item, mapHeight);
-			
+
 		case STAIR:
 			return GetStair(item, mapHeight);
 		case STAIR_END:
 			return GetStairEnd(item, mapHeight);
+		case MOVING_STAIR:
+			return GetMovingStair(item, mapHeight);
 
 		case START:
 			return GetStart(item, mapHeight);
@@ -313,11 +378,14 @@ BaseObject* GetObjectByType(xml_node item, eID type, int mapHeight)
 
 		case CANDLE:
 			return GetCandle(item, mapHeight);
-
+		case TRIDENT:
+			return GetTrident(item, mapHeight);
+		case DINOSAUR:
+			return GetDinosaur(item, mapHeight);
 		case SOLDIER:
-			return GetSoldier(item, mapHeight);		
+			return GetSoldier(item, mapHeight);
 
-		
+
 		case REVIVE:
 			return GetRevive(item, mapHeight);
 		case DOOR:

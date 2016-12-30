@@ -7,6 +7,8 @@ Heart::Heart(int x, int y) :BaseObject(HEART)
 	_sprite->setPosition(x, y);
 	_initX = x;
 	_stop = false;
+
+	this->setPhysicsBodySide(ALL);
 }
 
 void Heart::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
@@ -74,8 +76,8 @@ float Heart::checkCollision(BaseObject* object, float dt)
 	if (object->getId() == WALL)
 	{
 		auto collisionBody = (CollisionBody*)_componentList["CollisionBody"];
-		eDirection direction;
-		if (collisionBody->checkCollision(object, direction, dt, false) && !this->isInStatus(MOVING_UP))
+		eDirection direction;	
+		if (collisionBody->checkCollision(object, direction, dt, false))
 		{
 			if (direction == TOP)
 			{

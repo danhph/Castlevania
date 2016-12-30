@@ -24,7 +24,6 @@ public:
 	void update(float deltatime) override;
 	void draw(LPD3DXSPRITE, Viewport*) override;
 	void release() override;
-
 	void wasHit(int hitpoint);
 
 	bool isDead();

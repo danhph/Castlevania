@@ -39,7 +39,15 @@ public:
 
 	void SetTime(int number);
 	int GetTime();
+
+	void SetWeapon(eID id);
+	eID GetCurrentWeapon();
+
+	void SetMaxWeapon(int num);
+	int GetMaxWeapon();
 private:
+	eID _weaponID;
+	Sprite* _weaponSprite;
 	Sprite* _iconEmptyHitPoint;
 	Sprite* _border;
 
@@ -68,6 +76,9 @@ private:
 	int _timeNumber;
 	
 	float _beginTime;
+
+	int _maxWeapon;
+	Sprite* _maxWeaponSprite;
 };
 
 #endif // !__LIFEUI_H__

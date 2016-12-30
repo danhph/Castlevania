@@ -3,44 +3,75 @@
 Dinosaur::Dinosaur(int x, int y) :BaseObject(DINOSAUR)
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::ENEMY);
-	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ENEMY, "dinosaur_1"));
+	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ENEMY, "dinosaur_0"));
 	_sprite->setPosition(x, y);
-	_initX = x;
-	_stop = false;
+	_animation = new Animation(_sprite, 0.1f);
+	_animation->addFrameRect(ENEMY, "dinosaur_0", NULL);
+	_animation->setValueFlashes(0.5);
+
+	_effect = SpriteManager::getInstance()->getSprite(eID::EFFECT);
+	_effect->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::EFFECT, "hit_effect_1"));
+	_effectAnimation = new Animation(_effect, 0.15f);
+	_effectAnimation->addFrameRect(EFFECT, "hit_effect_1", "hit_effect_2", "hit_effect_3", "hit_effect_4", NULL);
+
+	_hitPoint = 6;
+	_direct = false;
+	_ready = 0;
 }
 
 void Dinosaur::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
-	_sprite->render(spriteHandle, viewport);
+	_animation->draw(spriteHandle, viewport);
 }
+
+void Dinosaur::shoot()
+{
+	auto y = this->getPositionY();
+	if (_direct)
+		y -= 14;
+	else
+		y += 14;
+	auto fireball = new FireBall(this->getPositionX(), y, _direct);
+	QuadTreeNode::getInstance()->Insert(fireball);
+}
+
+void Dinosaur::setDirect(bool direct)
+{
+	_direct = direct;
+}
+
 
 void Dinosaur::update(float deltatime)
 {
-	if (_startDestroyStopWatch)
+	_animation->update(deltatime);
+
+	if (_readyStopWatch->isTimeLoop(SHOOT_DELAY))
 	{
-		if (_destroyStopWatch->isStopWatch(2000))
-		{
-			this->setStatus(DESTROY);
-		}
+		_ready = 30;
 	}
 
-	auto move = (Movement*)this->_componentList["Movement"];
-	if (!_stop)
+	if (_ready > 0)
 	{
-		if ((this->getPositionX() < _initX - 32) || (this->getPositionX() > _initX + 32))
-		{
-			move->setVelocity(GVector2(move->getVelocity().x*(-1), move->getVelocity().y));
-		}
+		_animation->enableFlashes(true);
+		_ready--;
 	}
 	else
+		_animation->enableFlashes(false);
+
+	if (_shoot1StopWatch->isTimeLoop(SHOOT_DELAY))
 	{
-		move->setVelocity(GVector2(0, 0));
+		this->shoot();
 	}
+
+	if (_shoot2StopWatch->isTimeLoop(SHOOT_DELAY))
+	{
+		this->shoot();
+	}
+
 	for (auto it = _componentList.begin(); it != _componentList.end(); it++)
 	{
 		it->second->update(deltatime);
 	}
-
 }
 
 void Dinosaur::release()
@@ -57,42 +88,23 @@ void Dinosaur::init()
 	auto collisionBody = new CollisionBody(this);
 	_componentList["CollisionBody"] = collisionBody;
 
-	auto movement = new Movement(GVector2(0, 0), GVector2(0, 0), _sprite);
-	_componentList["Movement"] = movement;
-	movement->setVelocity(GVector2(-75, -50));
-	_destroyStopWatch = new StopWatch();
-	_startDestroyStopWatch = false;
+	_effectStopWatch = new StopWatch();
+	_hitStopWatch = new StopWatch();
+	_readyStopWatch = new StopWatch();
+	_shoot1StopWatch = new StopWatch();
+	_shoot2StopWatch = new StopWatch();
+
+	_readyStopWatch->isTimeLoop(0);
+	_shoot1StopWatch->isTimeLoop(600);
+	_shoot2StopWatch->isTimeLoop(1200);
 }
 
-RECT Dinosaur::getBounding()
+bool Dinosaur::isDead()
 {
-	return _sprite->getBounding();
+	return false;
 }
 
-float Dinosaur::checkCollision(BaseObject* object, float dt)
+void Dinosaur::wasHit(int hitpoint)
 {
-	if (object->getId() == WALL)
-	{
-		auto collisionBody = (CollisionBody*)_componentList["CollisionBody"];
-		eDirection direction;
-		if (collisionBody->checkCollision(object, direction, dt, false) && !this->isInStatus(MOVING_UP))
-		{
-			if (direction == TOP)
-			{
-				float moveX, moveY;
-				if (collisionBody->isColliding(object, moveX, moveY, dt))
-				{
-					collisionBody->updateTargetPosition(object, direction, false, GVector2(moveX, moveY));
-				}
-				if (!_startDestroyStopWatch)
-				{
-					_destroyStopWatch->isTimeLoop(2000);
-					_startDestroyStopWatch = true;
-				}
-				_stop = true;
-			}
-			return 1.0f;
-		}
-	}
-	return 0;
+	
 }

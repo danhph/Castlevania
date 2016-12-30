@@ -56,7 +56,7 @@
   </data>
  </layer>
  <objectgroup name="Object Layer 1">
-  <object id="1" name="REVIVE" type="53" x="53.9167" y="141.5" width="18.25" height="20.75">
+  <object id="1" name="REVIVE" type="53" x="92.4167" y="141.25" width="18.25" height="20.75">
    <properties>
     <property name="status" type="int" value="0"/>
    </properties>
@@ -97,15 +97,15 @@
     <property name="direct" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="57" name="END" type="51" x="136.549" y="1.67836" width="7.6667" height="7.5833">
+  <object id="57" name="END" type="51" x="153.049" y="113.678" width="7.6667" height="7.5833">
    <properties>
     <property name="direct" type="bool" value="true"/>
-    <property name="next" type="int" value="22"/>
+    <property name="next" type="int" value="23"/>
     <property name="status" type="int" value="4096"/>
    </properties>
   </object>
   <object id="58" name="Wall" type="40" x="17" y="49.625" width="15" height="62"/>
-  <object id="60" name="START" type="50" x="54.125" y="141.375" width="18.25" height="20.75">
+  <object id="60" name="START" type="50" x="104.875" y="141.875" width="18.25" height="20.75">
    <properties>
     <property name="status" type="int" value="0"/>
    </properties>

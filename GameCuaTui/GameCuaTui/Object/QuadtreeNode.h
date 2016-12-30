@@ -4,6 +4,7 @@
 #include "..\Framework\define.h"
 #include "BaseObject.h"
 #include "..\pugixml\pugixml.hpp"
+#include <algorithm>
 
 using namespace pugi;
 

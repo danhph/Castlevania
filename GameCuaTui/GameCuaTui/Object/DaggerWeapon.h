@@ -1,5 +1,5 @@
-#ifndef _FIREBALL_H_
-#define _FIREBALL_H_
+#ifndef _DAGGER_WEAPON_H_
+#define _DAGGER_WEAPON_H_
 
 #include "..\FrameWork\define.h"
 #include "BaseObject.h"
@@ -7,28 +7,22 @@
 #include "CollisionBody.h"
 #include "../FrameWork/Animation.h"
 #include "../Framework/StopWatch.h"
+#include "Weapon.h"
 
-#define FIREBALL_SPEED 140
+#define FLYING_SPEED 250
 
-class FireBall : public BaseObject
+class DaggerWeapon : public Weapon
 {
 public:
-	FireBall(int x, int y, bool direct);
+	DaggerWeapon(int x, int y, bool direct);
 
 	void init() override;
 	void update(float deltatime) override;
 	void draw(LPD3DXSPRITE, Viewport*) override;
 	void release() override;
 
-	void wasHit();
-	bool isDead();
+	CollisionBody* getCollisionBody() override;
 protected:
 	map<string, IComponent*> _componentList;
-
-	bool _isDead;
-
-	Sprite* _effect;
-	Animation* _effectAnimation;
-	StopWatch* _effectStopWatch;
 };
 #endif

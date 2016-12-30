@@ -56,7 +56,6 @@ bool PlayScene::init()
 	player->setPosition(64 + 16, 64);
 	player->getBounding();
 	this->_player = player;
-	_activeObject.push_back(_player);
 
 	_currentStage = MAP_STAGE_21;
 
@@ -105,7 +104,10 @@ void PlayScene::update(float dt)
 		j = i + 1;
 		while (j < _activeObject.size())
 		{
-			_activeObject[i]->checkCollision(_activeObject[j], dt);
+			if (_activeObject[i]->getId() == WALL)
+				_activeObject[j]->checkCollision(_activeObject[i], dt);
+			else
+				_activeObject[i]->checkCollision(_activeObject[j], dt);
 			j++;
 		}
 		i++;
@@ -144,13 +146,13 @@ void PlayScene::updateViewport(Player* player, float dt)
 	else if (_player->getVelocity().x == 0)
 	{
 		new_position = _viewport->getPositionWorld();
-		
+
 		if (new_position.x + WINDOW_WIDTH / 2 <= checkPoint)
 			player->StartMovieMove();
-		
+
 		if (player->getMapDirection() == RIGHT)
 		{
-			new_position.x -= 125 * dt/1000;
+			new_position.x -= 125 * dt / 1000;
 			if (new_position.x + WINDOW_WIDTH <= checkPoint)
 			{
 				new_position.x = checkPoint - WINDOW_WIDTH;
@@ -159,15 +161,13 @@ void PlayScene::updateViewport(Player* player, float dt)
 		}
 		else
 		{
-			new_position.x += 125 * dt/1000;
-			if (new_position.x  >= checkPoint)
+			new_position.x += 125 * dt / 1000;
+			if (new_position.x >= checkPoint)
 			{
 				new_position.x = checkPoint;
 				player->StopMovie();
 			}
 		}
-
-		
 	}
 	if (new_position.x + WINDOW_WIDTH > worldsize.x)
 	{

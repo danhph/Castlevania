@@ -18,13 +18,19 @@
 #include "../Framework/SceneManager.h"
 #include "Stair.h"
 #include "StairEnd.h"
+#include "MovingStair.h"
 #include "Candle.h"
 #include "End.h"
 #include "Door.h"
 #include "Back.h"
 #include "Soldier.h"
+#include "Dinosaur.h"
+#include "Fireball.h"
 #include "BreakWall.h"
 #include "BreakWall1.h"
+#include "DaggerWeapon.h"
+#include "BoomerangWeapon.h"
+#include "AxeWeapon.h"
 #include <thread>
 
 #define MOVE_SPEED 125
@@ -38,7 +44,7 @@ EVENT_RECEIVER
 class Player : public BaseObject, public IControlable
 {
 public:
-	Player(int life = 3);
+	Player();
 	~Player();
 
 	void init();
@@ -50,14 +56,9 @@ public:
 	void onKeyPressed(KeyEventArg* key_event);
 	void onKeyReleased(KeyEventArg* key_event);
 
-	void onCollisionBegin(CollisionEventArg* collision_arg);
-	void onCollisionEnd(CollisionEventArg* collision_arg);
-
 	float checkCollision(BaseObject* object, float dt);
 	void checkPosition();
 
-
-	void setLifeNumber(int number);
 	int getLifeNumber();
 
 	void setStatus(eStatus status) override;
@@ -114,19 +115,17 @@ private:
 
 	float _movingSpeed;
 	StopWatch* _stairStopWatch;
-	StopWatch* _ropeStopWatch;
 
 	eStatus _currentAnimateIndex;
-
-	int _lifeNum;
 
 	Info* _info;
 
 	GVector2 getVelocity();
 
 	void updateStatus(float dt);
-
+	void updateAttackStatus(float dt);
 	void updateCurrentAnimateIndex();
+	bool weaponCheckCollision(BaseObject* object, eDirection & direction, float dt, bool updatePosition);
 
 	BaseObject* preWall;
 
@@ -135,6 +134,11 @@ private:
 	bool _holdingKey;
 
 	bool _isAttacking;
+	bool _isRope;
+	StopWatch* _attackStopWatch;
+	StopWatch* _weaponStopWatch;
+	
+	vector<Weapon*> _listWeapon;
 
 	BaseObject* _stairEnd;
 	GVector2 _backPos;

@@ -55,7 +55,7 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 
 	pSprite = new Sprite(spriteHandle, L"Resources//Images//enemy.png");
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::ENEMY, pSprite));
-	this->loadSpriteInfo(eID::SOLDIER, "Resources//Images//enemy.txt");
+	this->loadSpriteInfo(eID::ENEMY, "Resources//Images//enemy.txt");
 
 	pSprite = new Sprite(spriteHandle, L"Resources//Images//rope_new.png");
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::ROPE, pSprite));
@@ -72,6 +72,10 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	pSprite = new Sprite(spriteHandle, L"Resources//Images//objects.png");
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::OBJECTS, pSprite));
 	this->loadSpriteInfo(eID::OBJECTS, "Resources//Images//objects.txt");
+
+	pSprite = new Sprite(spriteHandle, L"Resources//Images//weapon.png");
+	this->_listSprite.insert(pair<eID, Sprite*>(eID::WEAPON, pSprite));
+	this->loadSpriteInfo(eID::WEAPON, "Resources//Images//weapon.txt");
 
 	pSprite = new Sprite(spriteHandle, L"Resources//Images//breakwall.png");
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::BREAKWALL, pSprite));
@@ -90,6 +94,26 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	pSprite->setOrigin(VECTOR2ZERO);
 	pSprite->setScale(2.0f);
 	this->_listSprite[eID::MAP_STAGE_22] = pSprite;
+
+	pSprite = loadXMLDoc(spriteHandle, L"Resources//Map//stage23.tmx");
+	pSprite->setOrigin(VECTOR2ZERO);
+	pSprite->setScale(2.0f);
+	this->_listSprite[eID::MAP_STAGE_23] = pSprite;
+
+	pSprite = loadXMLDoc(spriteHandle, L"Resources//Map//stage31.tmx");
+	pSprite->setOrigin(VECTOR2ZERO);
+	pSprite->setScale(2.0f);
+	this->_listSprite[eID::MAP_STAGE_31] = pSprite;
+
+	pSprite = loadXMLDoc(spriteHandle, L"Resources//Map//stage32.tmx");
+	pSprite->setOrigin(VECTOR2ZERO);
+	pSprite->setScale(2.0f);
+	this->_listSprite[eID::MAP_STAGE_32] = pSprite;
+
+	pSprite = loadXMLDoc(spriteHandle, L"Resources//Map//stage33.tmx");
+	pSprite->setOrigin(VECTOR2ZERO);
+	pSprite->setScale(2.0f);
+	this->_listSprite[eID::MAP_STAGE_33] = pSprite;
 
 }
 

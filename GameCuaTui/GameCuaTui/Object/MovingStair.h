@@ -1,5 +1,5 @@
-#ifndef _FIREBALL_H_
-#define _FIREBALL_H_
+#ifndef _MOVING_STAIR_H
+#define _MOVING_STAIR_H
 
 #include "..\FrameWork\define.h"
 #include "BaseObject.h"
@@ -8,27 +8,24 @@
 #include "../FrameWork/Animation.h"
 #include "../Framework/StopWatch.h"
 
-#define FIREBALL_SPEED 140
+#define STAIR_MOVE_SPEED 75
 
-class FireBall : public BaseObject
+class MovingStair : public BaseObject
 {
 public:
-	FireBall(int x, int y, bool direct);
+	MovingStair(int x, int y, int activeX);
+
 
 	void init() override;
 	void update(float deltatime) override;
 	void draw(LPD3DXSPRITE, Viewport*) override;
 	void release() override;
+	GVector2 getVelocity() override;
 
-	void wasHit();
-	bool isDead();
 protected:
+	
 	map<string, IComponent*> _componentList;
-
-	bool _isDead;
-
-	Sprite* _effect;
-	Animation* _effectAnimation;
-	StopWatch* _effectStopWatch;
+	int _activeXLeft;
+	int _activeXRight;
 };
 #endif

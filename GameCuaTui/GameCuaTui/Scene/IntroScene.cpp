@@ -55,8 +55,7 @@ void IntroScene::update(float dt)
 		}
 		if (_access->isTimeLoop(800))
 		{
-			auto play = new IntroScene();
-			SceneManager::getInstance()->replaceScene(play);
+			SceneManager::getInstance()->replaceScene(new PlayScene());
 		}
 	}
 }

@@ -7,6 +7,10 @@
 #include "CollisionBody.h"
 #include "../FrameWork/Animation.h"
 #include "../Framework/StopWatch.h"
+#include "QuadtreeNode.h"
+#include "FireBall.h"
+
+#define SHOOT_DELAY 4500
 
 class Dinosaur : public BaseObject
 {
@@ -17,15 +21,31 @@ public:
 	void update(float deltatime) override;
 	void draw(LPD3DXSPRITE, Viewport*) override;
 	void release() override;
-	RECT getBounding() override;
+	
+	void setDirect(bool direct);
 
-	float checkCollision(BaseObject* object, float dt) override;
+	void wasHit(int hitpoint);
+	bool isDead();
 protected:
-	map<string, IComponent*> _componentList;
-	int _initX;
-	bool _stop;
 
-	StopWatch* _destroyStopWatch;
-	bool _startDestroyStopWatch;
+	void shoot();
+
+	Animation* _animation;
+	
+	map<string, IComponent*> _componentList;
+	int _hitPoint;
+
+	Sprite* _effect;
+	Animation* _effectAnimation;
+	StopWatch* _effectStopWatch;
+
+	bool _direct;
+	int _ready;
+	StopWatch* _readyStopWatch;
+	StopWatch* _shoot1StopWatch;
+	StopWatch* _shoot2StopWatch;
+	
+	StopWatch* _hitStopWatch;
+	bool _startHit;
 };
 #endif
