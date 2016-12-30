@@ -29,6 +29,7 @@ public:
 	bool isDead();
 
 	void Active(bool direct);
+	bool isActive();
 
 protected:
 	Animation* _animation;

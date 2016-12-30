@@ -17,6 +17,7 @@
 #include "../Object/Back.h"
 #include "../Object/Revive.h"
 #include "../Object/Soldier.h"
+#include "../Object/BlueBat.h"
 #include "../Object/Candle.h"
 #include "../Object/Trident.h"
 #include "../Object/Dinosaur.h"
@@ -38,6 +39,7 @@ BaseObject* GetStair(xml_node item, int mapHeight);
 BaseObject* GetMovingStair(xml_node item, int mapHeight);
 BaseObject* GetSoldier(xml_node item, int mapHeight);
 BaseObject* GetStairEnd(xml_node item, int mapHeight);
+BaseObject* GetBlueBat(xml_node item, int mapHeight);
 BaseObject* GetCandle(xml_node item, int mapHeight);
 BaseObject* GetTrident(xml_node item, int mapHeight);
 BaseObject* GetDinosaur(xml_node item, int mapHeight);

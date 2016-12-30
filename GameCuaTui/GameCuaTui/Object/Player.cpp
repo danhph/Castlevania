@@ -827,6 +827,10 @@ float Player::checkCollision(BaseObject* object, float dt)
 			}
 		}
 	}
+	else if (objectId == BLUEBAT)
+	{
+		
+	}
 	else if (objectId == FIREBALL)
 	{
 		if (!((FireBall*)object)->isDead() && _protectTime <= 0)
@@ -1152,13 +1156,16 @@ void Player::moveDown()
 		move->setVelocity(GVector2(-_movingSpeed, -_movingSpeed));
 	}
 
-	int x = this->getPositionX() - _stair->getBounding().left;
+	int y = this->getPositionY() - _stair->getBounding().bottom;
 
-	x = (x + 9) / 16 * 16;
+	y = (y + 9) / 16 * 16;
 
-	if (x == 0)
+	if (y == 0)
 	{
-		this->setPosition(_stair->getBounding().left, _stair->getBounding().bottom);
+		if (_directStair)
+			this->setPosition(_stair->getBounding().left, _stair->getBounding().bottom);
+		else
+			this->setPosition(_stair->getBounding().right, _stair->getBounding().bottom);
 		this->setStatus(NORMAL);
 	}
 
@@ -1169,8 +1176,16 @@ void Player::moveDown()
 		{
 			move->setVelocity(GVector2(0, 0));
 
-			this->setPositionX(x + _stair->getBounding().left);
-			this->setPositionY(x + _stair->getBounding().bottom);
+			if (_directStair)
+			{
+				this->setPositionX(y + _stair->getBounding().left);
+				this->setPositionY(y + _stair->getBounding().bottom);
+			}
+			else
+			{
+				this->setPositionX(-y + _stair->getBounding().right);
+				this->setPositionY(y + _stair->getBounding().bottom);
+			}
 
 			this->setStatus(STAND_DOWN);
 		}
@@ -1194,7 +1209,10 @@ void Player::moveDownToStair()
 			this->setScaleX(this->getScale().x * (-1));
 	}
 
-	this->setPosition(GVector2(_stairEnd->getBounding().left, _stairEnd->getBounding().bottom));
+	if (_directStair)
+		this->setPosition(GVector2(_stairEnd->getBounding().left, _stairEnd->getBounding().bottom));
+	else
+		this->setPosition(GVector2(_stairEnd->getBounding().right, _stairEnd->getBounding().bottom));
 }
 
 
@@ -1247,19 +1265,33 @@ void Player::moveUp()
 		{
 			move->setVelocity(GVector2(0, 0));
 
-			int x = this->getPositionX() - _stair->getBounding().left;
-			int y = this->getPositionY() - _stair->getBounding().bottom;
-
-			x = x / 16 * 16;
-
-			if (x == 0)
+			if (_directStair)
 			{
-				x = 1;
+				int x = this->getPositionX() - _stair->getBounding().left;
+				int y = this->getPositionY() - _stair->getBounding().bottom;
+
+				x = x / 16 * 16;
+
+				if (x == 0)
+				{
+					x = 1;
+				}
+
+				this->setPositionX(x + _stair->getBounding().left);
+				this->setPositionY(x + _stair->getBounding().bottom);
 			}
+			else
+			{
+				int y = this->getPositionY() - _stair->getBounding().bottom;
+				y = y / 16 * 16;
 
-			this->setPositionX(x + _stair->getBounding().left);
-			this->setPositionY(x + _stair->getBounding().bottom);
-
+				if (y == 0)
+				{
+					y = 1;
+				}
+				this->setPositionX(-y + _stair->getBounding().right);
+				this->setPositionY(y + _stair->getBounding().bottom);
+			}
 			this->setStatus(STAND_UP);
 		}
 

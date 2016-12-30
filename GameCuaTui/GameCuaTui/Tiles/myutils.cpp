@@ -174,6 +174,24 @@ BaseObject* GetTrident(xml_node item, int mapHeight)
 	return trident;
 }
 
+BaseObject* GetBlueBat(xml_node item, int mapHeight)
+{
+	auto properties = GetObjectProperties(item);
+	if (properties.size() == 0)
+		return nullptr;
+	auto width = 2 * stoi(properties["width"]);
+	auto height = 2 * stoi(properties["height"]);
+
+	auto x = 2 * stoi(properties["x"]);
+	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
+
+	x = x + width / 2;
+	y = y + height / 2;
+	auto blueBat = new BlueBat(x, y);
+	blueBat->init();
+	return blueBat;
+}
+
 BaseObject* GetCandle(xml_node item, int mapHeight)
 {
 	auto properties = GetObjectProperties(item);
@@ -384,7 +402,8 @@ BaseObject* GetObjectByType(xml_node item, eID type, int mapHeight)
 			return GetDinosaur(item, mapHeight);
 		case SOLDIER:
 			return GetSoldier(item, mapHeight);
-
+		case BLUEBAT:
+			return GetBlueBat(item, mapHeight);
 
 		case REVIVE:
 			return GetRevive(item, mapHeight);

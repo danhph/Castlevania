@@ -86,9 +86,6 @@ void BlueBat::init()
 	auto movement = new Movement(GVector2(0, 0), GVector2(0, 0), _sprite);
 	_componentList["Movement"] = movement;
 
-	auto sinmovement = new SinMovement(GVector2(0,60), 0.9, _sprite);
-	_componentList["SinMovement"] = sinmovement;
-
 	_effectStopWatch = new StopWatch();
 }
 
@@ -104,4 +101,27 @@ void BlueBat::wasHit()
 bool BlueBat::isDead()
 {
 	return _isDead;
+}
+
+void BlueBat::Active(bool direct)
+{
+	_isActive = true;
+	auto sinmovement = new SinMovement(GVector2(0, 60), 0.9, _sprite);
+	_componentList["SinMovement"] = sinmovement;
+	
+	auto move = (Movement*)this->_componentList["Movement"];
+
+	if (direct)
+	{
+		this->setScale(-1);
+		move->setVelocity(GVector2(BAT_MOVE_SPEED, 0));
+	}
+	else
+		move->setVelocity(GVector2(-BAT_MOVE_SPEED, 0));
+}
+
+
+bool BlueBat::isActive()
+{
+	return _isActive;
 }
