@@ -419,7 +419,7 @@
   <object id="80" name="END" type="51" x="679.75" y="0.25" width="7.5" height="7.5">
    <properties>
     <property name="direct" type="bool" value="true"/>
-    <property name="next" value="24"/>
+    <property name="next" value="27"/>
     <property name="status" value="4096"/>
    </properties>
   </object>
