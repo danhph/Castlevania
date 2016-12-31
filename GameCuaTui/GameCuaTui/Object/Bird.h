@@ -12,12 +12,12 @@
 #include "BigHeart.h"
 #include "Heart.h"
 
-#define BIRD_MOVE_SPEED 70
+#define BIRD_MOVE_SPEED 125
 
 class Bird : public BaseObject
 {
 public:
-	Bird(int x, int y, int activeX);
+	Bird(int x, int y, bool direct);
 
 
 	void init() override;
@@ -25,24 +25,18 @@ public:
 	void draw(LPD3DXSPRITE, Viewport*) override;
 	void release() override;
 
-	void wasHit(int hitpoint);
-
-	bool isDead();
-
+	void wasHit();
+	bool isDead();	
 protected:
 	Animation* _animation;
 	map<string, IComponent*> _componentList;
-	int _activeXLeft;
-	int _activeXRight;
 
-	int _hitPoint;
+	bool _isDead;
 
 	Sprite* _effect;
 	Animation* _effectAnimation;
 	StopWatch* _effectStopWatch;
 
-	StopWatch* _hitStopWatch;
-	bool _startHit;
-
+	int _initX;
 };
 #endif

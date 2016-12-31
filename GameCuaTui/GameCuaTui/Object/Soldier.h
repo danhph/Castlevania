@@ -29,6 +29,8 @@ public:
 
 	bool isDead();
 
+	void runToPlayer(bool direct);
+
 protected:
 	Animation* _animation;
 	map<string, IComponent*> _componentList;

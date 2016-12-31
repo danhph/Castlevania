@@ -3,14 +3,13 @@
 
 Soldier::Soldier(int x, int y, int activeX) : BaseObject(SOLDIER)
 {
-	_sprite = SpriteManager::getInstance()->getSprite(eID::SOLDIER);
-	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::SOLDIER, "soldier_01"));
+	_sprite = SpriteManager::getInstance()->getSprite(eID::ENEMY);
+	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ENEMY, "soldier_1"));
 	_sprite->setPosition(x, y);
-	_sprite->setScale(2.0);
 	_animation = new Animation(_sprite, 0.2f);
 	_activeXLeft = activeX;
 	_activeXRight = x;
-	_animation->addFrameRect(eID::SOLDIER, "soldier_01", "soldier_02", "soldier_03", NULL);
+	_animation->addFrameRect(eID::ENEMY, "soldier_1", "soldier_2", "soldier_3", "soldier_4", NULL);
 
 	_effect = SpriteManager::getInstance()->getSprite(eID::EFFECT);
 	_effect->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::EFFECT, "hit_effect_1"));
@@ -80,7 +79,7 @@ void Soldier::update(float deltatime)
 			auto ran = rand() % 10;
 			BaseObject* heart = nullptr;
 			if (ran < 3)
-				heart = new Heart(this->getPositionX(), this->getPositionY() + 32);
+				heart = new BigHeart(this->getPositionX(), this->getPositionY() + 32);
 			else
 				heart = new Heart(this->getPositionX(), this->getPositionY() + 32);
 
@@ -142,4 +141,17 @@ void Soldier::wasHit(int hitpoint)
 bool Soldier::isDead()
 {
 	return (_hitPoint <= 0);
+}
+
+
+void Soldier::runToPlayer(bool direct)
+{
+	auto move = (Movement*)this->_componentList["Movement"];
+	auto vec = move->getVelocity();
+	if ((direct && vec.x < 0) || (!direct && vec.x > 0))
+	{
+		vec.x = vec.x*(-1);
+		this->_sprite->setScaleX(this->_sprite->getScale().x*(-1));
+		move->setVelocity(vec);
+	}
 }

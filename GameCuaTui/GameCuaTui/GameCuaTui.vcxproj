@@ -107,6 +107,8 @@
     <ClCompile Include="Object\Back.cpp" />
     <ClCompile Include="Object\BaseObject.cpp" />
     <ClCompile Include="Object\BigHeart.cpp" />
+    <ClCompile Include="Object\Bird.cpp" />
+    <ClCompile Include="Object\BirdRange.cpp" />
     <ClCompile Include="Object\BlueBat.cpp" />
     <ClCompile Include="Object\BoomerangWeapon.cpp" />
     <ClCompile Include="Object\BreakWall.cpp" />
@@ -119,6 +121,8 @@
     <ClCompile Include="Object\EmptyObject.cpp" />
     <ClCompile Include="Object\End.cpp" />
     <ClCompile Include="Object\FireBall.cpp" />
+    <ClCompile Include="Object\Frog.cpp" />
+    <ClCompile Include="Object\FrogRange.cpp" />
     <ClCompile Include="Object\Heart.cpp" />
     <ClCompile Include="Object\Help.cpp" />
     <ClCompile Include="Object\Info.cpp" />
@@ -172,6 +176,8 @@
     <ClInclude Include="Object\Back.h" />
     <ClInclude Include="Object\BaseObject.h" />
     <ClInclude Include="Object\BigHeart.h" />
+    <ClInclude Include="Object\Bird.h" />
+    <ClInclude Include="Object\BirdRange.h" />
     <ClInclude Include="Object\BlueBat.h" />
     <ClInclude Include="Object\BoomerangWeapon.h" />
     <ClInclude Include="Object\BreakWall.h" />
@@ -184,6 +190,8 @@
     <ClInclude Include="Object\EmptyObject.h" />
     <ClInclude Include="Object\End.h" />
     <ClInclude Include="Object\FireBall.h" />
+    <ClInclude Include="Object\Frog.h" />
+    <ClInclude Include="Object\FrogRange.h" />
     <ClInclude Include="Object\Heart.h" />
     <ClInclude Include="Object\Help.h" />
     <ClInclude Include="Object\Info.h" />

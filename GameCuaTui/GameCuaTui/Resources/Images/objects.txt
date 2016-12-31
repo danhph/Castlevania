@@ -3,7 +3,7 @@ big_candle_1	0	0	32	64
 big_candle_2	32	0	64	64
 candle_1	64	0	80	32
 candle_2	80	0	96	32
-moving_stair	96	0	160	16
+moving_stair	96	0	160	14
 black_door	160	0	180	50
 down_arrow	180	0	212	32
 up_arrow	180	32	212	64

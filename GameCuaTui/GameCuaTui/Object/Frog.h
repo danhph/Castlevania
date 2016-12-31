@@ -17,7 +17,7 @@
 class Frog : public BaseObject
 {
 public:
-	Frog(int x, int y, int activeX);
+	Frog(int x, int y);
 
 
 	void init() override;
@@ -25,24 +25,23 @@ public:
 	void draw(LPD3DXSPRITE, Viewport*) override;
 	void release() override;
 
-	void wasHit(int hitpoint);
+	void wasHit();
 
 	bool isDead();
 
+
+	void MoveToPlayer(GVector2 pos);
 protected:
 	Animation* _animation;
 	map<string, IComponent*> _componentList;
-	int _activeXLeft;
-	int _activeXRight;
 
-	int _hitPoint;
+	bool _isDead;
 
 	Sprite* _effect;
 	Animation* _effectAnimation;
 	StopWatch* _effectStopWatch;
 
-	StopWatch* _hitStopWatch;
-	bool _startHit;
+	int _initX;
 
 };
 #endif

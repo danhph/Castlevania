@@ -12,7 +12,7 @@
 #include "BigHeart.h"
 #include "Heart.h"
 
-#define BAT_MOVE_SPEED 70
+#define BAT_MOVE_SPEED 120
 
 class BlueBat : public BaseObject
 {
@@ -34,7 +34,7 @@ public:
 protected:
 	Animation* _animation;
 	map<string, IComponent*> _componentList;
-	
+	float _initX;
 	bool _isDead;
 
 	bool _isActive;

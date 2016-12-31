@@ -104,7 +104,9 @@ void Player::init()
 	_info->SetLife(0);
 	_info->SetScore(0);
 	_info->SetMaxWeapon(1);
-
+	_info->SetTime(300);
+	_info->SetPlayerHitPoint(16);
+	_info->SetEnemyHitPoint(16);
 	this->resetValues();
 }
 
@@ -203,7 +205,7 @@ void Player::updateAttackStatus(float dt)
 					}
 				}
 			}
-			if (!isIntersectedInGame(viewportBounding, _listWeapon[i]->getBounding()))
+			if (!isIntersectedInGame(viewportBounding, _listWeapon[i]->getBounding()) && _listWeapon[i]->getBounding().top < viewportBounding.top)
 			{
 				_listWeapon.erase(_listWeapon.begin() + i);
 				obj->release();
@@ -334,12 +336,12 @@ void Player::updateStatus(float dt)
 	{
 		moveDown();
 	}
-	else if ((this->getStatus() & eStatus::STAND_DOWN) == eStatus::STAND_DOWN)
+	else if (this->getStatus() == eStatus::STAND_DOWN)
 	{
 		if (_input->isKeyDown(DIK_J))
 			this->setStatus(MOVING_DOWN);
 	}
-	else if ((this->getStatus() & eStatus::STAND_UP) == eStatus::STAND_UP)
+	else if (this->getStatus() == eStatus::STAND_UP)
 	{
 		if (_input->isKeyDown(DIK_U))
 			this->setStatus(MOVING_UP);
@@ -397,14 +399,8 @@ void Player::updateCurrentAnimateIndex()
 		_currentAnimateIndex = eStatus::BEING_HIT;
 }
 
-
 void Player::resetValues()
 {
-	_info->SetStage(((int) _currentStage) - 15);
-	_info->SetTime(300);
-	_info->SetPlayerHitPoint(16);
-	_info->SetEnemyHitPoint(16);
-
 	_listWeapon.clear();
 	preWall = nullptr;
 	_endMoviePosX = -1;
@@ -420,6 +416,9 @@ void Player::resetValues()
 
 	if (_isRevive)
 	{
+		_info->SetTime(300);
+		_info->SetPlayerHitPoint(16);
+		_info->SetEnemyHitPoint(16);
 		this->setScale(SCALE_FACTOR);
 		this->setPosition(this->_revivePos);
 	}
@@ -586,11 +585,12 @@ void Player::onKeyPressed(KeyEventArg* key_event)
 			}
 		case DIK_U:
 			{
-				if (_stair != nullptr)
-				{
-					moveUp();
-					_holdingKey = true;
-				}
+				if ((this->getStatus() & eStatus::JUMPING) != eStatus::JUMPING)
+					if (_stair != nullptr)
+					{
+						moveUp();
+						_holdingKey = true;
+					}
 				break;
 			}
 		case DIK_Z:
@@ -718,10 +718,13 @@ float Player::checkCollision(BaseObject* object, float dt)
 	{
 		if (collisionBody->checkCollision(object, direction, dt, false) && !this->isInStatus(MOVING_UP))
 		{
-			float moveX, moveY;
-			if (collisionBody->isColliding(object, moveX, moveY, dt))
+			if (direction != BOTTOM)
 			{
-				collisionBody->updateTargetPosition(object, direction, false, GVector2(moveX, moveY));
+				float moveX, moveY;
+				if (collisionBody->isColliding(object, moveX, moveY, dt))
+				{
+					collisionBody->updateTargetPosition(object, direction, false, GVector2(moveX, moveY));
+				}
 			}
 
 			if (direction == eDirection::TOP)
@@ -732,7 +735,6 @@ float Player::checkCollision(BaseObject* object, float dt)
 						gravity->setStatus(eGravityStatus::SHALLOWED);
 						if (this->isInStatus(eStatus::BEING_HIT))
 						{
-							_protectTime = PROTECT_TIME;
 							_info->SetPlayerHitPoint(_info->GetPlayerHitPoint() - 2);
 						}
 						this->standing();
@@ -750,7 +752,13 @@ float Player::checkCollision(BaseObject* object, float dt)
 			{
 				gravity->setStatus(eGravityStatus::FALLING__DOWN);
 				if (!this->isInStatus(eStatus::JUMPING) && !this->isInStatus(eStatus::FALLING) && !this->isInStatus(eStatus::BEING_HIT))
+				{
 					this->addStatus(eStatus::FALLING);
+					auto move = (Movement*)this->_componentList["Movement"];
+					auto vec = move->getVelocity();
+					vec.x = 0;
+					move->setVelocity(vec);
+				}
 			}
 		}
 	}
@@ -796,6 +804,14 @@ float Player::checkCollision(BaseObject* object, float dt)
 	}
 	else if (objectId == SOLDIER)
 	{
+		auto objPos = object->getPosition();
+		auto pos = this->getPosition();
+		if (_protectTime <= 0)
+			if (abs(pos.y + 32 - objPos.y) < 32)
+				if (abs(pos.x - objPos.x) < 100)
+				{
+					((Soldier*)object)->runToPlayer(pos.x > objPos.x);
+				}
 		if (!((Soldier*)object)->isDead())
 		{
 			if (_protectTime < 0)
@@ -829,7 +845,85 @@ float Player::checkCollision(BaseObject* object, float dt)
 	}
 	else if (objectId == BLUEBAT)
 	{
-		
+		if (!((BlueBat*)object)->isActive())
+		{
+			auto objPos = object->getPosition();
+			auto pos = this->getPosition();
+			if (getdistance(objPos, pos) < 200 && abs(pos.x - objPos.x) < 180)
+			{
+				((BlueBat*)object)->Active(pos.x > objPos.x);
+			}
+		}
+		if (!((BlueBat*)object)->isDead() && _protectTime <= 0)
+		{
+			if (collisionBody->checkCollision(object, direction, dt, false))
+			{
+				float moveX, moveY;
+				if (collisionBody->isColliding(object, moveX, moveY, dt))
+				{
+					collisionBody->updateTargetPosition(object, direction, false, GVector2(moveX, moveY));
+				}
+				behit(direction);
+			}
+			if (ropeCollisionBody->checkCollision(object, direction, dt, false))
+			{
+				((BlueBat*)object)->wasHit();
+			}
+			if (this->weaponCheckCollision(object, direction, dt, false))
+			{
+				((BlueBat*)object)->wasHit();
+			}
+		}
+	}
+	else if (objectId == BIRD)
+	{
+		if (!((Bird*)object)->isDead() && _protectTime <= 0)
+		{
+			if (collisionBody->checkCollision(object, direction, dt, false))
+			{
+				float moveX, moveY;
+				if (collisionBody->isColliding(object, moveX, moveY, dt))
+				{
+					collisionBody->updateTargetPosition(object, direction, false, GVector2(moveX, moveY));
+				}
+				behit(direction);
+			}
+			if (ropeCollisionBody->checkCollision(object, direction, dt, false))
+			{
+				((Bird*)object)->wasHit();
+			}
+			if (this->weaponCheckCollision(object, direction, dt, false))
+			{
+				((Bird*)object)->wasHit();
+			}
+		}
+	}
+	else if (objectId == FROG)
+	{
+		if (_protectTime <= 0)
+		{
+			if (!((Frog*)object)->isDead())
+			{
+				((Frog*)object)->MoveToPlayer(this->getPosition());
+				if (collisionBody->checkCollision(object, direction, dt, false))
+				{
+					float moveX, moveY;
+					if (collisionBody->isColliding(object, moveX, moveY, dt))
+					{
+						collisionBody->updateTargetPosition(object, direction, false, GVector2(moveX, moveY));
+					}
+					behit(direction);
+				}
+				if (ropeCollisionBody->checkCollision(object, direction, dt, false))
+				{
+					((Frog*)object)->wasHit();
+				}
+				if (this->weaponCheckCollision(object, direction, dt, false))
+				{
+					((Frog*)object)->wasHit();
+				}
+			}
+		}
 	}
 	else if (objectId == FIREBALL)
 	{
@@ -918,7 +1012,6 @@ float Player::checkCollision(BaseObject* object, float dt)
 						gravity->setStatus(eGravityStatus::SHALLOWED);
 						if (this->isInStatus(eStatus::BEING_HIT))
 						{
-							_protectTime = PROTECT_TIME;
 							_info->SetPlayerHitPoint(_info->GetPlayerHitPoint() - 2);
 						}
 						this->standing();
@@ -942,7 +1035,13 @@ float Player::checkCollision(BaseObject* object, float dt)
 			{
 				gravity->setStatus(eGravityStatus::FALLING__DOWN);
 				if (!this->isInStatus(eStatus::JUMPING) && !this->isInStatus(eStatus::FALLING) && !this->isInStatus(eStatus::BEING_HIT))
+				{
 					this->addStatus(eStatus::FALLING);
+					auto move = (Movement*)this->_componentList["Movement"];
+					auto vec = move->getVelocity();
+					vec.x = 0;
+					move->setVelocity(vec);
+				}
 			}
 		}
 	}
@@ -1008,19 +1107,21 @@ float Player::checkCollision(BaseObject* object, float dt)
 			float moveX, moveY;
 			if (collisionBody->isColliding(object, moveX, moveY, dt))
 			{
-				collisionBody->updateTargetPosition(object, direction, false, GVector2(moveX, moveY));
+				collisionBody->updateTargetPosition(object, direction, false, GVector2(moveX, moveY - 4));
 			}
 			if (!(this->getVelocity().y > -200 && this->isInStatus(eStatus::JUMPING)))
 				if (!(this->getVelocity().y > -200 && this->isInStatus(eStatus::BEING_HIT)))
 				{
 					auto gravity = (Gravity*)this->_componentList["Gravity"];
 					gravity->setStatus(eGravityStatus::SHALLOWED);
-					if (this->isInStatus(eStatus::BEING_HIT))
+					if (direction == TOP)
 					{
-						_protectTime = PROTECT_TIME;
-						_info->SetPlayerHitPoint(_info->GetPlayerHitPoint() - 2);
+						if (this->isInStatus(eStatus::BEING_HIT))
+						{
+							_info->SetPlayerHitPoint(_info->GetPlayerHitPoint() - 2);
+						}
+						this->standing();
 					}
-					this->standing();
 				}
 		}
 
@@ -1038,6 +1139,21 @@ float Player::checkCollision(BaseObject* object, float dt)
 		{
 			_revivePos = object->getPosition();
 			_reviveStage = this->_currentStage;
+			switch (_currentStage)
+			{
+				case MAP_STAGE_31:
+					_info->SetStage(7);
+					break;
+				case MAP_STAGE_23:
+					_info->SetStage(6);
+					break;
+				case MAP_STAGE_22:
+					_info->SetStage(5);
+					break;
+				default:
+					_info->SetStage(4);
+					break;
+			}
 		}
 	}
 	else if (objectId == DOOR)
@@ -1074,6 +1190,29 @@ float Player::checkCollision(BaseObject* object, float dt)
 			_info->SetPlayerHitPoint(0);
 		}
 	}
+	else if (objectId == BIRD_RANGE)
+	{
+		if (collisionBody->checkCollision(object, direction, dt, false))
+		{
+			((BirdRange*)object)->Active();
+			((BirdRange*)object)->SetDirect(this->getScale().x < 0);
+			((BirdRange*)object)->SetInitY(this->getPositionY() + 128);
+		}
+		else
+			((BirdRange*)object)->Deactive();
+	}
+	else if (objectId == FROG_RANGE)
+	{
+		if (collisionBody->checkCollision(object, direction, dt, false))
+		{
+			((FrogRange*)object)->Active();
+			((FrogRange*)object)->SetDirect(this->getScale().x < 0);
+			((FrogRange*)object)->SetInitY(this->getPositionY() - 64);
+		}
+		else
+			((FrogRange*)object)->Deactive();
+	}
+
 	return 1.0f;
 }
 
@@ -1232,8 +1371,8 @@ void Player::moveUp()
 				return;
 			this->setPositionX(_stair->getBounding().right);
 		}
-		
 	}
+
 	this->setStatus(eStatus::MOVING_UP);
 
 	auto move = (Movement*)this->_componentList["Movement"];
@@ -1388,7 +1527,7 @@ void Player::hit()
 	this->addStatus(eStatus::ATTACKING);
 	this->_animations[this->getStatus()]->restart();
 
-	if (this->_input->isKeyDown(DIK_U))
+	if (this->_input->isKeyDown(DIK_U) && _info->GetCurrentWeapon() != WEAPON)
 	{
 		_isRope = false;
 		_weaponStopWatch->restart();

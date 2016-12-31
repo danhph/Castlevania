@@ -71,20 +71,31 @@ void PlayScene::updateInput(float dt)
 
 void PlayScene::update(float dt)
 {
+	if (this->checkEndGame() == true)
+	{
+		return;
+	}
+
 	if (this->getPlayer()->isChangedStage())
 	{
 		_currentStage = this->getPlayer()->getStage();
 		initStage();
 	}
 
-	if (this->checkEndGame() == true)
-	{
-		return;
-	}
-
 	if (_player->isInStatus(eStatus::DIE) == false)
 	{
 		this->updateViewport(this->getPlayer(), dt);
+	}
+
+	if (this->getPlayer()->IsPlayingMove())
+	{
+		_player->update(dt);
+		for (BaseObject* object : _activeObject)
+		{
+			if (object->getId() == DOOR)
+				object->update(dt);
+		}
+		return;
 	}
 
 	RECT viewport_in_transform = _viewport->getBounding();

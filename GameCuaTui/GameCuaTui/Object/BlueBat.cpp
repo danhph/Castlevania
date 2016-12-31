@@ -17,6 +17,7 @@ BlueBat::BlueBat(int x, int y) : BaseObject(BLUEBAT)
 
 	_isDead = false;
 	_isActive = false;
+	_initX = x;
 }
 
 void BlueBat::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
@@ -33,7 +34,12 @@ void BlueBat::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 }
 
 void BlueBat::update(float deltatime)
-{	
+{
+	if (this->getPositionX() < _initX - 520 || this->getPositionX() > _initX + 520)
+	{
+		this->setStatus(DESTROY);
+		return;
+	}
 	if (!_isDead)
 	{
 		if (_isActive)
@@ -106,18 +112,20 @@ bool BlueBat::isDead()
 void BlueBat::Active(bool direct)
 {
 	_isActive = true;
-	auto sinmovement = new SinMovement(GVector2(0, 60), 0.9, _sprite);
-	_componentList["SinMovement"] = sinmovement;
-	
+
 	auto move = (Movement*)this->_componentList["Movement"];
 
 	if (direct)
 	{
-		this->setScale(-1);
-		move->setVelocity(GVector2(BAT_MOVE_SPEED, 0));
+		this->setScaleX(-1);
+		move->setVelocity(GVector2(BAT_MOVE_SPEED, -440));
+		move->setAccelerate(GVector2(100, 800));
 	}
 	else
-		move->setVelocity(GVector2(-BAT_MOVE_SPEED, 0));
+	{
+		move->setVelocity(GVector2(-BAT_MOVE_SPEED, -440));
+		move->setAccelerate(GVector2(100, 800));
+	}
 }
 
 

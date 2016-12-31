@@ -77,8 +77,9 @@ enum eID
 	REDBAT = 72,
 	BLUEBAT = 73,
 	FROG = 74,
-	CROW = 75,
+	FROG_RANGE = 75,
 	BIRD = 76,
+	BIRD_RANGE = 77,
 	SKELETON = 78,
 
 	OBJECTS = 79,

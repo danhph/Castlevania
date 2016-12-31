@@ -97,6 +97,42 @@ BaseObject* GetStart(xml_node item, int mapHeight)
 	return start;
 }
 
+BaseObject* GetFrogRange(xml_node item, int mapHeight)
+{
+	auto properties = GetObjectProperties(item);
+	if (properties.size() == 0)
+		return nullptr;
+
+	auto width = 2 * stoi(properties["width"]);
+	auto height = 2 * stoi(properties["height"]);
+
+	auto x = 2 * stoi(properties["x"]);
+	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
+
+
+	auto range = new FrogRange(x, y, width, height);
+	range->init();
+	return range;
+}
+
+BaseObject* GetBirdRange(xml_node item, int mapHeight)
+{
+	auto properties = GetObjectProperties(item);
+	if (properties.size() == 0)
+		return nullptr;
+
+	auto width = 2 * stoi(properties["width"]);
+	auto height = 2 * stoi(properties["height"]);
+
+	auto x = 2 * stoi(properties["x"]);
+	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
+
+
+	auto birdRange = new BirdRange(x, y, width, height);
+	birdRange->init();
+	return birdRange;
+}
+
 BaseObject* GetDoor(xml_node item, int mapHeight)
 {
 	auto properties = GetObjectProperties(item);
@@ -404,6 +440,10 @@ BaseObject* GetObjectByType(xml_node item, eID type, int mapHeight)
 			return GetSoldier(item, mapHeight);
 		case BLUEBAT:
 			return GetBlueBat(item, mapHeight);
+		case BIRD_RANGE:
+			return GetBirdRange(item, mapHeight);
+		case FROG_RANGE:
+			return GetFrogRange(item, mapHeight);
 
 		case REVIVE:
 			return GetRevive(item, mapHeight);

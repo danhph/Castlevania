@@ -9,6 +9,8 @@
 #include "../Object/Wall.h"
 #include "../Object/BreakWall.h"
 #include "../Object/BreakWall1.h"
+#include "../Object/BirdRange.h"
+#include "../Object/FrogRange.h"
 #include "../Object/Stair.h"
 #include "../Object/MovingStair.h"
 #include "../Object/StairEnd.h"
@@ -31,6 +33,8 @@ BaseObject* GetStart(xml_node item, int mapHeight);
 BaseObject* GetEnd(xml_node item, int mapHeight);
 BaseObject* GetBack(xml_node item, int mapHeight);
 BaseObject* GetRevive(xml_node item, int mapHeight);
+BaseObject* GetFrogRange(xml_node item, int mapHeight);
+BaseObject* GetBirdRange(xml_node item, int mapHeight);
 BaseObject* GetDoor(xml_node item, int mapHeight);
 BaseObject* GetWall(xml_node item, int mapHeight);
 BaseObject* GetBreakWall(xml_node item, int mapHeight);

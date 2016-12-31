@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="48" height="6" tilewidth="32" tileheight="32" nextobjectid="84">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="48" height="6" tilewidth="32" tileheight="32" nextobjectid="89">
+ <properties>
+  <property name="checkPoint" type="int" value="768"/>
+ </properties>
  <tileset firstgid="1" name="frame2" tilewidth="32" tileheight="32" tilecount="288" columns="48">
   <image source="frame2.png" width="1536" height="192"/>
  </tileset>
@@ -296,7 +299,7 @@
   </data>
  </layer>
  <objectgroup name="Object Layer 1">
-  <object id="1" name="START" type="501" x="831.417" y="159.872" width="16.5" height="16.25">
+  <object id="1" name="START" type="50" x="831.417" y="159.872" width="16.5" height="16.25">
    <properties>
     <property name="status" value="2048"/>
    </properties>
@@ -306,20 +309,20 @@
     <property name="direct" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="4" name="Wall" type="40" x="859.591" y="145.5" width="36.9091" height="2.54545"/>
-  <object id="5" name="Wall" type="40" x="928.5" y="144.5" width="32" height="16"/>
-  <object id="6" name="Wall" type="40" x="1120" y="64.5" width="32" height="16"/>
-  <object id="7" name="Wall" type="40" x="1344.5" y="96" width="32" height="16"/>
-  <object id="8" name="Wall" type="40" x="1375.5" y="32" width="16" height="16"/>
+  <object id="4" name="Wall" type="40" x="859.591" y="146.5" width="36.9091" height="2.54545"/>
+  <object id="5" name="Wall" type="40" x="928.5" y="146.5" width="32" height="15"/>
+  <object id="6" name="Wall" type="40" x="1121" y="66.5" width="30.6667" height="4.33333"/>
+  <object id="7" name="Wall" type="40" x="1344.5" y="99.3333" width="32" height="12.6667"/>
+  <object id="8" name="Wall" type="40" x="1376.5" y="34" width="14.6667" height="13.3333"/>
   <object id="9" name="Wall" type="40" x="128" y="115" width="32" height="14"/>
   <object id="10" name="Wall" type="40" x="188.167" y="82.5" width="36.3333" height="2.66667"/>
-  <object id="11" name="Wall" type="40" x="225.333" y="67" width="32" height="16"/>
-  <object id="12" name="Wall" type="40" x="992.5" y="129" width="64" height="16"/>
-  <object id="13" name="Wall" type="40" x="1087" y="128" width="64" height="16"/>
-  <object id="15" name="Wall" type="40" x="1408.5" y="64.5" width="96" height="16"/>
-  <object id="16" name="Wall" type="40" x="1248" y="64.5" width="96" height="4.18182"/>
-  <object id="17" name="Wall" type="40" x="1184.5" y="128" width="320" height="16"/>
-  <object id="18" name="Wall" type="40" x="833" y="64.5" width="190" height="16"/>
+  <object id="11" name="Wall" type="40" x="225.333" y="67" width="32" height="4.33333"/>
+  <object id="12" name="Wall" type="40" x="992.5" y="131" width="64" height="16"/>
+  <object id="13" name="Wall" type="40" x="1088" y="131.333" width="64" height="14.6667"/>
+  <object id="15" name="Wall" type="40" x="1408.5" y="66.8333" width="96" height="3.33333"/>
+  <object id="16" name="Wall" type="40" x="1248" y="66.8333" width="96" height="1.84849"/>
+  <object id="17" name="Wall" type="40" x="1184.5" y="131" width="320" height="16"/>
+  <object id="18" name="Wall" type="40" x="833" y="66.8333" width="190" height="3"/>
   <object id="19" name="Wall" type="40" x="704.5" y="97" width="126.5" height="16"/>
   <object id="20" name="Wall" type="40" x="673" y="113" width="32" height="16"/>
   <object id="21" name="Wall" type="40" x="672.5" y="128.5" width="16" height="32"/>
@@ -348,12 +351,12 @@
    </properties>
   </object>
   <object id="38" name="Candle" type="61" x="1226" y="96" width="8" height="8"/>
-  <object id="39" name="Soldier" type="71" x="1254.5" y="96" width="16" height="32">
+  <object id="39" name="Soldier" type="71" x="1327.83" y="97.3333" width="16" height="32">
    <properties>
-    <property name="ActiveBoundX" value="1215"/>
+    <property name="ActiveBoundX" value="1186"/>
    </properties>
   </object>
-  <object id="40" name="Soldier" type="71" x="1327.45" y="32" width="16" height="32">
+  <object id="40" name="Soldier" type="71" x="1327.45" y="33" width="16" height="32">
    <properties>
     <property name="ActiveBoundX" type="float" value="1248"/>
    </properties>
@@ -361,12 +364,12 @@
   <object id="41" name="Candle" type="61" x="1292" y="6.5" width="8" height="8"/>
   <object id="42" name="Candle" type="61" x="1354.5" y="6.5" width="8" height="8"/>
   <object id="43" name="Candle" type="61" x="1419" y="104" width="8" height="8"/>
-  <object id="44" name="BreakWall" type="60" x="1391.5" y="32.5" width="16" height="16"/>
+  <object id="44" name="BreakWall1" type="63" x="1391.83" y="34.8333" width="16" height="12.6667"/>
   <object id="45" name="Wall" type="40" x="1505" y="-0.5" width="16" height="176"/>
   <object id="46" name="Candle" type="61" x="1484" y="6.5" width="8" height="8"/>
-  <object id="47" name="Soldier" type="71" x="1425" y="32" width="16" height="32">
+  <object id="47" name="Soldier" type="71" x="1488.33" y="32" width="16" height="32">
    <properties>
-    <property name="ActiveBoundX" type="float" value="1488"/>
+    <property name="ActiveBoundX" type="float" value="1408"/>
    </properties>
   </object>
   <object id="48" name="Bird" type="72" x="1200" y="0.5" width="16" height="16"/>
@@ -428,10 +431,7 @@
     <property name="status" value="0"/>
    </properties>
   </object>
-  <object id="83" name="START" type="50" x="227.542" y="109.292" width="18.25" height="20.75">
-   <properties>
-    <property name="status" type="int" value="0"/>
-   </properties>
-  </object>
+  <object id="86" name="BirdRange" type="77" x="842.5" y="79.75" width="181.333" height="95.5"/>
+  <object id="87" name="BirdRange" type="75" x="189.833" y="95.4167" width="66.3333" height="33.8333"/>
  </objectgroup>
 </map>

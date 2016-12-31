@@ -24,12 +24,15 @@
 #include "Door.h"
 #include "Back.h"
 #include "Soldier.h"
+#include "BlueBat.h"
 #include "Dinosaur.h"
 #include "Fireball.h"
 #include "BreakWall.h"
 #include "BreakWall1.h"
 #include "DaggerWeapon.h"
 #include "BoomerangWeapon.h"
+#include "BirdRange.h"
+#include "FrogRange.h"
 #include "AxeWeapon.h"
 #include <thread>
 
