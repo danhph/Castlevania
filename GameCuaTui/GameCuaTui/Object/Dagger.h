@@ -22,8 +22,8 @@ public:
 	float checkCollision(BaseObject* object, float dt) override;
 protected:
 	map<string, IComponent*> _componentList;
-	int _initX;
 	bool _stop;
+	int _initX;
 
 	StopWatch* _destroyStopWatch;
 	bool _startDestroyStopWatch;

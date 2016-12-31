@@ -5,7 +5,7 @@ BreakWall::BreakWall(int x, int y) : BaseObject(BREAKWALL)
 	_sprite = SpriteManager::getInstance()->getSprite(eID::WALL);
 	_sprite->setPosition(x, y);
 	_sprite->setScale(2.0);
-
+	
 	_sprite2 = SpriteManager::getInstance()->getSprite(eID::WALL);
 	_sprite2->setPosition(x, y + 32);
 	_sprite2->setScale(2.0);
@@ -112,4 +112,10 @@ void BreakWall::wasHit()
 bool BreakWall::isBroken()
 {
 	return (_hitPoint <= 0);
+}
+
+void BreakWall::setColor(D3DXCOLOR color)
+{
+	_sprite->setColor(color);
+	_sprite2->setColor(color);
 }

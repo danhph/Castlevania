@@ -10,11 +10,18 @@
 #include "Heart.h"
 #include "BigHeart.h"
 #include "QuadtreeNode.h"
+#include "Money.h"
+#include "RopeUpgrade.h"
+#include "Dagger.h"
+#include "Boomerang.h"
+#include "Axe.h"
+#include "Potion.h"
+#include "Cross.h"
 #include <ctime>
 class Candle : public BaseObject
 {
 public:
-	Candle(int x, int y);
+	Candle(int x, int y, eID item = ITEM);
 
 
 	void init() override;
@@ -36,5 +43,7 @@ protected:
 	StopWatch* _stopwatch;
 
 	map<string, IComponent*> _componentList;
+
+	eID _item;
 };
 #endif

@@ -77,16 +77,17 @@ void Soldier::update(float deltatime)
 			this->setStatus(DESTROY);
 			srand(time(0));
 			auto ran = rand() % 10;
-			BaseObject* heart = nullptr;
+			BaseObject* item = nullptr;
 			if (ran < 3)
-				heart = new BigHeart(this->getPositionX(), this->getPositionY() + 32);
+				item = new BigHeart(this->getPositionX(), this->getPositionY());
+			else if (ran > 6)
+				item = new Money(this->getPositionX(), this->getPositionY(), ran - 7);
 			else
-				heart = new Heart(this->getPositionX(), this->getPositionY() + 32);
-
-			if (heart != nullptr)
+				item = new Heart(this->getPositionX(), this->getPositionY());
+			if (item != nullptr)
 			{
-				heart->init();
-				QuadTreeNode::getInstance()->Insert(heart);
+				item->init();
+				QuadTreeNode::getInstance()->Insert(item);
 			}
 		}
 	}

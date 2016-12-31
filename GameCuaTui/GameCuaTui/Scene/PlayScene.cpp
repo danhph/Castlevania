@@ -61,6 +61,9 @@ bool PlayScene::init()
 
 	initStage();
 
+	_crossStopWatch = new StopWatch();
+	_isCrossing = false;
+
 	return true;
 }
 
@@ -105,12 +108,31 @@ void PlayScene::update(float dt)
 	_activeObject.clear();
 	_activeObject = _root->Retrieve(viewport_in_transform);
 
+	if (this->getPlayer()->GetCross())
+	{
+		this->getPlayer()->UseCross();
+		_isCrossing = true;
+		_crossStopWatch->restart();
+		_crossStopWatch->isStopWatch(600);
+		auto i = 0;
+		while (i < _activeObject.size())
+		{
+			auto objId = (int)_activeObject[i]->getId();
+			if (objId > 70 && objId < 79)
+			{
+				_activeObject[i]->setStatus(DESTROY);
+				_activeObject.erase(_activeObject.begin() + i);
+			}
+			i++;
+		}
+	}
+
 	for (auto obj : _activeObject)
 		_player->checkCollision(obj, dt);
 
 	auto i = 0;
 	int j;
-	while (i < _activeObject.size())
+	while (i < _activeObject.size() - 1)
 	{
 		j = i + 1;
 		while (j < _activeObject.size())
@@ -190,7 +212,44 @@ void PlayScene::updateViewport(Player* player, float dt)
 
 void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 {
+	if (_isCrossing)
+	{
+		if (_crossingEffect)
+		{
+			for (BaseObject* object : _activeObject)
+			{
+				object->setColor(EFFECT_COLOR_1);
+			}
+			_tileMap->setColor(EFFECT_COLOR_1);
+			_player->setColor(EFFECT_COLOR_1);
+		}
+		else
+		{
+			for (BaseObject* object : _activeObject)
+			{
+				object->setColor(EFFECT_COLOR_2);
+			}
+			_tileMap->setColor(EFFECT_COLOR_2);
+			_player->setColor(EFFECT_COLOR_2);
+		}
+		
+		_crossingEffect = !_crossingEffect;
+
+		if (_crossStopWatch->isStopWatch(600))
+		{
+			_isCrossing = false;
+
+			for (BaseObject* object : _activeObject)
+			{
+				object->setColor(COLOR_WHITE);
+			}
+			_tileMap->setColor(COLOR_WHITE);
+			_player->setColor(COLOR_WHITE);
+		}
+	}
+
 	_tileMap->draw(spriteHandle, _viewport);
+
 	if (!this->getPlayer()->IsPlayingMove())
 	{
 		for (BaseObject* object : _activeObject)

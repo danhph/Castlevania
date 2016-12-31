@@ -1,24 +1,23 @@
-#include "Axe.h"
+#include "IncreaseWeapon.h"
 
-Axe::Axe(int x, int y) : BaseObject(AXE)
+IncreaseWeapon::IncreaseWeapon(int x, int y) : BaseObject(INCREASE)
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::ITEM);
-	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ITEM, "axe"));
 	_sprite->setPosition(x, y);
 	_initX = x;
 	_stop = false;
 }
 
-void Axe::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
+void IncreaseWeapon::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
 	_sprite->render(spriteHandle, viewport);
 }
 
-void Axe::update(float deltatime)
+void IncreaseWeapon::update(float deltatime)
 {
 	if (_startDestroyStopWatch)
 	{
-		if (_destroyStopWatch->isStopWatch(ITEM_DESTROY_TIME))
+		if (_destroyStopWatch->isStopWatch(2000))
 		{
 			this->setStatus(DESTROY);
 		}
@@ -35,7 +34,7 @@ void Axe::update(float deltatime)
 	}
 }
 
-void Axe::release()
+void IncreaseWeapon::release()
 {
 	for (auto it = _componentList.begin(); it != _componentList.end(); it++)
 	{
@@ -44,7 +43,7 @@ void Axe::release()
 	_componentList.clear();
 }
 
-void Axe::init()
+void IncreaseWeapon::init()
 {
 	auto collisionBody = new CollisionBody(this);
 	_componentList["CollisionBody"] = collisionBody;
@@ -57,13 +56,13 @@ void Axe::init()
 	_startDestroyStopWatch = false;
 }
 
-RECT Axe::getBounding()
+RECT IncreaseWeapon::getBounding()
 {
 	return _sprite->getBounding();
 }
 
 
-float Axe::checkCollision(BaseObject* object, float dt)
+float IncreaseWeapon::checkCollision(BaseObject* object, float dt)
 {
 	if (object->getId() == WALL)
 	{
@@ -80,7 +79,7 @@ float Axe::checkCollision(BaseObject* object, float dt)
 				}
 				if (!_startDestroyStopWatch)
 				{
-					_destroyStopWatch->isTimeLoop(2000);
+					_destroyStopWatch->isTimeLoop(ITEM_DESTROY_TIME);
 					_startDestroyStopWatch = true;
 				}
 				_stop = true;
@@ -89,4 +88,13 @@ float Axe::checkCollision(BaseObject* object, float dt)
 		}
 	}
 	return 0;
+}
+void IncreaseWeapon::setNum(int num)
+{
+	if (num == 1)
+		_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ITEM, "small2"));
+	else if (num == 2)
+		_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ITEM, "small3"));
+	else
+		_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ITEM, "small_heart"));
 }

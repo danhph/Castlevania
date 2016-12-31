@@ -11,7 +11,7 @@
 #include <ctime>
 #include "BigHeart.h"
 #include "Heart.h"
-
+#include "Money.h"
 #define SOLDIER_MOVE_SPEED 70
 
 class Soldier : public BaseObject

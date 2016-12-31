@@ -8,6 +8,7 @@ IControlable::IControlable()
 BaseObject::BaseObject(eID id)
 {
 	this->_id = id;
+	this->_sprite = nullptr;
 	this->setStatus(eStatus::NORMAL);
 }
 
@@ -158,6 +159,7 @@ float BaseObject::getOpacity()
 
 void BaseObject::setColor(D3DXCOLOR color)
 {
+	if (_sprite != nullptr)
 	_sprite->setColor(color);
 }
 

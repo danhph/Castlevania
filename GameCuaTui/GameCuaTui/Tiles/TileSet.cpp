@@ -60,6 +60,12 @@ int TileSet::getWidthtile() const
 	return _widthtile;
 }
 
+void TileSet::setColor(D3DXCOLOR color)
+{
+	_tileImage->setColor(color);
+}
+
+
 void TileSet::setWidthtile(const int& value)
 {
 	this->_widthtile = value;

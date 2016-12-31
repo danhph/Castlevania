@@ -1,6 +1,6 @@
 #include "Dagger.h"
 
-Dagger::Dagger(int x, int y) :BaseObject(DAGGER)
+Dagger::Dagger(int x, int y) : BaseObject(DAGGER)
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::ITEM);
 	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ITEM, "dagger"));
@@ -18,21 +18,14 @@ void Dagger::update(float deltatime)
 {
 	if (_startDestroyStopWatch)
 	{
-		if (_destroyStopWatch->isStopWatch(2000))
+		if (_destroyStopWatch->isStopWatch(ITEM_DESTROY_TIME))
 		{
 			this->setStatus(DESTROY);
 		}
 	}
 
 	auto move = (Movement*)this->_componentList["Movement"];
-	if (!_stop)
-	{
-		if ((this->getPositionX() < _initX - 32) || (this->getPositionX() > _initX + 32))
-		{
-			move->setVelocity(GVector2(move->getVelocity().x*(-1), move->getVelocity().y));
-		}
-	}
-	else
+	if (_stop)
 	{
 		move->setVelocity(GVector2(0, 0));
 	}
@@ -40,7 +33,6 @@ void Dagger::update(float deltatime)
 	{
 		it->second->update(deltatime);
 	}
-
 }
 
 void Dagger::release()
@@ -58,8 +50,9 @@ void Dagger::init()
 	_componentList["CollisionBody"] = collisionBody;
 
 	auto movement = new Movement(GVector2(0, 0), GVector2(0, 0), _sprite);
+	movement->setVelocity(GVector2(0, -200));
 	_componentList["Movement"] = movement;
-	movement->setVelocity(GVector2(-75, -50));
+
 	_destroyStopWatch = new StopWatch();
 	_startDestroyStopWatch = false;
 }
@@ -69,13 +62,14 @@ RECT Dagger::getBounding()
 	return _sprite->getBounding();
 }
 
+
 float Dagger::checkCollision(BaseObject* object, float dt)
 {
 	if (object->getId() == WALL)
 	{
 		auto collisionBody = (CollisionBody*)_componentList["CollisionBody"];
 		eDirection direction;
-		if (collisionBody->checkCollision(object, direction, dt, false) && !this->isInStatus(MOVING_UP))
+		if (collisionBody->checkCollision(object, direction, dt, false))
 		{
 			if (direction == TOP)
 			{

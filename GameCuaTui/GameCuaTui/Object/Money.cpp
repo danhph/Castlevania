@@ -1,20 +1,45 @@
-#include "Axe.h"
+#include "Money.h"
 
-Axe::Axe(int x, int y) : BaseObject(AXE)
+Money::Money(int x, int y, int type) : BaseObject(MONEY)
 {
+	_type = type;
+
+
 	_sprite = SpriteManager::getInstance()->getSprite(eID::ITEM);
-	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ITEM, "axe"));
+	switch (_type)
+	{
+	case 1:
+		_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ITEM, "blue_money"));
+		break;
+	case 2:
+		_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ITEM, "yellow_money"));
+		break;
+	default:
+		_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ITEM, "red_money"));
+		break;
+	}
 	_sprite->setPosition(x, y);
-	_initX = x;
+	
 	_stop = false;
 }
 
-void Axe::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
+int Money::GetCoin()
+{
+	switch (_type)
+	{
+		case 1: return 400;
+		case 2: return 700;
+		default: return 100;
+	}
+}
+
+
+void Money::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
 	_sprite->render(spriteHandle, viewport);
 }
 
-void Axe::update(float deltatime)
+void Money::update(float deltatime)
 {
 	if (_startDestroyStopWatch)
 	{
@@ -35,7 +60,7 @@ void Axe::update(float deltatime)
 	}
 }
 
-void Axe::release()
+void Money::release()
 {
 	for (auto it = _componentList.begin(); it != _componentList.end(); it++)
 	{
@@ -44,7 +69,7 @@ void Axe::release()
 	_componentList.clear();
 }
 
-void Axe::init()
+void Money::init()
 {
 	auto collisionBody = new CollisionBody(this);
 	_componentList["CollisionBody"] = collisionBody;
@@ -57,13 +82,13 @@ void Axe::init()
 	_startDestroyStopWatch = false;
 }
 
-RECT Axe::getBounding()
+RECT Money::getBounding()
 {
 	return _sprite->getBounding();
 }
 
 
-float Axe::checkCollision(BaseObject* object, float dt)
+float Money::checkCollision(BaseObject* object, float dt)
 {
 	if (object->getId() == WALL)
 	{

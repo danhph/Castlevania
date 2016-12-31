@@ -18,7 +18,7 @@ void BigHeart::update(float deltatime)
 {
 	if (_startDestroyStopWatch)
 	{
-		if (_destroyStopWatch->isStopWatch(2000))
+		if (_destroyStopWatch->isStopWatch(ITEM_DESTROY_TIME))
 		{
 			this->setStatus(DESTROY);
 		}
@@ -69,7 +69,7 @@ float BigHeart::checkCollision(BaseObject* object, float dt)
 	{
 		auto collisionBody = (CollisionBody*)_componentList["CollisionBody"];
 		eDirection direction;
-		if (collisionBody->checkCollision(object, direction, dt, false) && !this->isInStatus(MOVING_UP))
+		if (collisionBody->checkCollision(object, direction, dt, false))
 		{
 			if (direction == TOP)
 			{

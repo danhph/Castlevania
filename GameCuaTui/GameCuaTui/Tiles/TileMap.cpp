@@ -56,6 +56,11 @@ void TileMap::setCheckpoint(int checkPoint)
 	_checkPoint = checkPoint;
 }
 
+void TileMap::setColor(D3DXCOLOR color)
+{
+	_tileSet->setColor(color);
+}
+
 
 TileMap* TileMap::LoadFromFile(const string path, eID spriteId)
 {

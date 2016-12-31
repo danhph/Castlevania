@@ -25,6 +25,8 @@ public:
 
 	void wasHit();
 
+	void setColor(D3DXCOLOR color) override;
+
 protected:
 	map<string, IComponent*> _componentList;
 	int _hitPoint;

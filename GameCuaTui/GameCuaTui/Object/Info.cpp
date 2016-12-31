@@ -270,6 +270,8 @@ void Info::SetLife(int number)
 void Info::SetPlayerHitPoint(int number)
 {
 	_playerHitPointNumber = number;
+	if (_playerHitPointNumber > 16)
+		_playerHitPointNumber = 16;
 }
 
 void Info::SetScore(int number)

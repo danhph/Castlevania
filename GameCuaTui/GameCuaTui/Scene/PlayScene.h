@@ -16,6 +16,8 @@
 
 using namespace std;
 
+#define EFFECT_COLOR_1 D3DCOLOR_RGBA(255, 0, 255, 255)
+#define EFFECT_COLOR_2 D3DCOLOR_RGBA(0, 255, 0, 255)
 
 EVENT_RECEIVER
 class PlayScene : public Scene
@@ -57,6 +59,10 @@ private:
 
 
 	bool _isPlayingMovie;
+
+	bool _isCrossing;
+	bool _crossingEffect;
+	StopWatch* _crossStopWatch;
 };
 
 #endif //

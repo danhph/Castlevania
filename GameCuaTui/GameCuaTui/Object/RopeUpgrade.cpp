@@ -1,20 +1,20 @@
-#include "Axe.h"
+#include "RopeUpgrade.h"
 
-Axe::Axe(int x, int y) : BaseObject(AXE)
+RopeUpgrade::RopeUpgrade(int x, int y) : BaseObject(ROPE_UPGRADE)
 {
 	_sprite = SpriteManager::getInstance()->getSprite(eID::ITEM);
-	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ITEM, "axe"));
+	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ITEM, "whip_upgrade"));
 	_sprite->setPosition(x, y);
 	_initX = x;
 	_stop = false;
 }
 
-void Axe::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
+void RopeUpgrade::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 {
 	_sprite->render(spriteHandle, viewport);
 }
 
-void Axe::update(float deltatime)
+void RopeUpgrade::update(float deltatime)
 {
 	if (_startDestroyStopWatch)
 	{
@@ -35,7 +35,7 @@ void Axe::update(float deltatime)
 	}
 }
 
-void Axe::release()
+void RopeUpgrade::release()
 {
 	for (auto it = _componentList.begin(); it != _componentList.end(); it++)
 	{
@@ -44,7 +44,7 @@ void Axe::release()
 	_componentList.clear();
 }
 
-void Axe::init()
+void RopeUpgrade::init()
 {
 	auto collisionBody = new CollisionBody(this);
 	_componentList["CollisionBody"] = collisionBody;
@@ -57,13 +57,13 @@ void Axe::init()
 	_startDestroyStopWatch = false;
 }
 
-RECT Axe::getBounding()
+RECT RopeUpgrade::getBounding()
 {
 	return _sprite->getBounding();
 }
 
 
-float Axe::checkCollision(BaseObject* object, float dt)
+float RopeUpgrade::checkCollision(BaseObject* object, float dt)
 {
 	if (object->getId() == WALL)
 	{

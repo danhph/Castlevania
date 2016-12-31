@@ -32,11 +32,19 @@ void BreakWall1::update(float deltatime)
 		if (_effectStopWatch->isStopWatch(600))
 		{
 			this->setStatus(DESTROY);
-			BaseObject* heart = nullptr;
-			if (heart != nullptr)
+			BaseObject* item = nullptr;
+
+			srand(time(0));
+			auto ran = rand() % 10;
+			if (ran < 3)
+				item = new IncreaseWeapon(this->getPositionX(), this->getPositionY());
+			else
+				item = new Chicken(this->getPositionX(), this->getPositionY());
+			item = new IncreaseWeapon(this->getPositionX(), this->getPositionY());
+			if (item != nullptr)
 			{
-				heart->init();
-				QuadTreeNode::getInstance()->Insert(heart);
+				item->init();
+				QuadTreeNode::getInstance()->Insert(item);
 			}
 		}
 	}

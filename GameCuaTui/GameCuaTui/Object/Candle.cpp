@@ -1,7 +1,8 @@
 #include "Candle.h"
 
-Candle::Candle(int x, int y): BaseObject(CANDLE)
+Candle::Candle(int x, int y, eID item): BaseObject(CANDLE)
 {
+	_item = item;
 	_sprite = SpriteManager::getInstance()->getSprite(eID::CANDLE);
 	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::CANDLE, "candle_01"));
 	_sprite->setPosition(x, y);
@@ -36,18 +37,51 @@ void Candle::update(float deltatime)
 		if (_stopwatch->isStopWatch(400))
 		{
 			this->setStatus(DESTROY);
-			srand(time(0));
-			auto ran = rand() % 10;
-			BaseObject* heart = nullptr;
-			if (ran < 3)
-				heart = new BigHeart(this->getPositionX(), this->getPositionY());
-			else
-				heart = new Heart(this->getPositionX(), this->getPositionY());
-			
-			if (heart != nullptr)
+			BaseObject* item = nullptr;
+			if (_item == ITEM)
 			{
-				heart->init();
-				QuadTreeNode::getInstance()->Insert(heart);
+				srand(time(0));
+				auto ran = rand() % 20;
+				if (ran < 5)
+					item = new Money(this->getPositionX(), this->getPositionY(), ran % 3);
+				else if (ran < 10)
+					item = new BigHeart(this->getPositionX(), this->getPositionY());
+				else if (ran == 10 || ran == 15)
+					item = new RopeUpgrade(this->getPositionX(), this->getPositionY());
+				else if (ran < 17)
+					item = new Heart(this->getPositionX(), this->getPositionY());
+			}
+			else
+			{
+				switch (_item)
+				{
+				case ROPE_UPGRADE:
+					item = new RopeUpgrade(this->getPositionX(), this->getPositionY());
+					break;
+				case DAGGER:
+					item = new Dagger(this->getPositionX(), this->getPositionY());
+					break;
+				case BOOMERANG:
+					item = new Boomerang(this->getPositionX(), this->getPositionY());
+					break;
+				case AXE:
+					item = new Axe(this->getPositionX(), this->getPositionY());
+					break;
+				case POTION:
+					item = new Potion(this->getPositionX(), this->getPositionY());
+					break;
+				case CROSS:
+					item = new Cross(this->getPositionX(), this->getPositionY());
+					break;
+				default:
+					item = new Heart(this->getPositionX(), this->getPositionY());
+					break;
+				}
+			}
+			if (item != nullptr)
+			{
+				item->init();
+				QuadTreeNode::getInstance()->Insert(item);
 			}
 		}
 	}

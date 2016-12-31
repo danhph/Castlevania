@@ -7,7 +7,12 @@
 #include "CollisionBody.h"
 #include "../FrameWork/Animation.h"
 #include "../Framework/StopWatch.h"
+#include "Heart.h"
+#include "Chicken.h"
+#include "IncreaseWeapon.h"
 #include "QuadtreeNode.h"
+#include <ctime>
+
 
 class BreakWall1 : public BaseObject
 {

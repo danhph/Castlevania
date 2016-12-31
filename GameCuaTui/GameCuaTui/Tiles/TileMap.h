@@ -29,6 +29,8 @@ public:
 
 	void setCheckpoint(int checkPoint);
 
+	void setColor(D3DXCOLOR color);
+
 private:
 
 	int _frameWidth;

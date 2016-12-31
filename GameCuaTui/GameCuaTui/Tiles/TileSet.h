@@ -19,7 +19,7 @@ private:
 	int _columns;
 	int _rows;
 	std::vector<Tile*> _listTiles;
-
+	
 public:
 	TileSet(eID spriteId);
 
@@ -30,6 +30,9 @@ public:
 
 	void loadListTiles(pugi::xml_node& node);
 	Sprite* getSprite();
+	
+	void setColor(D3DXCOLOR color);
+	
 	void draw(LPD3DXSPRITE spriteHandle, int id, GVector2 position, Viewport* viewport);
 };
 

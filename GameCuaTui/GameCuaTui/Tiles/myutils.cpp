@@ -241,7 +241,11 @@ BaseObject* GetCandle(xml_node item, int mapHeight)
 
 	x = x + width / 2;
 	y = y + height / 2;
-	auto candle = new Candle(x, y);
+	BaseObject* candle = nullptr;
+	if (properties["item"] != "")
+		candle = new Candle(x, y, (eID) stoi(properties["item"]));
+	else
+		candle = new Candle(x, y);
 	candle->init();
 	return candle;
 }

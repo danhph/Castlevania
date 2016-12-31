@@ -11,6 +11,7 @@
 #include <ctime>
 #include "BigHeart.h"
 #include "Heart.h"
+#include "Money.h"
 
 #define BAT_MOVE_SPEED 120
 

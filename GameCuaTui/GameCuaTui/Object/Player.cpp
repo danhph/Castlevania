@@ -97,6 +97,7 @@ void Player::init()
 	this->_isRevive = false;
 	this->_isBack = false;
 	this->_currentAnimateIndex = NORMAL;
+	this->_cross = false;
 
 	_info = new Info();
 	_info->init();
@@ -412,10 +413,11 @@ void Player::resetValues()
 	_holdingKey = false;
 
 	_movingSpeed = MOVE_SPEED;
-	_protectTime = PROTECT_TIME;
 
 	if (_isRevive)
 	{
+		_protectTime = PROTECT_TIME;
+		_rope->resetRope();
 		_info->SetTime(300);
 		_info->SetPlayerHitPoint(16);
 		_info->SetEnemyHitPoint(16);
@@ -996,6 +998,93 @@ float Player::checkCollision(BaseObject* object, float dt)
 		if (collisionBody->checkCollision(object, direction, dt, false))
 		{
 			_info->SetHeart(_info->GetHeart() + 5);
+			object->setStatus(DESTROY);
+		}
+	}
+	else if (objectId == CHICKEN)
+	{
+		if (collisionBody->checkCollision(object, direction, dt, false))
+		{
+			_info->SetPlayerHitPoint(_info->GetPlayerHitPoint() + 6);
+			object->setStatus(DESTROY);
+		}
+	}
+	else if (objectId == MONEY)
+	{
+		if (collisionBody->checkCollision(object, direction, dt, false))
+		{
+			_info->SetScore(_info->GetScore() + ((Money*)object)->GetCoin());
+			object->setStatus(DESTROY);
+		}
+	}
+	else if (objectId == ROPE_UPGRADE)
+	{
+		if (collisionBody->checkCollision(object, direction, dt, false))
+		{
+			_rope->upgradeRope();
+			object->setStatus(DESTROY);
+		}
+	}
+	else if (objectId == BOOMERANG)
+	{
+		if (collisionBody->checkCollision(object, direction, dt, false))
+		{
+			_info->SetWeapon(BOOMERANG);
+			object->setStatus(DESTROY);
+		}
+	}
+	else if (objectId == AXE)
+	{
+		if (collisionBody->checkCollision(object, direction, dt, false))
+		{
+			_info->SetWeapon(AXE);
+			object->setStatus(DESTROY);
+		}
+	}
+	else if (objectId == DAGGER)
+	{
+		if (collisionBody->checkCollision(object, direction, dt, false))
+		{
+			_info->SetWeapon(DAGGER);
+			object->setStatus(DESTROY);
+		}
+	}
+	else if (objectId == POTION)
+	{
+		if (collisionBody->checkCollision(object, direction, dt, false))
+		{
+			_protectTime = 5000;
+			object->setStatus(DESTROY);
+		}
+	}
+	else if (objectId == CROSS)
+	{
+		if (collisionBody->checkCollision(object, direction, dt, false))
+		{
+			_cross = true;
+			object->setStatus(DESTROY);
+		}
+	}
+	else if (objectId == INCREASE)
+	{
+		auto maxWeapon = _info->GetMaxWeapon();
+		
+		((IncreaseWeapon*)object)->setNum(maxWeapon);
+
+		if (collisionBody->checkCollision(object, direction, dt, false))
+		{
+			switch (maxWeapon)
+			{
+				case 1:
+					_info->SetMaxWeapon(2);
+					break;
+				case 2:
+					_info->SetMaxWeapon(3);
+					break;
+				default:
+					_info->SetHeart(_info->GetHeart() + 1);
+					break;
+			}
 			object->setStatus(DESTROY);
 		}
 	}
@@ -1689,4 +1778,14 @@ void Player::StopMovie()
 void Player::StartMovieMove()
 {
 	_movieStartMove = true;
+}
+
+bool Player::GetCross()
+{
+	return _cross;
+}
+
+void Player::UseCross()
+{
+	_cross = false;
 }

@@ -20,7 +20,7 @@ void Heart::update(float deltatime)
 {
 	if (_startDestroyStopWatch)
 	{
-		if (_destroyStopWatch->isStopWatch(2000))
+		if (_destroyStopWatch->isStopWatch(ITEM_DESTROY_TIME))
 		{
 			this->setStatus(DESTROY);
 		}

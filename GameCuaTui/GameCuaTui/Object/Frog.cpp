@@ -23,17 +23,9 @@ void Frog::MoveToPlayer(GVector2 pos)
 {
 	pos.y += 32;
 	auto vec = pos - this->getPosition();
-	if (vec.x != 0)
-	{
-		vec.y = vec.y / abs(vec.x) * FROG_MOVE_SPEED;
-
-		if (vec.x > 0)
-			vec.x = FROG_MOVE_SPEED;
-		else
-			vec.x = -FROG_MOVE_SPEED;
-	}
-	else
-		vec.y = vec.y / abs(vec.y) * FROG_MOVE_SPEED;
+	
+	vec.x = vec.x / abs(vec.x) * FROG_MOVE_SPEED;
+	vec.y = vec.y / abs(vec.y) * FROG_MOVE_SPEED;
 
 	auto move = (Movement*) _componentList["Movement"];
 	move->setVelocity(vec);

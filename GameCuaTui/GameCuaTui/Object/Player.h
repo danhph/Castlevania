@@ -34,6 +34,8 @@
 #include "BirdRange.h"
 #include "FrogRange.h"
 #include "AxeWeapon.h"
+#include "Money.h"
+#include "IncreaseWeapon.h"
 #include <thread>
 
 #define MOVE_SPEED 125
@@ -111,6 +113,9 @@ public:
 	void StartMovieMove();
 	void StopMovie();
 
+	void UseCross();
+	bool GetCross();
+
 	eDirection getMapDirection();
 private:
 	map<int, Animation*> _animations;
@@ -164,6 +169,8 @@ private:
 	eDirection _mapDirect;
 
 	int _endMoviePosX;
+
+	bool _cross;
 };
 
 void safeCheckCollision(BaseObject* activeobj, BaseObject* passiveobj, float dt);

@@ -12,10 +12,10 @@ axe		256	0	286	28
 boomerang	0	32	30	60
 holy_water	30	32	62	64
 pot_roast	62	32	94	58
-small2	94	32	122	60
-big2	122	32	164	74
-small3	164	32	192	60
-big3	192	32	234	74
+smallblue_II	94	32	122	60
+bigblue_II	122	32	164	74
+smallred_II	164	32	192	60
+bigred_II	192	32	234	74
 ball_1		234	32	267	60
 ball_2		267	32	295	64
 potion		286	0	312	32
