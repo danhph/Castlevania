@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="24" height="6" tilewidth="32" tileheight="32" nextobjectid="28">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="24" height="6" tilewidth="32" tileheight="32" nextobjectid="29">
  <tileset firstgid="1" name="frame1" tilewidth="32" tileheight="32" tilecount="144" columns="24">
   <image source="frame1.png" width="768" height="192"/>
  </tileset>
@@ -162,7 +162,12 @@
   <object id="10" name="Candle" type="61" x="456" y="63" width="8" height="8"/>
   <object id="11" name="Candle" type="61" x="392.5" y="63" width="8" height="8"/>
   <object id="12" name="Candle" type="61" x="327" y="63" width="8" height="8"/>
-  <object id="14" name="MoneyBag" type="30" x="408.5" y="96" width="16" height="16"/>
+  <object id="14" name="Treasure" type="84" x="496.167" y="96.5" width="15.5" height="14.5">
+   <properties>
+    <property name="appearx" value="433"/>
+    <property name="appeary" value="197"/>
+   </properties>
+  </object>
   <object id="15" name="Wall" type="40" x="0.5" y="129" width="224" height="16"/>
   <object id="16" name="Medusa" type="76" x="96.5" y="80" width="32" height="32"/>
   <object id="18" name="Door" type="43" x="1" y="79" width="16" height="48"/>

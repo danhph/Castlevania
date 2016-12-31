@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="6" tilewidth="32" tileheight="32" nextobjectid="104">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="6" tilewidth="32" tileheight="32" nextobjectid="108">
  <properties>
   <property name="checkPoint" type="int" value="768"/>
  </properties>
@@ -291,7 +291,7 @@
    </properties>
   </object>
   <object id="47" name="Door" type="54" x="768" y="15.6667" width="16.6667" height="50.3333"/>
-  <object id="49" name="Wall" type="40" x="960.5" y="65" width="96" height="16"/>
+  <object id="49" name="Wall" type="40" x="961" y="65" width="93.5" height="16"/>
   <object id="50" name="Wall" type="40" x="864.5" y="65.5" width="64" height="14.5"/>
   <object id="51" name="Wall" type="40" x="1056" y="96.5" width="32" height="16"/>
   <object id="53" name="Wall" type="40" x="1089" y="128.5" width="32" height="16"/>
@@ -339,7 +339,7 @@
    </properties>
   </object>
   <object id="88" name="Wall" type="40" x="768.333" y="0.75" width="16" height="14.5"/>
-  <object id="91" name="START" type="501" x="1152.87" y="156.625" width="18.25" height="20.75">
+  <object id="91" name="START" type="50" x="1152.87" y="156.625" width="18.25" height="20.75">
    <properties>
     <property name="status" type="int" value="2048"/>
    </properties>
@@ -357,9 +357,11 @@
    </properties>
   </object>
   <object id="101" name="BirdRange" type="69" x="512.5" y="0.5" width="255" height="80.5"/>
-  <object id="103" name="START" type="50" x="1067.38" y="77.625" width="18.25" height="20.75">
+  <object id="104" name="Increase" type="95" x="1121.09" y="66.5455" width="14.5455" height="13.4545"/>
+  <object id="107" name="Treasure" type="84" x="289" y="16.5" width="14.25" height="14.75">
    <properties>
-    <property name="status" type="int" value="0"/>
+    <property name="appearx" value="393"/>
+    <property name="appeary" value="50"/>
    </properties>
   </object>
  </objectgroup>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="48" height="6" tilewidth="32" tileheight="32" nextobjectid="92">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="48" height="6" tilewidth="32" tileheight="32" nextobjectid="97">
  <properties>
   <property name="checkPoint" type="int" value="768"/>
  </properties>
@@ -440,5 +440,9 @@
     <property name="status" type="int" value="0"/>
    </properties>
   </object>
+  <object id="92" name="Chicken" type="94" x="1392.25" y="33.75" width="14.75" height="13.25"/>
+  <object id="93" name="BirdRange" type="69" x="831.333" y="0.666667" width="192.667" height="66"/>
+  <object id="95" name="Chicken" type="94" x="704.5" y="97.5" width="15.75" height="14.25"/>
+  <object id="96" name="Increase" type="95" x="128.25" y="114" width="15.75" height="14"/>
  </objectgroup>
 </map>
