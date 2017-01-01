@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="8" height="6" tilewidth="32" tileheight="32" nextobjectid="63">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="8" height="6" tilewidth="32" tileheight="32" nextobjectid="68">
  <tileset firstgid="1" name="frame0" tilewidth="32" tileheight="32" tilecount="48" columns="8">
   <image source="frame0.png" width="256" height="192"/>
  </tileset>
@@ -61,13 +61,14 @@
     <property name="status" type="int" value="0"/>
    </properties>
   </object>
-  <object id="4" name="BreakWall" type="62" x="224" y="64" width="16" height="32"/>
-  <object id="8" name="Bat" type="73" x="38" y="6.25" width="16" height="16"/>
-  <object id="10" name="Candle" type="61" x="204" y="102" width="8" height="8">
+  <object id="4" name="BreakWall" type="62" x="224" y="64" width="16" height="32">
    <properties>
-    <property name="item" type="int" value="90"/>
+    <property name="crownX" value="150"/>
+    <property name="crownY" value="143"/>
    </properties>
   </object>
+  <object id="8" name="Bat" type="73" x="38" y="6.25" width="16" height="16"/>
+  <object id="10" name="Candle" type="61" x="204" y="102" width="8" height="8"/>
   <object id="11" name="Candle" type="61" x="76.3334" y="109.334" width="8" height="8">
    <properties>
     <property name="item" type="int" value="13"/>
@@ -116,12 +117,6 @@
   <object id="60" name="START" type="50" x="104.875" y="141.875" width="18.25" height="20.75">
    <properties>
     <property name="status" type="int" value="0"/>
-   </properties>
-  </object>
-  <object id="62" name="Crown" type="83" x="224.75" y="81.25" width="14.75" height="14.25">
-   <properties>
-    <property name="appearx" value="136"/>
-    <property name="appeary" value="143"/>
    </properties>
   </object>
  </objectgroup>
