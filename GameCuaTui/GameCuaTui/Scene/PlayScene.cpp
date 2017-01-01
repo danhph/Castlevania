@@ -265,7 +265,7 @@ void PlayScene::draw(LPD3DXSPRITE spriteHandle)
 	{
 		for (BaseObject* object : _activeObject)
 		{
-			if (object->getId() == DOOR)
+			if (object->getId() == DOOR || object->getId() == BREAKWALL1)
 				object->draw(spriteHandle, _viewport);
 		}
 	}
