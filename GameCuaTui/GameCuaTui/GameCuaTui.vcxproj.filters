@@ -385,9 +385,6 @@
     <ClInclude Include="Tiles\TileMap.h">
       <Filter>Header Files\Tile</Filter>
     </ClInclude>
-    <ClInclude Include="Tiles\TileSet.h">
-      <Filter>Header Files\Tile</Filter>
-    </ClInclude>
     <ClInclude Include="Framework\Text.h">
       <Filter>Header Files\Framework</Filter>
     </ClInclude>
@@ -534,6 +531,9 @@
     </ClInclude>
     <ClInclude Include="Object\Treasure.h">
       <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles\TileSet.h">
+      <Filter>Header Files\Tile</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

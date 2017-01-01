@@ -40,7 +40,7 @@ void BreakWall1::update(float deltatime)
 				item = new IncreaseWeapon(this->getPositionX(), this->getPositionY());
 			else if (_item == CHICKEN)
 				item = new Chicken(this->getPositionX(), this->getPositionY());
-			else if (_item != WEAPON)
+			else if (_item != ITEM)
 				item = new Heart(this->getPositionX(), this->getPositionY());
 	
 			if (item != nullptr)

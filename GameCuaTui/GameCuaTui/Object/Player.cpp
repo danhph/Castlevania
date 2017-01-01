@@ -1299,15 +1299,15 @@ float Player::checkCollision(BaseObject* object, float dt)
 	}
 	else if (objectId == DOOR)
 	{
-		if (this->getStatus() == NORMAL || this->getStatus() == MOVING_LEFT || this->getStatus() == MOVING_RIGHT)
+		if (collisionBody->checkCollision(object, direction, dt, false))
 		{
-			if (collisionBody->checkCollision(object, direction, dt, false))
+			float moveX, moveY;
+			if (collisionBody->isColliding(object, moveX, moveY, dt))
 			{
-				float moveX, moveY;
-				if (collisionBody->isColliding(object, moveX, moveY, dt))
-				{
-					collisionBody->updateTargetPosition(object, direction, false, GVector2(moveX, moveY));
-				}
+				collisionBody->updateTargetPosition(object, direction, false, GVector2(moveX, moveY));
+			}
+			if (this->getStatus() == NORMAL || this->getStatus() == MOVING_LEFT || this->getStatus() == MOVING_RIGHT)
+			{
 				if (direction == _mapDirect)
 				{
 					if (_endMoviePosX == -1)
@@ -1402,7 +1402,6 @@ float Player::checkCollision(BaseObject* object, float dt)
 		_info->SetEnemyHitPoint(medusaHitpoint);
 		if (!((Medusa*)object)->isDead() && (medusaHitpoint == 0))
 			_info->AddScore(3000);
-
 	}
 	else if (objectId == SNAKE)
 	{
@@ -1469,7 +1468,6 @@ float Player::checkCollision(BaseObject* object, float dt)
 		}
 		else if (!((Treasure*)object)->IsActive())
 			((Treasure*)object)->Active(false);
-
 	}
 	return 1.0f;
 }

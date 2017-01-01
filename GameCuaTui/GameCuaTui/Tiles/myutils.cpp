@@ -265,9 +265,9 @@ BaseObject* GetBreakWall1(xml_node item, int mapHeight)
 	y = y + height / 2;
 	BaseObject* breakWall = nullptr;
 	if (properties["item"] != "")
-		breakWall = new BreakWall(x, y, (eID)stoi(properties["item"]));
+		breakWall = new BreakWall1(x, y, (eID)stoi(properties["item"]));
 	else
-		breakWall = new BreakWall(x, y);
+		breakWall = new BreakWall1(x, y);
 	breakWall->init();
 	return breakWall;
 }
