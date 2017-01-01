@@ -3,6 +3,13 @@
 
 #include "Game.h"
 #include "Framework/SpriteManager.h"
+#include "Framework/define.h"
+#include "Framework/SceneManager.h"
+#include "Framework/SoundManager.h"
+#include "Scene/IntroScene.h"
+#include "Scene/PlayScene.h"
+#include "Scene/OverScene.h"
+#include "Framework/StageManager.h"
 
 class CastlevaniaGame : public Game
 {

@@ -34,10 +34,6 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	pSprite = new Sprite(spriteHandle, L"Resources//Images//wall_cube.png");
 	this->_listSprite[eID::WALL] = pSprite;
 
-
-	pSprite = new Sprite(spriteHandle, L"Resources//Fonts//fontEx.png", 30, 10);
-	this->_listSprite[eID::FONTEX] = pSprite;
-
 	pSprite = new Sprite(spriteHandle, L"Resources//Fonts//fontFull.png", 54, 6);
 	this->_listSprite[eID::FONTFULL] = pSprite;
 
@@ -73,6 +69,10 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::WEAPON, pSprite));
 	this->loadSpriteInfo(eID::WEAPON, "Resources//Images//weapon.txt");
 
+	pSprite = new Sprite(spriteHandle, L"Resources//Images//boss.png");
+	this->_listSprite.insert(pair<eID, Sprite*>(eID::BOSS, pSprite));
+	this->loadSpriteInfo(eID::BOSS, "Resources//Images//boss.txt");
+
 	pSprite = new Sprite(spriteHandle, L"Resources//Images//breakwall.png");
 	this->_listSprite.insert(pair<eID, Sprite*>(eID::BREAKWALL, pSprite));
 	this->loadSpriteInfo(eID::BREAKWALL, "Resources//Images//breakwall.txt");
@@ -95,6 +95,11 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	pSprite->setOrigin(VECTOR2ZERO);
 	pSprite->setScale(2.0f);
 	this->_listSprite[eID::MAP_STAGE_23] = pSprite;
+
+	pSprite = loadXMLDoc(spriteHandle, L"Resources//Map//stage24.tmx");
+	pSprite->setOrigin(VECTOR2ZERO);
+	pSprite->setScale(2.0f);
+	this->_listSprite[eID::MAP_STAGE_24] = pSprite;
 
 	pSprite = loadXMLDoc(spriteHandle, L"Resources//Map//stage31.tmx");
 	pSprite->setOrigin(VECTOR2ZERO);

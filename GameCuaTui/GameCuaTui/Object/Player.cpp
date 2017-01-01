@@ -1,6 +1,5 @@
 ﻿#include "Player.h"
 
-
 Player::Player() : BaseObject(eID::PLAYER)
 {
 }
@@ -98,16 +97,17 @@ void Player::init()
 	this->_isBack = false;
 	this->_currentAnimateIndex = NORMAL;
 	this->_cross = false;
-
+	this->_endLevel = false;
 	_info = new Info();
 	_info->init();
-	_info->SetHeart(100);
-	_info->SetLife(0);
+	_info->SetHeart(50);
+	_info->SetLife(3);
 	_info->SetScore(0);
 	_info->SetMaxWeapon(1);
-	_info->SetTime(300);
 	_info->SetPlayerHitPoint(16);
 	_info->SetEnemyHitPoint(16);
+	_info->ActiveTime();
+	_info->SetTime(300);
 	this->resetValues();
 }
 
@@ -144,9 +144,9 @@ void Player::updateAttackStatus(float dt)
 						if (_info->GetHeart() > 0)
 						{
 							if (this->getScale().x > 0)
-								weapon = new BoomerangWeapon(this->getPositionX() + 16, this->getPositionY() + 40, true);
+								weapon = new BoomerangWeapon(this->getPositionX() + 16, this->getPositionY() + 30, true);
 							else
-								weapon = new BoomerangWeapon(this->getPositionX() - 16, this->getPositionY() + 40, false);
+								weapon = new BoomerangWeapon(this->getPositionX() - 16, this->getPositionY() + 30, false);
 							_info->SetHeart(_info->GetHeart() - 1);
 						}
 						break;
@@ -221,12 +221,38 @@ void Player::updateAttackStatus(float dt)
 
 void Player::update(float deltatime)
 {
-	if (_info->GetPlayerHitPoint() == 0 || _info->GetTime() == 0)
+	if (_endLevel)
 	{
-		this->setStatus(DIE);
-		auto move = (Movement*)this->_componentList["Movement"];
-		move->setVelocity(GVector2(0, this->getVelocity().y));
-		_protectTime = 0;
+		_info->PauseTime();
+		if (_info->GetTime() > 0)
+		{
+			_info->AddScore(10);
+			_info->SetTime(_info->GetTime() - 1);
+		}
+		else if (_info->GetHeart() > 0)
+		{
+			_info->AddScore(100);
+			_info->SetHeart(_info->GetHeart() - 1);
+		}
+		else
+		{
+			_isChangedStage = true;
+			_info->ActiveTime();
+			_info->SetTime(300);
+		}
+	}
+	else
+	{
+		auto time = _info->GetTime();
+		if (_info->GetPlayerHitPoint() == 0 || time == 0)
+		{
+			_info->PauseTime();
+			_info->SetTime(time);
+			this->setStatus(DIE);
+			auto move = (Movement*)this->_componentList["Movement"];
+			move->setVelocity(GVector2(0, this->getVelocity().y));
+			_protectTime = 0;
+		}
 	}
 	if (_isPlayingMovie)
 	{
@@ -402,6 +428,7 @@ void Player::updateCurrentAnimateIndex()
 
 void Player::resetValues()
 {
+	_info->ActiveTime();
 	_listWeapon.clear();
 	preWall = nullptr;
 	_endMoviePosX = -1;
@@ -414,13 +441,21 @@ void Player::resetValues()
 
 	_movingSpeed = MOVE_SPEED;
 
+	_info->SetEnemyHitPoint(16);
+	if (_endLevel)
+	{
+		this->setScale(SCALE_FACTOR);
+		_protectTime = PROTECT_TIME;
+		_info->SetPlayerHitPoint(16);
+		_endLevel = false;
+	}
+
 	if (_isRevive)
 	{
 		_protectTime = PROTECT_TIME;
-		_rope->resetRope();
 		_info->SetTime(300);
+		_rope->resetRope();
 		_info->SetPlayerHitPoint(16);
-		_info->SetEnemyHitPoint(16);
 		this->setScale(SCALE_FACTOR);
 		this->setPosition(this->_revivePos);
 	}
@@ -816,7 +851,7 @@ float Player::checkCollision(BaseObject* object, float dt)
 				}
 		if (!((Soldier*)object)->isDead())
 		{
-			if (_protectTime < 0)
+			if (_protectTime <= 0)
 			{
 				if (this->isInStatus(STAND_UP) || this->isInStatus(MOVING_UP) || this->isInStatus(STAND_DOWN) || this->isInStatus(MOVING_DOWN))
 				{
@@ -843,6 +878,8 @@ float Player::checkCollision(BaseObject* object, float dt)
 			{
 				((Soldier*)object)->wasHit(2);
 			}
+			if (((Soldier*)object)->isDead())
+				_info->AddScore(400);
 		}
 	}
 	else if (objectId == BLUEBAT)
@@ -875,6 +912,8 @@ float Player::checkCollision(BaseObject* object, float dt)
 			{
 				((BlueBat*)object)->wasHit();
 			}
+			if (((BlueBat*)object)->isDead())
+				_info->AddScore(200);
 		}
 	}
 	else if (objectId == BIRD)
@@ -898,6 +937,8 @@ float Player::checkCollision(BaseObject* object, float dt)
 			{
 				((Bird*)object)->wasHit();
 			}
+			if (((Bird*)object)->isDead())
+				_info->AddScore(300);
 		}
 	}
 	else if (objectId == FROG)
@@ -924,6 +965,8 @@ float Player::checkCollision(BaseObject* object, float dt)
 				{
 					((Frog*)object)->wasHit();
 				}
+				if (((Frog*)object)->isDead())
+					_info->AddScore(300);
 			}
 		}
 	}
@@ -983,6 +1026,8 @@ float Player::checkCollision(BaseObject* object, float dt)
 			{
 				((Dinosaur*)object)->wasHit(2);
 			}
+			if (((Dinosaur*)object)->isDead())
+				_info->AddScore(400);
 		}
 	}
 	else if (objectId == HEART)
@@ -1029,6 +1074,8 @@ float Player::checkCollision(BaseObject* object, float dt)
 	{
 		if (collisionBody->checkCollision(object, direction, dt, false))
 		{
+			if (_info->GetCurrentWeapon() != BOOMERANG)
+				_info->SetMaxWeapon(1);
 			_info->SetWeapon(BOOMERANG);
 			object->setStatus(DESTROY);
 		}
@@ -1037,6 +1084,8 @@ float Player::checkCollision(BaseObject* object, float dt)
 	{
 		if (collisionBody->checkCollision(object, direction, dt, false))
 		{
+			if (_info->GetCurrentWeapon() != AXE)
+				_info->SetMaxWeapon(1);
 			_info->SetWeapon(AXE);
 			object->setStatus(DESTROY);
 		}
@@ -1045,6 +1094,8 @@ float Player::checkCollision(BaseObject* object, float dt)
 	{
 		if (collisionBody->checkCollision(object, direction, dt, false))
 		{
+			if (_info->GetCurrentWeapon() != DAGGER)
+				_info->SetMaxWeapon(1);
 			_info->SetWeapon(DAGGER);
 			object->setStatus(DESTROY);
 		}
@@ -1068,7 +1119,7 @@ float Player::checkCollision(BaseObject* object, float dt)
 	else if (objectId == INCREASE)
 	{
 		auto maxWeapon = _info->GetMaxWeapon();
-		
+
 		((IncreaseWeapon*)object)->setNum(maxWeapon);
 
 		if (collisionBody->checkCollision(object, direction, dt, false))
@@ -1247,28 +1298,31 @@ float Player::checkCollision(BaseObject* object, float dt)
 	}
 	else if (objectId == DOOR)
 	{
-		if (collisionBody->checkCollision(object, direction, dt, false))
+		if (this->getStatus() == NORMAL || this->getStatus() == MOVING_LEFT || this->getStatus() == MOVING_RIGHT)
 		{
-			float moveX, moveY;
-			if (collisionBody->isColliding(object, moveX, moveY, dt))
+			if (collisionBody->checkCollision(object, direction, dt, false))
 			{
-				collisionBody->updateTargetPosition(object, direction, false, GVector2(moveX, moveY));
-			}
-			if (direction == _mapDirect)
-			{
-				if (_endMoviePosX == -1)
+				float moveX, moveY;
+				if (collisionBody->isColliding(object, moveX, moveY, dt))
 				{
-					if (_mapDirect == RIGHT)
-					{
-						_endMoviePosX = this->getPositionX() - 128;
-					}
-					else
-					{
-						_endMoviePosX = this->getPositionX() + 128;
-					}
+					collisionBody->updateTargetPosition(object, direction, false, GVector2(moveX, moveY));
 				}
-				((Door*)object)->Open();
-				_isPlayingMovie = true;
+				if (direction == _mapDirect)
+				{
+					if (_endMoviePosX == -1)
+					{
+						if (_mapDirect == RIGHT)
+						{
+							_endMoviePosX = this->getPositionX() - 128;
+						}
+						else
+						{
+							_endMoviePosX = this->getPositionX() + 128;
+						}
+					}
+					((Door*)object)->Open();
+					_isPlayingMovie = true;
+				}
 			}
 		}
 	}
@@ -1300,6 +1354,92 @@ float Player::checkCollision(BaseObject* object, float dt)
 		}
 		else
 			((FrogRange*)object)->Deactive();
+	}
+	else if (objectId == MEDUSA)
+	{
+		if (collisionBody->checkCollision(object, direction, dt, false))
+		{
+			if (!((Medusa*)object)->isActive())
+			{
+				((Medusa*)object)->Active();
+				auto checkPoint = ((Medusa*)object)->getCheckPoint();
+				StageManager::getInstance()->getCurrentTileMap()->setCheckpoint(checkPoint);
+				auto wall = new Wall(checkPoint - 4, 0, 8, 512);
+				QuadTreeNode::getInstance()->Insert(wall);
+			}
+			else
+			{
+				if (_protectTime <= 0)
+				{
+					((Medusa*)object)->DelayMove();
+					float moveX, moveY;
+					if (collisionBody->isColliding(object, moveX, moveY, dt))
+					{
+						collisionBody->updateTargetPosition(object, direction, false, GVector2(moveX, moveY));
+					}
+					behit(direction);
+				}
+			}
+		}
+
+		((Medusa*)object)->SetDirect(this->getPositionX() > object->getPositionX());
+
+		if (((Medusa*)object)->isActive())
+		{
+			if (ropeCollisionBody->checkCollision(object, direction, dt, false))
+			{
+				((Medusa*)object)->wasHit();
+				_info->SetEnemyHitPoint(_info->GetEnemyHitPoint() - 2);
+			}
+			if (this->weaponCheckCollision(object, direction, dt, false))
+			{
+				((Medusa*)object)->wasHit();
+			}
+		}
+
+		auto medusaHitpoint = ((Medusa*)object)->GetHitPoint();
+		_info->SetEnemyHitPoint(medusaHitpoint);
+		if (!((Medusa*)object)->isDead() && (medusaHitpoint == 0))
+			_info->AddScore(3000);
+
+	}
+	else if (objectId == SNAKE)
+	{
+		if (_protectTime <= 0)
+		{
+			if (!((Snake*)object)->checkWasHit())
+			{
+				if (collisionBody->checkCollision(object, direction, dt, false))
+				{
+					float moveX, moveY;
+					if (collisionBody->isColliding(object, moveX, moveY, dt))
+					{
+						collisionBody->updateTargetPosition(object, direction, false, GVector2(moveX, moveY));
+					}
+					behit(direction);
+				}
+				if (ropeCollisionBody->checkCollision(object, direction, dt, false))
+				{
+					((Snake*)object)->wasHit();
+				}
+				if (this->weaponCheckCollision(object, direction, dt, false))
+				{
+					((Snake*)object)->wasHit();
+				}
+				if (((Snake*)object)->checkWasHit())
+					_info->AddScore(50);
+			}
+		}
+	}
+	else if (objectId == BALL)
+	{
+		if (collisionBody->checkCollision(object, direction, dt, false))
+		{
+			object->setStatus(DESTROY);
+
+			_currentStage = ((Ball*)object)->GetNext();
+			_endLevel = true;
+		}
 	}
 
 	return 1.0f;
@@ -1788,4 +1928,14 @@ bool Player::GetCross()
 void Player::UseCross()
 {
 	_cross = false;
+}
+
+bool Player::EndLevel()
+{
+	return _endLevel;
+}
+
+Info* Player::GetInfo()
+{
+	return _info;
 }

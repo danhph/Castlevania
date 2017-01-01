@@ -280,7 +280,7 @@ bool PlayScene::checkEndGame()
 {
 	if (((Player*)_player)->getLifeNumber() < 0)
 	{
-		auto gameoverScene = new IntroScene();
+		auto gameoverScene = new OverScene(this->getPlayer()->GetInfo());
 		SceneManager::getInstance()->replaceScene(gameoverScene);
 		return true;
 	}

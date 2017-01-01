@@ -1,10 +1,4 @@
 ﻿#include "CastlevaniaGame.h"
-#include "Framework/define.h"
-#include "Framework/SceneManager.h"
-#include "Framework/SoundManager.h"
-#include "Scene/IntroScene.h"
-#include "Scene/PlayScene.h"
-#include "Framework/StageManager.h"
 
 CastlevaniaGame::CastlevaniaGame(HINSTANCE hInstance, LPWSTR title) : Game(hInstance, title, WINDOW_WIDTH, WINDOW_HEIGHT)
 {

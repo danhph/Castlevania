@@ -1,4 +1,15 @@
-﻿#ifndef __GAMEUIT_FRAMEWORK__
+﻿#ifndef DIRECTINPUT_VERSION
+#define DIRECTINPUT_VERSION 0x800 
+#endif
+
+#pragma warning(disable: 4018)
+#pragma warning(disable: 4066)
+#pragma warning(disable: 4244)
+#pragma warning(disable: 4305)
+#pragma warning(disable: 4715)
+#pragma warning(disable: 4800)
+
+#ifndef __GAMEUIT_FRAMEWORK__
 #define __GAMEUIT_FRAMEWORK__
 
 #define _USE_MATH_DEFINES
@@ -33,7 +44,6 @@ enum eID
 	PLAYER = 0,
 	MAIN_MENU = 1,
 	FONTFULL = 2,
-	FONTEX = 3,
 
 	INFO = 4,
 	HEART_ICON = 5,
@@ -107,6 +117,10 @@ enum eID
 	BALL = 99,
 	DINOSAUR = 101,
 	FIREBALL = 102,
+
+	BOSS = 200,
+	MEDUSA = 201,
+	SNAKE = 202,
 };
 
 enum eStatus

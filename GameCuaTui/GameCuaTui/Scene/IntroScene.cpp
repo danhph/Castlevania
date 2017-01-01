@@ -12,16 +12,23 @@ void IntroScene::updateInput(float deltatime)
 bool IntroScene::init()
 {
 	_introtable = SpriteManager::getInstance()->getSprite(eID::MAIN_MENU);
-	_introtable->setPosition(GVector2(514.0f, 0));
-	_introtable->setScale(SCALE_FACTOR);
-	_introtable->setOrigin(GVector2(0.0f, 1.0f));
+	_introtable->setPosition(256,240);
 
-	_playOption = new TextSprite(eID::FONTFULL, "PUSH START KEY", GVector2(0, 280));
+	_playOption = new TextSprite(eID::FONTFULL, "PUSH START KEY", GVector2(160, 300));
 	_playOption->init();
 	_playOption->setScale(2.0);
-	_playOption->setOrigin(VECTOR2ZERO);
 
-	_movement = new Movement(VECTOR2ZERO, GVector2(-200.0f, 0.0f), _introtable);
+	_huuDanh = new TextSprite(eID::FONTFULL, "HUU DANH   - 14520134", GVector2(20, 350));
+	_huuDanh->init();
+	_huuDanh->setScale(2.0);
+
+	_thanhLiem = new TextSprite(eID::FONTFULL, "THANH LIEM - 14520462", GVector2(20, 375));
+	_thanhLiem->init();
+	_thanhLiem->setScale(2.0);
+
+	_lanAnh = new TextSprite(eID::FONTFULL, "LAN ANH    - 14520021", GVector2(20, 400));
+	_lanAnh->init();
+	_lanAnh->setScale(2.0);
 
 	_flash = new StopWatch();
 	_access = new StopWatch();
@@ -37,16 +44,6 @@ void IntroScene::onKeyPressed(KeyEventArg* key_event)
 
 void IntroScene::update(float dt)
 {
-	_movement->update(dt);
-	
-	_playOption->setPosition(GVector2(_introtable->getPositionX() + 170.0f, _playOption->getPosition().y));
-
-	if (_introtable->getPositionX() <= 0)
-	{
-		_movement->setVelocity(VECTOR2ZERO);
-		_introtable->setPosition(VECTOR2ZERO);
-	}
-
 	if (_ok)
 	{
 		if (_flash->isTimeLoop(120))
@@ -74,13 +71,15 @@ void IntroScene::draw(LPD3DXSPRITE spriteHandle)
 			_playOption->draw(spriteHandle);
 		}
 	}
+	_huuDanh->draw(spriteHandle);
+	_thanhLiem->draw(spriteHandle);
+	_lanAnh->draw(spriteHandle);
 }
 
 void IntroScene::release()
 {
 	SAFE_DELETE(_playOption);
 	SAFE_DELETE(_introtable);
-	SAFE_DELETE(_movement);
 	SAFE_DELETE(_flash);
 	SAFE_DELETE(_access);
 

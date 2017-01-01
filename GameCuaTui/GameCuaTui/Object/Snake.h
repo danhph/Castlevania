@@ -1,5 +1,5 @@
-#ifndef _BALL_H
-#define _BALL_H
+#ifndef _SNAKE_H_
+#define _SNAKE_H_
 
 #include "..\FrameWork\define.h"
 #include "BaseObject.h"
@@ -8,28 +8,31 @@
 #include "../FrameWork/Animation.h"
 #include "../Framework/StopWatch.h"
 
-class Ball : public BaseObject
+#define SNAKE_MOVE_SPEED 125
+
+class Snake : public BaseObject
 {
 public:
-	Ball(int x, int y, eID id);
+	Snake(int x, int y, bool direct);
 
 	void init() override;
 	void update(float deltatime) override;
 	void draw(LPD3DXSPRITE, Viewport*) override;
 	void release() override;
-	RECT getBounding() override;
 
 	float checkCollision(BaseObject* object, float dt) override;
 
-	eID GetNext();
+	bool checkWasHit();
+
+	void wasHit();
 protected:
-	map<string, IComponent*> _componentList;
-
 	Animation* _animation;
-
-	bool _stop;
+	map<string, IComponent*> _componentList;
 	int _initX;
-
-	eID _id;
+	bool _wasHit;
+	Sprite* _effect;
+	Animation* _effectAnimation;
+	StopWatch* _stopwatch;
+	bool _direct;
 };
 #endif

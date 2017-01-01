@@ -25,6 +25,7 @@
 #include "../Object/Dinosaur.h"
 #include "../Object/Heart.h"
 #include "../Object/BigHeart.h"
+#include "../Object/Medusa.h"
 #include <ctime>
 using namespace pugi;
 
@@ -41,6 +42,7 @@ BaseObject* GetBreakWall(xml_node item, int mapHeight);
 BaseObject* GetBreakWall1(xml_node item, int mapHeight);
 BaseObject* GetStair(xml_node item, int mapHeight);
 BaseObject* GetMovingStair(xml_node item, int mapHeight);
+BaseObject* GetMedusa(xml_node item, int mapHeight);
 BaseObject* GetSoldier(xml_node item, int mapHeight);
 BaseObject* GetStairEnd(xml_node item, int mapHeight);
 BaseObject* GetBlueBat(xml_node item, int mapHeight);

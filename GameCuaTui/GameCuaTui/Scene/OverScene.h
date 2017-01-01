@@ -1,5 +1,5 @@
-#ifndef __INTRO_SCENE__
-#define __INTRO_SCENE__
+#ifndef _OVER_SCENE_
+#define _OVER_SCENE_
 
 #include "../Framework/Sprite.h"
 #include "../Framework/SpriteManager.h"
@@ -10,17 +10,18 @@
 #include "../Framework/IComponent.h"
 #include "../Object/BaseObject.h"
 #include "../Object/TextSprite.h"
-
+#include "../Object/Info.h"
 #include "../Framework/Scene.h"
 
 #include "PlayScene.h"
+#include "IntroScene.h"
 
 EVENT_RECEIVER
-class IntroScene : public Scene, public IControlable
+class OverScene : public Scene, public IControlable
 {
 public:
-	IntroScene();
-	~IntroScene();
+	OverScene(Info* info);
+	~OverScene();
 
 	bool init() override;
 	void update(float dt) override;
@@ -29,17 +30,17 @@ public:
 	void updateInput(float deltatime) override;
 
 private:
-	Sprite* _introtable;
-
-	void onKeyPressed(KeyEventArg* key_event);
-	
 	StopWatch* _flash;
 	StopWatch* _access;
-	bool _ok ;
+
+	bool _ok;
+	bool _choice;
 	bool _draw;
-	TextSprite* _playOption;
-	TextSprite* _huuDanh;
-	TextSprite* _thanhLiem;
-	TextSprite* _lanAnh;
+
+	Sprite* _sprite;
+	TextSprite* _gameover;
+	TextSprite* _continue;
+	TextSprite* _quit;	
+	Info* _info;
 };
-#endif // !__INTRO_SCENE__
+#endif // !_OVER_SCENE_

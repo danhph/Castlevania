@@ -115,6 +115,12 @@ void SinMovement::setFrequency(float freq)
 	_radianVeloc = freq;
 	this->_linearVeloc = _amplitude * _radianVeloc;
 }
+
+string SinMovement::GetName()
+{
+	return "SinMovement";
+}
+
 #pragma endregion
 
 #pragma region RoundMovement
@@ -175,3 +181,8 @@ RoundMovement::~RoundMovement()
 }
 
 #pragma endregion
+
+string IComponent::GetName()
+{
+	return "Icomponent";
+}

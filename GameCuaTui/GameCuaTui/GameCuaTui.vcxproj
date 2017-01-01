@@ -106,6 +106,7 @@
     <ClCompile Include="Object\Axe.cpp" />
     <ClCompile Include="Object\AxeWeapon.cpp" />
     <ClCompile Include="Object\Back.cpp" />
+    <ClCompile Include="Object\Ball.cpp" />
     <ClCompile Include="Object\BaseObject.cpp" />
     <ClCompile Include="Object\BigHeart.cpp" />
     <ClCompile Include="Object\Bird.cpp" />
@@ -130,6 +131,7 @@
     <ClCompile Include="Object\Heart.cpp" />
     <ClCompile Include="Object\Help.cpp" />
     <ClCompile Include="Object\Info.cpp" />
+    <ClCompile Include="Object\Medusa.cpp" />
     <ClCompile Include="Object\Money.cpp" />
     <ClCompile Include="Object\MovingStair.cpp" />
     <ClCompile Include="Object\Player.cpp" />
@@ -138,6 +140,7 @@
     <ClCompile Include="Object\QuadtreeNode.cpp" />
     <ClCompile Include="Object\Revive.cpp" />
     <ClCompile Include="Object\Rope.cpp" />
+    <ClCompile Include="Object\Snake.cpp" />
     <ClCompile Include="Object\Soldier.cpp" />
     <ClCompile Include="Object\Stair.cpp" />
     <ClCompile Include="Object\StairEnd.cpp" />
@@ -150,6 +153,7 @@
     <ClCompile Include="Object\RopeUpgrade.cpp" />
     <ClCompile Include="pugixml\pugixml.cpp" />
     <ClCompile Include="Scene\IntroScene.cpp" />
+    <ClCompile Include="Scene\OverScene.cpp" />
     <ClCompile Include="Scene\PlayScene.cpp" />
     <ClCompile Include="Tiles\myutils.cpp" />
     <ClCompile Include="Tiles\Tile.cpp" />
@@ -184,6 +188,7 @@
     <ClInclude Include="Object\Axe.h" />
     <ClInclude Include="Object\AxeWeapon.h" />
     <ClInclude Include="Object\Back.h" />
+    <ClInclude Include="Object\Ball.h" />
     <ClInclude Include="Object\BaseObject.h" />
     <ClInclude Include="Object\BigHeart.h" />
     <ClInclude Include="Object\Bird.h" />
@@ -209,6 +214,7 @@
     <ClInclude Include="Object\Heart.h" />
     <ClInclude Include="Object\Help.h" />
     <ClInclude Include="Object\Info.h" />
+    <ClInclude Include="Object\Medusa.h" />
     <ClInclude Include="Object\Money.h" />
     <ClInclude Include="Object\MovingStair.h" />
     <ClInclude Include="Object\Player.h" />
@@ -217,6 +223,7 @@
     <ClInclude Include="Object\QuadtreeNode.h" />
     <ClInclude Include="Object\Revive.h" />
     <ClInclude Include="Object\Rope.h" />
+    <ClInclude Include="Object\Snake.h" />
     <ClInclude Include="Object\Soldier.h" />
     <ClInclude Include="Object\Stair.h" />
     <ClInclude Include="Object\StairEnd.h" />
@@ -229,6 +236,7 @@
     <ClInclude Include="pugixml\pugiconfig.hpp" />
     <ClInclude Include="pugixml\pugixml.hpp" />
     <ClInclude Include="Scene\IntroScene.h" />
+    <ClInclude Include="Scene\OverScene.h" />
     <ClInclude Include="Scene\PlayScene.h" />
     <ClInclude Include="Tiles\Tile.h" />
     <ClInclude Include="Tiles\TileMap.h" />

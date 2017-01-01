@@ -36,6 +36,8 @@
 #include "AxeWeapon.h"
 #include "Money.h"
 #include "IncreaseWeapon.h"
+#include "Medusa.h"
+#include "../Framework/StageManager.h"
 #include <thread>
 
 #define MOVE_SPEED 125
@@ -43,7 +45,7 @@
 
 #define GRAVITY 800
 #define ATTACK_TIME 600
-#define PROTECT_TIME 1500
+#define PROTECT_TIME 2000
 
 EVENT_RECEIVER
 class Player : public BaseObject, public IControlable
@@ -117,6 +119,10 @@ public:
 	bool GetCross();
 
 	eDirection getMapDirection();
+
+	bool EndLevel();
+
+	Info* GetInfo();
 private:
 	map<int, Animation*> _animations;
 	map<string, IComponent*> _componentList;
@@ -171,6 +177,8 @@ private:
 	int _endMoviePosX;
 
 	bool _cross;
+
+	bool _endLevel;
 };
 
 void safeCheckCollision(BaseObject* activeobj, BaseObject* passiveobj, float dt);

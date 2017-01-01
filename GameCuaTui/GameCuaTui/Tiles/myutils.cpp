@@ -309,6 +309,29 @@ BaseObject* GetSoldier(xml_node item, int mapHeight)
 	return soldier;
 }
 
+BaseObject* GetMedusa(xml_node item, int mapHeight)
+{
+	auto properties = GetObjectProperties(item);
+	if (properties.size() == 0)
+		return nullptr;
+	auto width = 2 * stoi(properties["width"]);
+	auto height = 2 * stoi(properties["height"]);
+
+	auto x = 2 * stoi(properties["x"]);
+	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
+
+	x = x + width / 2;
+	y = y + height / 2;
+
+	auto checkPoint = 2 * stoi(properties["checkPoint"]);
+
+	auto next = (eID)stoi(properties["next"]);
+
+	auto medusa = new Medusa(x, y, checkPoint, next);
+	medusa->init();
+	return medusa;
+}
+
 BaseObject* GetStairEnd(xml_node item, int mapHeight)
 {
 	auto properties = GetObjectProperties(item);
@@ -448,6 +471,9 @@ BaseObject* GetObjectByType(xml_node item, eID type, int mapHeight)
 			return GetBirdRange(item, mapHeight);
 		case FROG_RANGE:
 			return GetFrogRange(item, mapHeight);
+
+		case MEDUSA:
+			return GetMedusa(item, mapHeight);
 
 		case REVIVE:
 			return GetRevive(item, mapHeight);

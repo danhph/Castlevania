@@ -6,9 +6,11 @@ Soldier::Soldier(int x, int y, int activeX) : BaseObject(SOLDIER)
 	_sprite = SpriteManager::getInstance()->getSprite(eID::ENEMY);
 	_sprite->setFrameRect(SpriteManager::getInstance()->getSourceRect(eID::ENEMY, "soldier_1"));
 	_sprite->setPosition(x, y);
-	_animation = new Animation(_sprite, 0.2f);
+
 	_activeXLeft = activeX;
 	_activeXRight = x;
+
+	_animation = new Animation(_sprite, 0.2f);
 	_animation->addFrameRect(eID::ENEMY, "soldier_1", "soldier_2", "soldier_3", "soldier_4", NULL);
 
 	_effect = SpriteManager::getInstance()->getSprite(eID::EFFECT);

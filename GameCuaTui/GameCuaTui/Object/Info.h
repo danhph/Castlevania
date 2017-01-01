@@ -34,10 +34,13 @@ public:
 	void SetStage(int number);
 	int GetStage();
 
+	void AddScore(int number);
 	void SetScore(int number);
 	int GetScore();
 
 	void SetTime(int number);
+	void PauseTime();
+	void ActiveTime();
 	int GetTime();
 
 	void SetWeapon(eID id);
@@ -76,7 +79,8 @@ private:
 	int _timeNumber;
 	
 	float _beginTime;
-
+	bool _pauseTime;
+	int time;
 	int _maxWeapon;
 	Sprite* _maxWeaponSprite;
 };

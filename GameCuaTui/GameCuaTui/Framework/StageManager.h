@@ -22,6 +22,8 @@ public:
 	
 	TileMap* getTileMap(eID id);
 
+	static TileMap* getCurrentTileMap();
+
 	list<BaseObject*>* getListObject(eID id);
 
 	~StageManager(void);
@@ -30,8 +32,10 @@ private:
 	StageManager(void);
 	
 	static StageManager* _instance;
+	static TileMap* _tileMap;
 
 	map<eID, string> _resourcePath;
+
 };
 
 

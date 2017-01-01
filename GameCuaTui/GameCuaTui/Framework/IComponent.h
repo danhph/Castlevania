@@ -10,6 +10,7 @@ class IComponent
 {
 public:
 	virtual void update(float deltatime) = 0;
+	virtual string GetName();
 };
 
 class Movement : public IComponent
@@ -67,6 +68,8 @@ public:
 	void update(float deltatime);
 	void setAmplitude(GVector2 amplitude);
 	void setFrequency(float freq);
+
+	string GetName() override;
 
 private:
 	Sprite* _refSprite;

@@ -134,9 +134,9 @@ void Info::update(float deltatime)
 	stringstream ssLife;
 	ssLife << setw(2) << setfill('0') << _lifeNumber;
 	_textLife->setString("P-" + ssLife.str());
-
-
-	int time = _timeNumber - ((int)GameTime::getInstance()->getTotalGameTime() - _beginTime) / 1000;
+	
+	if (!_pauseTime)
+		time = _timeNumber - ((int)GameTime::getInstance()->getTotalGameTime() - _beginTime) / 1000;
 
 	stringstream ssTime;
 	ssTime << setw(4) << setfill('0') << time;
@@ -246,7 +246,7 @@ int Info::GetStage()
 
 int Info::GetTime()
 {
-	return _timeNumber - ((int)GameTime::getInstance()->getTotalGameTime() - _beginTime) / 1000;
+	return time;
 }
 
 
@@ -279,6 +279,11 @@ void Info::SetScore(int number)
 	_scoreNumber = number;
 }
 
+void Info::AddScore(int number)
+{
+	_scoreNumber += number;
+}
+
 void Info::SetStage(int number)
 {
 	_stageNumber = number;
@@ -286,8 +291,13 @@ void Info::SetStage(int number)
 
 void Info::SetTime(int number)
 {
-	_timeNumber = number + 1;
-	_beginTime = GameTime::getInstance()->getTotalGameTime();
+	if (!_pauseTime)
+	{
+		_timeNumber = number + 1;
+		_beginTime = GameTime::getInstance()->getTotalGameTime();
+	}
+	else
+		time = number;
 }
 
 void Info::SetMaxWeapon(int num)
@@ -316,3 +326,14 @@ int Info::GetMaxWeapon()
 {
 	return _maxWeapon;
 }
+
+void Info::ActiveTime()
+{
+	_pauseTime = false;
+}
+
+void Info::PauseTime()
+{
+	_pauseTime = true;
+}
+

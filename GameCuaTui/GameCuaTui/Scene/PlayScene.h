@@ -10,6 +10,7 @@
 #include <algorithm>
 #include "../Framework/SoundManager.h"
 #include "../Scene/IntroScene.h"
+#include "../Scene/OverScene.h"
 #include "../Object/Player.h"
 #include "../Tiles/myutils.h"
 #include "../Framework/StageManager.h"
