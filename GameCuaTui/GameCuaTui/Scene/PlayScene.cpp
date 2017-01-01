@@ -20,6 +20,7 @@ void PlayScene::setViewport(Viewport* viewport)
 void PlayScene::initStage()
 {
 	SoundManager::getInstance()->Play(CHANGE_STAGE);
+	SoundManager::getInstance()->Stop(BOSS_SOUND);
 	SoundManager::getInstance()->PlayLoop(PLAY_SCENE);
 
 

@@ -1456,7 +1456,8 @@ float Player::checkCollision(BaseObject* object, float dt)
 				auto wall = new Wall(checkPoint - 8, 0, 16, 512);
 				QuadTreeNode::getInstance()->Insert(wall);
 				SoundManager::getInstance()->Stop(PLAY_SCENE);
-				SoundManager::getInstance()->PlayLoop(BOSS_SOUND);
+				if(!SoundManager::getInstance()->IsPlaying(BOSS_SOUND))
+					SoundManager::getInstance()->PlayLoop(BOSS_SOUND);
 			}
 			else
 			{
