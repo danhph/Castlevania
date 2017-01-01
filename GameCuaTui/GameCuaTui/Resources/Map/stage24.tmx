@@ -158,11 +158,7 @@
   <object id="6" name="Candle" type="61" x="715.5" y="63" width="8" height="8"/>
   <object id="7" name="Candle" type="61" x="648.5" y="63" width="8" height="8"/>
   <object id="8" name="Candle" type="61" x="584.5" y="63" width="8" height="8"/>
-  <object id="9" name="Candle" type="61" x="519.5" y="63" width="8" height="8">
-   <properties>
-    <property name="item" value="90"/>
-   </properties>
-  </object>
+  <object id="9" name="Candle" type="61" x="519.5" y="63" width="8" height="8"/>
   <object id="10" name="Candle" type="61" x="456" y="63" width="8" height="8"/>
   <object id="11" name="Candle" type="61" x="392.5" y="63" width="8" height="8"/>
   <object id="12" name="Candle" type="61" x="327" y="63" width="8" height="8"/>
