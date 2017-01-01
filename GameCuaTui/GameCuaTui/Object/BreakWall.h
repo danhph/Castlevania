@@ -8,11 +8,11 @@
 #include "../FrameWork/Animation.h"
 #include "../Framework/StopWatch.h"
 #include "QuadtreeNode.h"
-
+#include "Crown.h"
 class BreakWall : public BaseObject
 {
 public:
-	BreakWall(int x, int y);
+	BreakWall(int x, int y, int itemX = 0, int itemY = 0);
 
 
 	void init() override;
@@ -39,5 +39,8 @@ protected:
 
 	StopWatch* _hitStopWatch;
 	bool _startHit;
+
+	int _itemX;
+	int _itemY;
 };
 #endif

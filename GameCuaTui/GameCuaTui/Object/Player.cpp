@@ -456,6 +456,7 @@ void Player::resetValues()
 		_info->SetTime(300);
 		_rope->resetRope();
 		_info->SetPlayerHitPoint(16);
+		this->setStatus(NORMAL);
 		this->setScale(SCALE_FACTOR);
 		this->setPosition(this->_revivePos);
 	}
@@ -1364,7 +1365,7 @@ float Player::checkCollision(BaseObject* object, float dt)
 				((Medusa*)object)->Active();
 				auto checkPoint = ((Medusa*)object)->getCheckPoint();
 				StageManager::getInstance()->getCurrentTileMap()->setCheckpoint(checkPoint);
-				auto wall = new Wall(checkPoint - 4, 0, 8, 512);
+				auto wall = new Wall(checkPoint - 8, 0, 16, 512);
 				QuadTreeNode::getInstance()->Insert(wall);
 			}
 			else
@@ -1441,7 +1442,35 @@ float Player::checkCollision(BaseObject* object, float dt)
 			_endLevel = true;
 		}
 	}
+	else if (objectId == CROWN)
+	{
+		if (collisionBody->checkCollision(object, direction, dt, false))
+		{
+			if (!((Crown*)object)->IsActive())
+				((Crown*)object)->Active(true);
+			else
+			{
+				_info->AddScore(2000);
+				object->setStatus(DESTROY);
+			}
+		}
+	}
+	else if (objectId == TREASURE)
+	{
+		if (collisionBody->checkCollision(object, direction, dt, false))
+		{
+			if (!((Treasure*)object)->IsActive())
+				((Treasure*)object)->Active(true);
+			else
+			{
+				_info->AddScore(2000);
+				object->setStatus(DESTROY);
+			}
+		}
+		else if (!((Treasure*)object)->IsActive())
+			((Treasure*)object)->Active(false);
 
+	}
 	return 1.0f;
 }
 

@@ -263,7 +263,11 @@ BaseObject* GetBreakWall1(xml_node item, int mapHeight)
 
 	x = x + width / 2;
 	y = y + height / 2;
-	auto breakWall = new BreakWall1(x, y);
+	BaseObject* breakWall = nullptr;
+	if (properties["item"] != "")
+		breakWall = new BreakWall(x, y, (eID)stoi(properties["item"]));
+	else
+		breakWall = new BreakWall(x, y);
 	breakWall->init();
 	return breakWall;
 }
@@ -276,14 +280,42 @@ BaseObject* GetBreakWall(xml_node item, int mapHeight)
 	auto width = 2 * stoi(properties["width"]);
 	auto height = 2 * stoi(properties["height"]);
 
+	auto crownX = 2 * stoi(properties["crownX"]);
+	auto crownY = mapHeight - 2 * stoi(properties["crownY"]) - 16;
+
 	auto x = 2 * stoi(properties["x"]);
 	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
 
 	x = x + width / 2;
 	y = y + height / 4;
-	auto breakWall = new BreakWall(x, y);
+	auto breakWall = new BreakWall(x, y, crownX, crownY);
 	breakWall->init();
 	return breakWall;
+}
+
+BaseObject* GetTreasure(xml_node item, int mapHeight)
+{
+	auto properties = GetObjectProperties(item);
+	if (properties.size() == 0)
+		return nullptr;
+	auto width = 2 * stoi(properties["width"]);
+	auto height = 2 * stoi(properties["height"]);
+
+	auto treasureX = 2 * stoi(properties["appearx"]);
+	auto treasureY = mapHeight - 2 * stoi(properties["appeary"]) - height;
+
+	auto x = 2 * stoi(properties["x"]);
+	auto y = mapHeight - 2 * stoi(properties["y"]) - height;
+
+	x = x + width / 2;
+	y = y + height / 2;
+
+	treasureX = treasureX + width / 2;
+	treasureY = treasureY + height / 2;
+
+	auto treasure = new Treasure(x, y, treasureX, treasureY);
+	treasure->init();
+	return treasure;
 }
 
 BaseObject* GetSoldier(xml_node item, int mapHeight)
@@ -471,6 +503,9 @@ BaseObject* GetObjectByType(xml_node item, eID type, int mapHeight)
 			return GetBirdRange(item, mapHeight);
 		case FROG_RANGE:
 			return GetFrogRange(item, mapHeight);
+
+		case TREASURE:
+			return GetTreasure(item, mapHeight);
 
 		case MEDUSA:
 			return GetMedusa(item, mapHeight);

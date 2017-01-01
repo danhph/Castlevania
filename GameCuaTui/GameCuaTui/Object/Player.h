@@ -37,6 +37,8 @@
 #include "Money.h"
 #include "IncreaseWeapon.h"
 #include "Medusa.h"
+#include "Crown.h"
+#include "Treasure.h"
 #include "../Framework/StageManager.h"
 #include <thread>
 

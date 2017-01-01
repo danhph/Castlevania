@@ -17,7 +17,7 @@
 class BreakWall1 : public BaseObject
 {
 public:
-	BreakWall1(int x, int y);
+	BreakWall1(int x, int y, eID item = ITEM);
 
 
 	void init() override;
@@ -37,5 +37,7 @@ protected:
 	Sprite* _effect;
 	Animation* _effectAnimation;
 	StopWatch* _effectStopWatch;
+
+	eID _item;
 };
 #endif

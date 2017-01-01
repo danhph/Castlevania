@@ -1,7 +1,9 @@
 #include "BreakWall.h"
 
-BreakWall::BreakWall(int x, int y) : BaseObject(BREAKWALL)
+BreakWall::BreakWall(int x, int y, int itemX, int itemY) : BaseObject(BREAKWALL)
 {
+	_itemX = itemX;
+	_itemY = itemY;
 	_sprite = SpriteManager::getInstance()->getSprite(eID::WALL);
 	_sprite->setPosition(x, y);
 	_sprite->setScale(2.0);
@@ -54,11 +56,11 @@ void BreakWall::update(float deltatime)
 		if (_effectStopWatch->isStopWatch(600))
 		{
 			this->setStatus(DESTROY);
-			BaseObject* heart = nullptr;
-			if (heart != nullptr)
+			BaseObject* item = new Crown(this->getPositionX(), this->getPositionY(), _itemX, _itemY);
+			if (item != nullptr)
 			{
-				heart->init();
-				QuadTreeNode::getInstance()->Insert(heart);
+				item->init();
+				QuadTreeNode::getInstance()->Insert(item);
 			}
 		}
 	}

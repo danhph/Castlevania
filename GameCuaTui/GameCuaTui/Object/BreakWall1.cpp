@@ -1,7 +1,9 @@
 #include "BreakWall1.h"
 
-BreakWall1::BreakWall1(int x, int y) : BaseObject(BREAKWALL1)
+BreakWall1::BreakWall1(int x, int y, eID item) : BaseObject(BREAKWALL1)
 {
+	_item = item;
+
 	_sprite = SpriteManager::getInstance()->getSprite(eID::WALL);
 	_sprite->setPosition(x, y);
 	_sprite->setScale(2.0);
@@ -34,13 +36,13 @@ void BreakWall1::update(float deltatime)
 			this->setStatus(DESTROY);
 			BaseObject* item = nullptr;
 
-			srand(time(0));
-			auto ran = rand() % 10;
-			if (ran < 3)
+			if (_item == INCREASE)
 				item = new IncreaseWeapon(this->getPositionX(), this->getPositionY());
-			else
+			else if (_item == CHICKEN)
 				item = new Chicken(this->getPositionX(), this->getPositionY());
-			item = new IncreaseWeapon(this->getPositionX(), this->getPositionY());
+			else if (_item != WEAPON)
+				item = new Heart(this->getPositionX(), this->getPositionY());
+	
 			if (item != nullptr)
 			{
 				item->init();

@@ -119,6 +119,7 @@
     <ClCompile Include="Object\Candle.cpp" />
     <ClCompile Include="Object\CollisionBody.cpp" />
     <ClCompile Include="Object\Cross.cpp" />
+    <ClCompile Include="Object\Crown.cpp" />
     <ClCompile Include="Object\Dagger.cpp" />
     <ClCompile Include="Object\DaggerWeapon.cpp" />
     <ClCompile Include="Object\Dinosaur.cpp" />
@@ -146,6 +147,7 @@
     <ClCompile Include="Object\StairEnd.cpp" />
     <ClCompile Include="Object\Start.cpp" />
     <ClCompile Include="Object\TextSprite.cpp" />
+    <ClCompile Include="Object\Treasure.cpp" />
     <ClCompile Include="Object\Trident.cpp" />
     <ClCompile Include="Object\IncreaseWeapon.cpp" />
     <ClCompile Include="Object\Wall.cpp" />
@@ -202,6 +204,7 @@
     <ClInclude Include="Object\Chicken.h" />
     <ClInclude Include="Object\CollisionBody.h" />
     <ClInclude Include="Object\Cross.h" />
+    <ClInclude Include="Object\Crown.h" />
     <ClInclude Include="Object\Dagger.h" />
     <ClInclude Include="Object\DaggerWeapon.h" />
     <ClInclude Include="Object\Dinosaur.h" />
@@ -229,6 +232,7 @@
     <ClInclude Include="Object\StairEnd.h" />
     <ClInclude Include="Object\Start.h" />
     <ClInclude Include="Object\TextSprite.h" />
+    <ClInclude Include="Object\Treasure.h" />
     <ClInclude Include="Object\Trident.h" />
     <ClInclude Include="Object\Wall.h" />
     <ClInclude Include="Object\Weapon.h" />
