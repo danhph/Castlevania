@@ -58,6 +58,7 @@ void Crown::Active(bool active)
 {
 	_active = true;
 	this->setPosition(_initX, _initY);
+	SoundManager::getInstance()->Play(HIDDEN_ITEM_APPEAR);
 	if (!_startDestroyStopWatch)
 	{
 		_destroyStopWatch->isStopWatch(ITEM_DESTROY_TIME * 4);

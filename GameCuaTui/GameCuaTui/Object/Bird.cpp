@@ -48,7 +48,7 @@ void Bird::draw(LPD3DXSPRITE spriteHandle, Viewport* viewport)
 
 void Bird::update(float deltatime)
 {
-	if (this->getPositionX() < _initX - 520 || this->getPositionX() > _initX + 520)
+	if (this->getPositionX() < _initX - 500 || this->getPositionX() > _initX + 500)
 	{
 		this->setStatus(DESTROY);
 		return;

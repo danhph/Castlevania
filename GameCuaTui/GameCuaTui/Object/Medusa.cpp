@@ -84,7 +84,7 @@ void Medusa::update(float deltatime)
 		}
 		else
 		{
-			if (this->getPositionX() < _initX - 250 || this->getPositionX() > _initX + 250)
+			if (this->getPositionX() < _initX - 220 || this->getPositionX() > _initX + 220)
 				this->DelayMove();
 		}
 		if (_startHit && _hitStopWatch->isStopWatch(400))

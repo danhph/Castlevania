@@ -35,6 +35,9 @@ bool IntroScene::init()
 	
 	_ok = false;
 	_draw = true;
+
+	SoundManager::getInstance()->PlayLoop(INTRO_SCENE);
+
 	return true;
 }
 
@@ -78,6 +81,7 @@ void IntroScene::draw(LPD3DXSPRITE spriteHandle)
 
 void IntroScene::release()
 {
+	SoundManager::getInstance()->Stop(INTRO_SCENE);
 	SAFE_DELETE(_playOption);
 	SAFE_DELETE(_introtable);
 	SAFE_DELETE(_flash);

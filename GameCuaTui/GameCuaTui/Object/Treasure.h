@@ -7,7 +7,7 @@
 #include "CollisionBody.h"
 #include "../FrameWork/Animation.h"
 #include "../Framework/StopWatch.h"
-
+#include "../Framework/SoundManager.h"
 #define DELAY_SHOW 3000
 
 class Treasure : public BaseObject

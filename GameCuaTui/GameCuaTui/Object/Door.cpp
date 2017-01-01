@@ -89,6 +89,7 @@ void Door::Open()
 {
 	if (!_wasOpen)
 	{
+		SoundManager::getInstance()->Play(OPEN_DOOR);
 		_wasOpen = true;
 		_stopwatch->isTimeLoop(2000);
 	}

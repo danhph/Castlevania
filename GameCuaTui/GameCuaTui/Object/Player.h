@@ -40,6 +40,7 @@
 #include "Crown.h"
 #include "Treasure.h"
 #include "../Framework/StageManager.h"
+#include "../Framework/SoundManager.h"
 #include <thread>
 
 #define MOVE_SPEED 125

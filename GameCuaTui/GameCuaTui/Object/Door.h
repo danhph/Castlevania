@@ -7,6 +7,7 @@
 #include "CollisionBody.h"
 #include "../FrameWork/Animation.h"
 #include "../Framework/StopWatch.h"
+#include "../Framework/SoundManager.h"
 
 class Door : public BaseObject
 {

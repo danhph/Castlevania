@@ -41,6 +41,7 @@ class Gravity : public IComponent
 public:
 	Gravity(GVector2 gravity, Movement* movement);
 	void setStatus(eGravityStatus status);
+	eGravityStatus getStatus();
 	void update(float deltatime);
 	void setGravity(GVector2 gravity);
 

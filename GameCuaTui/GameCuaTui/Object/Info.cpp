@@ -295,6 +295,7 @@ void Info::SetTime(int number)
 	{
 		_timeNumber = number + 1;
 		_beginTime = GameTime::getInstance()->getTotalGameTime();
+		time = number;
 	}
 	else
 		time = number;

@@ -58,6 +58,7 @@ void Treasure::Active(bool active)
 	{
 		if (_stopWatch->isStopWatch(DELAY_SHOW))
 		{
+			SoundManager::getInstance()->Play(HIDDEN_ITEM_APPEAR);
 			_active = active;
 			this->setPosition(_initX, _initY);
 			if (!_startDestroyStopWatch)

@@ -19,6 +19,10 @@ void PlayScene::setViewport(Viewport* viewport)
 
 void PlayScene::initStage()
 {
+	SoundManager::getInstance()->Play(CHANGE_STAGE);
+	SoundManager::getInstance()->PlayLoop(PLAY_SCENE);
+
+
 	_tileMap = StageManager::getInstance()->getTileMap(_currentStage);
 
 	auto quadTreeWidth = (_tileMap->worldWidth() >= _tileMap->worldHeight()) ? _tileMap->worldWidth() : _tileMap->worldHeight();
@@ -274,6 +278,8 @@ void PlayScene::release()
 	SAFE_DELETE(_root);
 	_tileMap->release();
 	SAFE_DELETE(_tileMap);
+
+	SoundManager::getInstance()->Stop(PLAY_SCENE);
 }
 
 bool PlayScene::checkEndGame()

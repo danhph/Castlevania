@@ -13,7 +13,7 @@ void CastlevaniaGame::init()
 	Game::init();
 	// init game
 #if _DEBUG
-	SceneManager::getInstance()->addScene(new PlayScene());
+	SceneManager::getInstance()->addScene(new IntroScene());
 #else
 	SceneManager::getInstance()->addScene(new IntroScene());
 #endif

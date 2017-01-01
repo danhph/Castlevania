@@ -61,6 +61,12 @@ void Gravity::setStatus(eGravityStatus status)
 	this->_status = status;
 }
 
+eGravityStatus Gravity::getStatus()
+{
+	return _status;
+}
+
+
 void Gravity::setGravity(GVector2 gravity)
 {
 	this->_gravity = gravity;
