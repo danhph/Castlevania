@@ -521,11 +521,15 @@ namespace newMapEditor
 
         private void btnAddProperty_Click(object sender, EventArgs e)
         {
-            AddProperty frmAddPro = new AddProperty();
-            frmAddPro.ShowDialog();
-            KeyValuePair<String, String> myproperty = frmAddPro.Property;
-            selectedObject[myproperty.Key] = myproperty.Value;
-            proObject.SelectedObject = new DictionaryPropertyGridAdapter(selectedObject.Property);
+            try
+            {
+                AddProperty frmAddPro = new AddProperty();
+                frmAddPro.ShowDialog();
+                KeyValuePair<String, String> myproperty = frmAddPro.Property;
+                selectedObject[myproperty.Key] = myproperty.Value;
+                proObject.SelectedObject = new DictionaryPropertyGridAdapter(selectedObject.Property);
+            }
+            catch { }
         }
         private void UpdateListObject()
         {

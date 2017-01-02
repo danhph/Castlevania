@@ -17,6 +17,7 @@ namespace newMapEditor
         {
             _properties = new Dictionary<String, String>();
             _properties["id"] = id.ToString();
+            _properties["type"] = "";
             _properties["name"] = name;
             _properties["type"] = type.ToString();
             _properties["x"] = X.ToString();
@@ -28,6 +29,7 @@ namespace newMapEditor
         {
             _properties = new Dictionary<String, String>();
             _properties["id"] = (count++).ToString();
+            _properties["type"] = "";
             _properties["name"] = "object" + count.ToString();
             _properties["x"] = X.ToString();
             _properties["y"] = Y.ToString();
