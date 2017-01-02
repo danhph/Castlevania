@@ -247,6 +247,7 @@ namespace newMapEditor
             // 
             // btnAddProperty
             // 
+            this.btnAddProperty.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddProperty.Location = new System.Drawing.Point(971, 193);
             this.btnAddProperty.Name = "btnAddProperty";
             this.btnAddProperty.Size = new System.Drawing.Size(75, 23);
@@ -257,6 +258,7 @@ namespace newMapEditor
             // 
             // btnRemoveProperty
             // 
+            this.btnRemoveProperty.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRemoveProperty.Location = new System.Drawing.Point(1052, 193);
             this.btnRemoveProperty.Name = "btnRemoveProperty";
             this.btnRemoveProperty.Size = new System.Drawing.Size(75, 23);

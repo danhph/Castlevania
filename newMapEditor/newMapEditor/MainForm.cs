@@ -340,15 +340,11 @@ namespace newMapEditor
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            try
-            {
                 tileset = null;
                 background.resetBackground();
                 background.TileSet = null;
                 panel2.Controls.Clear();
                 Draw();
-            }
-            catch { }
         }
 
         private void resizeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -467,42 +463,50 @@ namespace newMapEditor
         }
         private void updateScaleFactor(Panel panel, Background bg)
         {
-            scaleFactor = Math.Max((float)panel.Width / (bg.MapWidth * bg.TileSet.TileWidth), (float)panel.Height / (bg.MapHeight * bg.TileSet.TileHeight));
+            try
+            {
+                scaleFactor = Math.Max((float)panel.Width / (bg.MapWidth * bg.TileSet.TileWidth), (float)panel.Height / (bg.MapHeight * bg.TileSet.TileHeight));
+            }
+            catch { }
         }
         private void Draw()
         {
-            //try
-            //{
-
-            updateScaleFactor(panel1, background);
-            //updateSizePicmain();
-            Bitmap buffer = new Bitmap((int)(background.MapWidth * background.TileSet.TileWidth * scaleFactor) + 1, (int)(background.MapHeight * background.TileSet.TileHeight * scaleFactor) + 1);
-            Graphics gBuffer = Graphics.FromImage(buffer);
-            background.Draw(gBuffer, scaleFactor);
-            foreach (Objects obj in listObject)
+            if (background != null && background.TileSet!=null)
             {
-                obj.Draw(gBuffer, scaleFactor);
-            }
-            for (int i = 0; i <= background.MapWidth; i++)
-            {
-                gBuffer.DrawLine(new Pen(Color.Blue, 1), new Point((int)(i * background.TileSet.TileWidth * scaleFactor), 0), new Point((int)(i * background.TileSet.TileWidth * scaleFactor), (int)(background.MapHeight * background.TileSet.TileHeight * scaleFactor)));
-            }
-            for (int i = 0; i <= background.MapHeight; i++)
-            {
-                gBuffer.DrawLine(new Pen(Color.Blue, 1), new Point(0, (int)(i * background.TileSet.TileHeight * scaleFactor)), new Point((int)(background.MapWidth * background.TileSet.TileWidth * scaleFactor), (int)(i * background.TileSet.TileHeight * scaleFactor)));
-            }
-            updateSizePicmain(scaleFactor);
-            //Bitmap scaleBuffer = new Bitmap(buffer, picMain.Size);
-            //gPicMain.DrawImage(buffer, new Rectangle(0, 0, panel1.Width, panel1.Height), new Rectangle(0, 0, image.Width, image.Height), GraphicsUnit.Pixel);
+                updateScaleFactor(panel1, background);
+                //updateSizePicmain();
+                Bitmap buffer = new Bitmap((int)(background.MapWidth * background.TileSet.TileWidth * scaleFactor) + 1, (int)(background.MapHeight * background.TileSet.TileHeight * scaleFactor) + 1);
+                Graphics gBuffer = Graphics.FromImage(buffer);
+                background.Draw(gBuffer, scaleFactor);
+                foreach (Objects obj in listObject)
+                {
+                    obj.Draw(gBuffer, scaleFactor);
+                }
+                for (int i = 0; i <= background.MapWidth; i++)
+                {
+                    gBuffer.DrawLine(new Pen(Color.Blue, 1), new Point((int)(i * background.TileSet.TileWidth * scaleFactor), 0), new Point((int)(i * background.TileSet.TileWidth * scaleFactor), (int)(background.MapHeight * background.TileSet.TileHeight * scaleFactor)));
+                }
+                for (int i = 0; i <= background.MapHeight; i++)
+                {
+                    gBuffer.DrawLine(new Pen(Color.Blue, 1), new Point(0, (int)(i * background.TileSet.TileHeight * scaleFactor)), new Point((int)(background.MapWidth * background.TileSet.TileWidth * scaleFactor), (int)(i * background.TileSet.TileHeight * scaleFactor)));
+                }
+                updateSizePicmain(scaleFactor);
+                //Bitmap scaleBuffer = new Bitmap(buffer, picMain.Size);
+                //gPicMain.DrawImage(buffer, new Rectangle(0, 0, panel1.Width, panel1.Height), new Rectangle(0, 0, image.Width, image.Height), GraphicsUnit.Pixel);
 
-            picMain.Image = buffer;
+                picMain.Image = buffer;
 
-            //picMain.Image = buffer;
-            //}
-            //catch
-            //{
-            //  picMain.Image = null;
-            //}
+                //picMain.Image = buffer;
+                //}
+                //catch
+                //{
+                //  picMain.Image = null;
+                //}
+            }
+            else
+            {
+                picMain.Image = null;
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -510,6 +514,7 @@ namespace newMapEditor
             lstObject.Items.Clear();
             listObject.Clear();
             proObject.SelectedObject = null;
+            selectedObject = null;
             Draw();
         }
 
