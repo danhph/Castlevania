@@ -57,7 +57,7 @@ namespace newMapEditor
                 pictureBox.Name = "pic" + i.ToString();
                 pictureBox.BackgroundImageLayout = ImageLayout.Stretch;
                 pictureBox.Size = new System.Drawing.Size(32, 32);
-                pictureBox.Tag = i.ToString();
+                pictureBox.Tag = (i+1).ToString();
                 pictureBox.BackgroundImage = tileset[i + 1].Image;
                 pictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(picItem_MouseClick);
                 panel2.Controls.Add(pictureBox);
@@ -340,11 +340,15 @@ namespace newMapEditor
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            tileset = null;
-            background.resetBackground();
-            background.TileSet = null;
-            panel2.Controls.Clear();
-            Draw();
+            try
+            {
+                tileset = null;
+                background.resetBackground();
+                background.TileSet = null;
+                panel2.Controls.Clear();
+                Draw();
+            }
+            catch { }
         }
 
         private void resizeToolStripMenuItem_Click(object sender, EventArgs e)
