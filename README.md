@@ -1,2 +1,1 @@
-# Castlevania
-UIT
+## Đồ án Nhập môn phát triển Game### Lớp: SE102.H12### Tên game: Castlevania#### Nhóm: 4| STT | MSSV | Thành viên | Vai trò ||-----|------|--------------|--------||1|14520134|Phạm Hữu Danh|Nhóm trưởng||2|14520462|Nguyễn Thanh Liêm|Thành viên||3|14520021|Nghiêm Lan Anh|Thành viên|#### Môi trường lập trình- Visual Studio 2012 (Game Castlevania)- Visual Studio 2015 (Map Editor)- Windows 10- Direct X SDK (June 2010)
