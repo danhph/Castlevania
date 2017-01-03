@@ -3,7 +3,7 @@
 
 void OverScene::updateInput(float deltatime)
 {
-	if (_input->isKeyPressed(DIK_U) || _input->isKeyPressed(DIK_J))
+	if (_input->isKeyPressed(DIK_UP) || _input->isKeyPressed(DIK_DOWN))
 	{
 		_choice = !_choice;
 	}

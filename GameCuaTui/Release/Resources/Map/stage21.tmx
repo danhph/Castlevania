@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="8" height="6" tilewidth="32" tileheight="32" nextobjectid="69">
+ <tileset firstgid="1" name="frame0" tilewidth="32" tileheight="32" tilecount="48" columns="8">
+  <image source="frame0.png" width="256" height="192"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="8" height="6" offsetx="0.5" offsety="1">
+  <data>
+   <tile gid="1"/>
+   <tile gid="2"/>
+   <tile gid="3"/>
+   <tile gid="4"/>
+   <tile gid="5"/>
+   <tile gid="6"/>
+   <tile gid="7"/>
+   <tile gid="8"/>
+   <tile gid="9"/>
+   <tile gid="10"/>
+   <tile gid="11"/>
+   <tile gid="12"/>
+   <tile gid="13"/>
+   <tile gid="14"/>
+   <tile gid="15"/>
+   <tile gid="16"/>
+   <tile gid="17"/>
+   <tile gid="18"/>
+   <tile gid="19"/>
+   <tile gid="20"/>
+   <tile gid="21"/>
+   <tile gid="22"/>
+   <tile gid="23"/>
+   <tile gid="24"/>
+   <tile gid="25"/>
+   <tile gid="26"/>
+   <tile gid="27"/>
+   <tile gid="28"/>
+   <tile gid="29"/>
+   <tile gid="30"/>
+   <tile gid="31"/>
+   <tile gid="32"/>
+   <tile gid="33"/>
+   <tile gid="34"/>
+   <tile gid="35"/>
+   <tile gid="36"/>
+   <tile gid="37"/>
+   <tile gid="38"/>
+   <tile gid="39"/>
+   <tile gid="40"/>
+   <tile gid="41"/>
+   <tile gid="42"/>
+   <tile gid="43"/>
+   <tile gid="44"/>
+   <tile gid="45"/>
+   <tile gid="46"/>
+   <tile gid="47"/>
+   <tile gid="48"/>
+  </data>
+ </layer>
+ <objectgroup name="Object Layer 1">
+  <object id="1" name="REVIVE" type="53" x="92.4167" y="141.25" width="18.25" height="20.75">
+   <properties>
+    <property name="status" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="4" name="BreakWall" type="62" x="224" y="64" width="16" height="32">
+   <properties>
+    <property name="crownX" value="150"/>
+    <property name="crownY" value="143"/>
+   </properties>
+  </object>
+  <object id="8" name="Bat" type="73" x="38" y="6.25" width="16" height="16"/>
+  <object id="10" name="Candle" type="61" x="204" y="102" width="8" height="8"/>
+  <object id="11" name="Candle" type="61" x="76.3334" y="109.334" width="8" height="8">
+   <properties>
+    <property name="item" type="int" value="13"/>
+   </properties>
+  </object>
+  <object id="12" name="Candle" type="61" x="141" y="8" width="8" height="8"/>
+  <object id="13" name="Soldier" type="71" x="144.5" y="32.75" width="16" height="32">
+   <properties>
+    <property name="ActiveBoundHeight" type="float" value="32"/>
+    <property name="ActiveBoundWidth" type="float" value="128"/>
+    <property name="ActiveBoundX" type="float" value="32"/>
+    <property name="ActiveBoundY" type="float" value="32"/>
+   </properties>
+  </object>
+  <object id="19" name="Wall" type="40" x="32.25" y="66.5" width="127.75" height="12.75"/>
+  <object id="24" name="Wall" type="40" x="1" y="66.5" width="16" height="95.5"/>
+  <object id="28" name="Wall" type="40" x="0" y="162.5" width="256" height="2.25"/>
+  <object id="29" name="Wall" type="40" x="224" y="96" width="16" height="64"/>
+  <object id="30" name="Wall" type="40" x="170.75" y="97.25" width="52.5" height="4"/>
+  <object id="31" name="Wall" type="40" x="240" y="64" width="16" height="32"/>
+  <object id="32" name="Stair" type="41" x="112" y="104.5" width="58.25" height="57">
+   <properties>
+    <property name="direct" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="44" name="Wall" type="40" x="224" y="0" width="16" height="64"/>
+  <object id="45" name="Wall" type="40" x="0" y="0" width="16.75" height="67"/>
+  <object id="53" name="StairEnd" type="42" x="169.875" y="97.5" width="7.25" height="8">
+   <properties>
+    <property name="direct" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="55" name="Stair" type="41" x="82" y="1.25" width="62.75" height="64">
+   <properties>
+    <property name="direct" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="57" name="END" type="51" x="136.799" y="2.01133" width="7.6667" height="7.5833">
+   <properties>
+    <property name="direct" type="bool" value="true"/>
+    <property name="next" type="int" value="22"/>
+    <property name="status" type="int" value="4096"/>
+   </properties>
+  </object>
+  <object id="58" name="Wall" type="40" x="17" y="49.625" width="15" height="62"/>
+  <object id="60" name="START" type="50" x="104.875" y="141.875" width="18.25" height="20.75">
+   <properties>
+    <property name="status" type="int" value="0"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

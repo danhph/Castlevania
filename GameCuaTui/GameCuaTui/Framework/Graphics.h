@@ -3,7 +3,7 @@
 
 #include <Windows.h>
 #include "define.h"
-
+#include"../resource1.h"
 
 class Graphics
 {

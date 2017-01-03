@@ -1,0 +1,6 @@
+frame_name	left	top	right	bottom
+red_blood	0	0	11	18
+empty		11	0	22	18
+pink_blood	22	0	33	18
+
+

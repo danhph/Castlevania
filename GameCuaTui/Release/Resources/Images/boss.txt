@@ -1,0 +1,11 @@
+frame_name	left	top	right	bottom
+bat_1		0	0	34	46
+bat_2		34	0	128	46
+bat_3		128	0	192	46
+medusa_1	192	0	256	64
+medusa_2	256	0	320	64
+medusa_3	320	0	384	64
+medusa_4	384	0	448	64
+medusa_5	448	0	489	64
+snake_1		489	0	523	20
+snake_2		523	0	553	20

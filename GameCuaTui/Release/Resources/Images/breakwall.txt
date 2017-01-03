@@ -1,0 +1,11 @@
+frame_name	left	top	right	bottom
+break_1		0	0	13	83
+break_2		13	0	29	83
+break_3		29	0	46	83
+break_4		46	0	74	83	
+break_5		74	0	100	83
+break_6		100	0	139	83
+break_7		139	0	182	83
+break_8		182	0	217	83
+break_9		217	0	257	83
+break_10	257	0	301	83

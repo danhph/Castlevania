@@ -68,7 +68,7 @@ bool PlayScene::init()
 
 	_crossStopWatch = new StopWatch();
 	_isCrossing = false;
-
+	
 	return true;
 }
 
@@ -95,23 +95,23 @@ void PlayScene::update(float dt)
 		this->updateViewport(this->getPlayer(), dt);
 	}
 
-	if (this->getPlayer()->IsPlayingMove())
-	{
-		_player->update(dt);
-		for (BaseObject* object : _activeObject)
-		{
-			if (object->getId() == DOOR)
-				object->update(dt);
-		}
-		return;
-	}
-
 	RECT viewport_in_transform = _viewport->getBounding();
 
 	_root->DeleteObjects();
 
 	_activeObject.clear();
 	_activeObject = _root->Retrieve(viewport_in_transform);
+
+	if (this->getPlayer()->IsPlayingMove())
+	{
+		_player->update(dt);
+		for (BaseObject* object : _activeObject)
+		{
+			if (object->getId() == DOOR || object->getId() == BREAKWALL1)
+				object->update(dt);
+		}
+		return;
+	}
 
 	if (this->getPlayer()->GetCross())
 	{

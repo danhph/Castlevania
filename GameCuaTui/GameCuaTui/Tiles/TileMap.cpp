@@ -3,11 +3,11 @@
 TileMap::TileMap()
 {
 	_mapIndex = NULL;
+	_checkPoint = -1;
 }
 
 TileMap::~TileMap()
 {
-	_checkPoint = -1;
 }
 
 void TileMap::release()

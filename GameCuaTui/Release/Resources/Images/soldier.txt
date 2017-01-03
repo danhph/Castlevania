@@ -1,0 +1,7 @@
+frame_name	left	top	right	bottom
+soldier_01	0	0	16	32
+soldier_02	16	0	32	32
+soldier_03	32	0	48	32
+		
+
+
